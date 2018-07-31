@@ -1,0 +1,332 @@
+/*body should have fixed width now scroll */
+body {
+	overflow-y: scroll;
+	height: 100%;
+	width: 100%;
+	background-color: WhiteSmoke;
+	position: relative;
+}
+
+/* jquery ui css stuff ----------------- */
+div.ui-rotatable-handle {
+	height: 24px;
+	width: 24px;
+	cursor: pointer;
+	border-radius: 100%;
+	background-size: 100%;
+	background-color: #f0f0f0;
+	background-image: url('/img/refresh-icon.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+	box-shadow: 1px 1px 2x Black;
+	color: DimGray;
+	top: -16px;
+	left: -10px;
+	position: relative;
+	z-index: 20
+}
+
+div.ui-draggable.ui-draggable-handle {
+	position: absolute;
+}
+
+/* end jquery ui stuff *******************/
+
+/* All Seating chart styles -----------------------*/
+span.sectionTitle {
+	font-size: 26px;
+	text-align: center;
+	position: relative;
+	display: inline;
+	text-shadow: 1px 1px 2px sandybrown;
+}
+
+button.helpBtn {
+	position: relative;
+	margin-left: 2.5% !important;
+	display: none;
+}
+
+button.helpBtn>i {
+	font-weight: bolder;
+	font-size: 2em;
+	text-shadow: 1px 1px 2px sandybrown
+}
+
+/* SeatingChart - Desk style */
+.desk {
+	position: absolute;
+	padding: 0px;
+}
+
+.desk table td {
+	padding: 0px;
+}
+
+.desk-wrapper {
+	position: absolute;
+}
+
+span.deskDeleter {
+	border-radius: 100%;
+	box-shadow: 1px 1px 2px Black;
+	color: red;
+	background-color: white;
+	position: absolute;
+	right: -0.75em;
+	top: -0.25em;
+	width: 16px;
+	height: 16px;
+	font-size: 15px;
+	z-index: 100;
+	display: none;
+	cursor: pointer;
+}
+
+.doubledesk {
+	width: 7.8em;
+	height: 3.9em;
+	background-image: url('../img/doubleDesk.png');
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+div.doubledesk>table>tr>td>div.seat.pos1 {
+	left: -1em;
+}
+
+div.doubledesk>table>tr>td>div.seat.pos2 {
+	left: 1em;
+}
+
+.singledesk {
+	width: 3.9em;
+	height: 3.9em;
+	background-image: url('../img/singleDesk.png');
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+.seat {
+	width: 3.75em;
+	height: 3.75em;
+	margin: 0px;
+	top: 0px;
+	position: relative;
+}
+
+.seat.pos1 {
+	left: -0.5em;
+}
+
+.seat.pos2 {
+	left: 0.2em;
+}
+
+.seat-over {
+	background-color: rgba(139, 69, 19, 0.45);
+	width: 4em;
+	height: 4em;
+}
+
+div.seat-over.seat>div.rosterStudent {
+	opacity: 0.5 !important;
+}
+/*End Desk style */
+/*SeatingChart -Toolbar */
+div.toolsPanel {
+	width: 7.5%;
+	height: 100%;
+	display: block;
+	float: left;
+	position: relative;
+	border: 1px dotted Red;
+}
+
+.studentTools {
+	display: none;
+}
+
+.studentTools ul.collection {
+	width: 5.5em;
+	height: 700px;
+}
+
+.studentTools ul.collection li {
+	border-bottom: 1px solid Gray;
+	min-height: 5em;
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 5em;
+}
+
+.furnitureTools {
+	display: none;
+}
+/*  end seating chart style *************************/
+
+/* rosterStudent style ------------------------------*/
+div.rosterStudent {
+	padding: 0.5em;
+	padding-top: 0.15em;
+	position: relative;
+	width: 4em;
+	height: 7em;
+	display: block;
+	cursor: pointer;
+}
+
+div.rosterStudent>div.studentHead {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div.studentHead>div.counterRotate {
+	height: 3.5em;
+	widht: 3.5em;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	position: absolute;
+}
+
+div.rosterStudent>div.studentBody {
+	position: relative;
+	top: 3.5em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div.rosterStudent>div.studentBody>.counterRotate {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	width: 3em;
+	height: 3em;
+	padding-top: 0.25em;
+	overflow: hidden;
+}
+
+/*----------------- Roster student seating chart FLOOR----
+  this is only style for student on seating chart floor not on the side panel*/
+.rosterStudent.ui-draggable.ui-draggable-handle {
+	position: relative;
+	box-shadow: 2px 2px 2px Gray;
+	background-color: transparent;
+	width: 4.5em;
+}
+
+/*-- end seating chart floor --------------*/
+/*-- roster   student  chart edit panel (side panel) ---*/
+.desk .seat .rosterStudent {
+	position: relative;
+	top: -3.75em;
+}
+
+.desk .seat .rosterStudent .studentHead>div.counterRotate {
+	position: absolute;
+	width: 3.5em;
+}
+
+.desk .seat .rosterStudent .studentBody>div.counterRotate {
+	position: absolute;
+	font-size: 1.15em;
+	border: 3px solid White;
+	border-radius: 15%;
+	box-shadow: 1px 1px 1px Gray;
+	background-color: AntiqueWhite;
+	z-index: 5;
+	overflow: hidden;
+	width: 3em;
+	height: 3em;
+	padding-top: 0.25em;
+}
+
+.studentName {
+	position: relative;
+	font-weight: 10;
+	font-size: 0.75em;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: Roboto, Serif;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.studentName>.last {
+	overflow-wrap: normal;
+	word-break: keep-all;
+}
+
+.seatingChartImageDiv {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+ul.scStudentList.collection {
+	overflow-y: scroll;
+	height: 600px;
+}
+
+.scStudentTools {
+		overflow-x: hidden;
+		height: 100%;
+		width: 10em;
+		position: relative;
+		left: -2em;
+		}
+
+		.scStudentList {
+		overflow-y: scroll;
+		height: 75%;
+		width:100%;
+		}
+
+		.seatingChart {
+		width: 1090px;
+		height: 650px;
+		display: block;
+		position: relative;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 1em;
+		}
+		.stationLayer {
+		height: 700px;
+		background-color:transparent;
+		position: relative;
+		left:-0.75em;
+		margin-bottom:0.5em;
+		display:none;
+		}
+
+		.floorPlan {
+		height: 700px;
+		background-image: url('../img/classFloor.svg');
+		background-color:White;
+		border-radius: 5%;
+		border: 0.1em dotted Brown;
+		position: relative;
+		left:-0.75em;
+		margin-bottom:0.5em;
+		box-shadow:2px 2px
+		5px DimGray;
+		}
+
+		.seatingChartToolbar {
+		display: none;
+		position: relative;
+		}
+
+		.editTools {
+		display: none;
+		position: relative;
+		}
+		
+
+/* end seating chart style *************************/

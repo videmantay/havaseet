@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+	//user info
+	var teacher = {
+		"uid" : "20013688",
+		"id" : 20013688,
+		"school_id" : 228550800,
+		"synced" : 0,
+		"school_uid" : "",
+		"additional_buildings" : "",
+		"name_title" : "Mr.",
+		"name_title_show" : 1,
+		"name_first" : "Lee",
+		"name_first_preferred" : "",
+		"use_preferred_first_name" : "1",
+		"name_middle" : "",
+		"name_middle_show" : 0,
+		"name_last" : "ViDemantay",
+		"name_display" : "Mr. ViDemantay",
+		"username" : "",
+		"primary_email" : "lee@videmantay.net",
+		"picture_url" : "https:\/\/cdn3-4.cdn.schoology.com\/system\/files\/imagecache\/profile_reg\/pictures\/picture-f32980e8160b94a6d66e296dd64448fe_5ab1475f7c66d.png",
+		"gender" : null,
+		"position" : null,
+		"grad_year" : "",
+		"password" : "",
+		"role_id" : 5,
+		"tz_offset" : -7,
+		"tz_name" : "America\/Los_Angeles",
+		"parents" : null,
+		"child_uids" : null,
+		"send_message" : 1,
+		"language" : "",
+		"permissions" : {
+			"is_directory_public" : 1,
+			"allow_connections" : 1
+		}
+	};
+	var course = {
+		"section" : {
+			"id" : "1624225987",
+			"course_title" : "MadeIt Up",
+			"course_code" : "",
+			"course_id" : "1624225985",
+			"school_id" : "228550800",
+			"building_id" : "228550800",
+			"access_code" : "TB658-KHXRR",
+			"section_title" : "Section 1",
+			"section_code" : "",
+			"section_school_code" : "",
+			"synced" : "0",
+			"active" : 1,
+			"description" : "",
+			"subject_area" : "0",
+			"grade_level_range_start" : "0",
+			"grade_level_range_end" : "0",
+			"parent_id" : null,
+			"grading_periods" : [ 0 ],
+			"profile_url" : "https://cdn3-7.cdn.schoology.com/system/files/imagecache/profile_reg/courselogos/logo-1624225987_5b31557911e27.png?1529959801",
+			"location" : "",
+			"meeting_days" : [ "" ],
+			"start_time" : "",
+			"end_time" : "",
+			"weight" : "0"
+		},
+		"links" : {
+			"self" : "https:\/\/api.schoology.com\/v1\/users\/20013688\/sections"
+		}
+	};
+	
+	var acctInfo = {
+			"active" : true,
+			"expDate" : "2018-06-11",
+			"secId" : "1624225987"
+		};
+	
+	const students = {
+		"enrollment" : [
+				{
+					"id" : "1453234329",
+					"uid" : "20013688",
+					"school_uid" : "",
+					"name_title" : "Mr.",
+					"name_title_show" : "1",
+					"name_first" : "Lee",
+					"name_first_preferred" : "",
+					"use_preferred_first_name" : "1",
+					"name_middle" : "",
+					"name_middle_show" : "0",
+					"name_last" : "ViDemantay",
+					"name_display" : "Mr. ViDemantay",
+					"admin" : 1,
+					"status" : "1",
+					"picture_url" : "https:\/\/cdn3-4.cdn.schoology.com\/system\/files\/imagecache\/profile_reg\/pictures\/picture-f32980e8160b94a6d66e296dd64448fe_5ab1475f7c66d.png",
+					"links" : {
+						"self" : "https:\/\/api.schoology.com\/v1\/sections\/675750671\/enrollments\/1453234329"
+					}
+				},
+				{
+					"id" : "1767944793",
+					"uid" : "69690077",
+					"school_uid" : "",
+					"name_title" : "",
+					"name_title_show" : "0",
+					"name_first" : "Ainsley",
+					"name_first_preferred" : "",
+					"use_preferred_first_name" : "1",
+					"name_middle" : "",
+					"name_middle_show" : "0",
+					"name_last" : "Boomer",
+					"name_display" : "Ainsley Boomer",
+					"admin" : 0,
+					"status" : "1",
+					"picture_url" : "https:\/\/cdn3-4.cdn.schoology.com\/system\/files\/imagecache\/profile_reg\/pictures\/picture-f8e72f42f0e598f30f114be8f706b942_5b10a109d3e3e.png",
+					"links" : {
+						"self" : "https:\/\/api.schoology.com\/v1\/sections\/675750671\/enrollments\/1767944793"
+					}
+				},
+				{
+					"id" : "1585434038",
+					"uid" : "53909154",
+					"school_uid" : "",
+					"name_title" : "",
+					"name_title_show" : "0",
+					"name_first" : "Darwin",
+					"name_first_preferred" : "",
+					"use_preferred_first_name" : "1",
+					"name_middle" : "",
+					"name_middle_show" : "0",
+					"name_last" : "Goober",
+					"name_display" : "Darwin Goober",
+					"admin" : 0,
+					"status" : "1",
+					"picture_url" : "https:\/\/cdn3-7.cdn.schoology.com\/system\/files\/imagecache\/profile_reg\/pictures\/picture-4f0d01b827928ef9f1dc8cc3a30e4313_5b10a2b1cf680.png",
+					"links" : {
+						"self" : "https:\/\/api.schoology.com\/v1\/sections\/675750671\/enrollments\/1585434038"
+					}
+				},
+				{
+					"id" : "1767944723",
+					"uid" : "69690049",
+					"school_uid" : "",
+					"name_title" : "",
+					"name_title_show" : "0",
+					"name_first" : "Melanie",
+					"name_first_preferred" : "",
+					"use_preferred_first_name" : "1",
+					"name_middle" : "",
+					"name_middle_show" : "0",
+					"name_last" : "Gowor",
+					"name_display" : "Melanie Gowor",
+					"admin" : 0,
+					"status" : "1",
+					"picture_url" : "https:\/\/cdn3-3.cdn.schoology.com\/system\/files\/imagecache\/profile_reg\/pictures\/picture-6954c8e80211908c6bc457b73350add3_5b10a19e3433e.png",
+					"links" : {
+						"self" : "https:\/\/api.schoology.com\/v1\/sections\/675750671\/enrollments\/1767944723"
+					}
+				},
+				{
+					"id" : "1585433778",
+					"uid" : "53909040",
+					"school_uid" : "",
+					"name_title" : "",
+					"name_title_show" : "0",
+					"name_first" : "Angel",
+					"name_first_preferred" : "",
+					"use_preferred_first_name" : "1",
+					"name_middle" : "",
+					"name_middle_show" : "0",
+					"name_last" : "Guy",
+					"name_display" : "Angel Guy",
+					"admin" : 0,
+					"status" : "1",
+					"picture_url" : "https:\/\/cdn3-7.cdn.schoology.com\/system\/files\/imagecache\/profile_reg\/pictures\/picture-6ccdb4dccbd6397d951d84ec5a98613f_5b10a35880377.png",
+					"links" : {
+						"self" : "https:\/\/api.schoology.com\/v1\/sections\/675750671\/enrollments\/1585433778"
+					}
+				} ],
+		"total" : "5",
+		"links" : {
+			"self" : "https:\/\/api.schoology.com\/v1\/sections\/675750671\/enrollments?start=0&limit=50"
+		}
+	};
+	var seatingCharts = {
+		"sectionId" : "675750671",
+		"defaultId" : 5732568548769792,
+		"list" : []
+	};
+	var curChart = {
+		"id" : 5732568548769792,
+		"uid" : "20013688",
+		"sectionId" : "675750671",
+		"furniture" : [],
+		"isDefault" : false,
+		"readOnly" : false,
+		"shared" : false,
+		"allowedUids" : [],
+		"isActive" : false,
+		"isArchived" : false,
+		"isVolume" : false,
+		"domainAssociations" : []
+	};
+	/*checks to see if acct is up to date*/
+	
+</script>
+ <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+
+<link rel="stylesheet" href="css/app.css" />
+<title>Havaseet</title>
+<style>
+#loader {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	visibility: hidden;
+	background: url('img/Preloader_3.gif') 50% 50% no-repeat
+		rgb(249, 249, 249);
+}
+</style>
+</head>
+<body style="position:relative">
+	<div id="dashboard">
+		<div class="amber" style="height: 3em;">
+			<img id="sectionProfImg" class="left circle responsive-img"
+				src=""
+				style="width: 2.8em; margin-left: 20px; height: 2.8em;"
+			><span id="sectionTitleSpan" class="center-align white-text material-label"
+				style="font-size: 1.5em; font-weight: bold; margin-left: 15px;"
+			></span>
+		</div>
+		<main>
+		<div class="homeToolbar row amber darken-3">
+			<div class="col s1">
+				<a class="btn waves-effect waves-light"><i class="material-icons">settings</i></a>
+			</div>
+		</div>
+		<div>
+			<div class="edit-tools red lighten-1 row" style="display:none">
+				<div class="col">
+					<a class="btn amber darken-1" style="cursor: pointer;"><i
+						class="left material-icons" style="cursor: pointer;"
+					>delete</i><span>Clear All</span></a>
+				</div>
+				<div class="col">
+					<div class="col">
+						<a class="btn deep-orange darken-1" style="cursor: pointer;"><i
+							class="left material-icons" style="cursor: pointer;"
+						>close</i><span>CANCEL</span></a>
+					</div>
+					<div class="col">
+						<a class="btn green lighten-1" style="cursor: pointer;"><i
+							class="left material-icons" style="cursor: pointer;"
+						>done</i><span>SAVE</span></a>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="l10 col">
+					<div>
+						<div class="floorPlan" style="margin:0.5rem;min-width:996px;max-width:1060px">							
+						</div>
+					</div>
+				</div>
+				<div class="l2 col">
+					<div class="scSideTools" style="margin:auto">
+						<div class="groupListWrapper center-align grey-text" style="display:none">
+							<span 	style="font-size: 1.5em; font-weight: bold; margin-left:auto;margin-right:auto"
+							>Groups</span>
+							<ul class="groupList collection"></ul>
+						</div>
+						<div id="studentListWrapper" class="center-align grey-text material-label" style="margin:auto">
+							<span 
+								style="font-size: 1.5em; font-weight: bold; margin-left:auto;margin-right:auto"
+							>Students</span>
+							<div >
+								<ul class="scStudentList collection" style="width:8em; margin:auto">
+									<li class="collection-item"><div class="rosterStudent"
+											id="1760298377"
+										>
+											<div class="studentHead">
+												<div class="counterRotate">
+													<img class="studentImg z-depth-2 circle responsive-img"
+														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
+														style="width: 100%; height: 100%;"
+													>
+												</div>
+											</div>
+											<div class="studentBody">
+												<div class="counterRotate">
+													<section class="studentInfoTable">
+														<div class="studentName">
+															<span class="first">ALLISON</span><br>
+															<span class="last">CHOI</span>
+														</div>
+													</section>
+												</div>
+											</div>
+										</div></li>
+									<li class="collection-item"><div class="rosterStudent"
+											id="1760298365"
+										>
+											<div class="studentHead">
+												<div class="counterRotate">
+													<img class="studentImg z-depth-2 circle responsive-img"
+														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
+														style="width: 100%; height: 100%;"
+													>
+												</div>
+											</div>
+											<div class="studentBody">
+												<div class="counterRotate">
+													<section class="studentInfoTable">
+														<div class="studentName">
+															<span class="first">CELINA</span><br>
+															<span class="last">THEPHAVONG</span>
+														</div>
+													</section>
+												</div>
+											</div>
+										</div></li>
+									<li class="collection-item"><div class="rosterStudent"
+											id="1760298361"
+										>
+											<div class="studentHead">
+												<div class="counterRotate">
+													<img class="studentImg z-depth-2 circle responsive-img"
+														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
+														style="width: 100%; height: 100%;"
+													>
+												</div>
+											</div>
+											<div class="studentBody">
+												<div class="counterRotate">
+													<section class="studentInfoTable">
+														<div class="studentName">
+															<span class="first">ELIZABETH</span><br>
+															<span class="last">OCHOA</span>
+														</div>
+													</section>
+												</div>
+											</div>
+										</div></li>
+									<li class="collection-item"><div class="rosterStudent"
+											id="1760298387"
+										>
+											<div class="studentHead">
+												<div class="counterRotate">
+													<img class="studentImg z-depth-2 circle responsive-img"
+														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
+														style="width: 100%; height: 100%;"
+													>
+												</div>
+											</div>
+											<div class="studentBody">
+												<div class="counterRotate">
+													<section class="studentInfoTable">
+														<div class="studentName">
+															<span class="first">ESTER</span><br>
+															<span class="last">YOO</span>
+														</div>
+													</section>
+												</div>
+											</div>
+										</div></li>
+									<li class="collection-item"><div class="rosterStudent"
+											id="1760298373"
+										>
+											<div class="studentHead">
+												<div class="counterRotate">
+													<img class="studentImg z-depth-2 circle responsive-img"
+														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
+														style="width: 100%; height: 100%;"
+													>
+												</div>
+											</div>
+											<div class="studentBody">
+												<div class="counterRotate">
+													<section class="studentInfoTable">
+														<div class="studentName">
+															<span class="first">JUANA</span><br>
+															<span class="last">MERCADO</span>
+														</div>
+													</section>
+												</div>
+											</div>
+										</div></li>
+									<li class="collection-item"><div class="rosterStudent"
+											id="1760298353"
+										>
+											<div class="studentHead">
+												<div class="counterRotate">
+													<img class="studentImg z-depth-2 circle responsive-img"
+														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
+														style="width: 100%; height: 100%;"
+													>
+												</div>
+											</div>
+											<div class="studentBody">
+												<div class="counterRotate">
+													<section class="studentInfoTable">
+														<div class="studentName">
+															<span class="first">LINDA</span><br>
+															<span class="last">SUGIMOTO</span>
+														</div>
+													</section>
+												</div>
+											</div>
+										</div></li>
+									<li class="collection-item"><div class="rosterStudent"
+											id="1760298383"
+										>
+											<div class="studentHead">
+												<div class="counterRotate">
+													<img class="studentImg z-depth-2 circle responsive-img"
+														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
+														style="width: 100%; height: 100%;"
+													>
+												</div>
+											</div>
+											<div class="studentBody">
+												<div class="counterRotate">
+													<section class="studentInfoTable">
+														<div class="studentName">
+															<span class="first">LORRAINE</span><br>
+															<span class="last">WALTER</span>
+														</div>
+													</section>
+												</div>
+											</div>
+										</div></li>
+									<li class="collection-item"><div class="rosterStudent"
+											id="1760298363"
+										>
+											<div class="studentHead">
+												<div class="counterRotate">
+													<img class="studentImg z-depth-2 circle responsive-img"
+														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
+														style="width: 100%; height: 100%;"
+													>
+												</div>
+											</div>
+											<div class="studentBody">
+												<div class="counterRotate">
+													<section class="studentInfoTable">
+														<div class="studentName">
+															<span class="first">MICHELLE</span><br>
+															<span class="last">MOORE</span>
+														</div>
+													</section>
+												</div>
+											</div>
+										</div></li>
+									<li class="collection-item"><div class="rosterStudent"
+											id="1760298351"
+										>
+											<div class="studentHead">
+												<div class="counterRotate">
+													<img class="studentImg z-depth-2 circle responsive-img"
+														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
+														style="width: 100%; height: 100%;"
+													>
+												</div>
+											</div>
+											<div class="studentBody">
+												<div class="counterRotate">
+													<section class="studentInfoTable">
+														<div class="studentName">
+															<span class="first">MICHELLE</span><br>
+															<span class="last">PARK</span>
+														</div>
+													</section>
+												</div>
+											</div>
+										</div></li>
+									<li class="collection-item"><div class="rosterStudent"
+											id="1760298349"
+										>
+											<div class="studentHead">
+												<div class="counterRotate">
+													<img class="studentImg z-depth-2 circle responsive-img"
+														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
+														style="width: 100%; height: 100%;"
+													>
+												</div>
+											</div>
+											<div class="studentBody">
+												<div class="counterRotate">
+													<section class="studentInfoTable">
+														<div class="studentName">
+															<span class="first">MIN</span><br>
+															<span class="last">CHUNG</span>
+														</div>
+													</section>
+												</div>
+											</div>
+										</div></li>
+									<li class="collection-item"><div class="rosterStudent"
+											id="1760298355"
+										>
+											<div class="studentHead">
+												<div class="counterRotate">
+													<img class="studentImg z-depth-2 circle responsive-img"
+														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
+														style="width: 100%; height: 100%;"
+													>
+												</div>
+											</div>
+											<div class="studentBody">
+												<div class="counterRotate">
+													<section class="studentInfoTable">
+														<div class="studentName">
+															<span class="first">REGINA</span><br>
+															<span class="last">RAMOS</span>
+														</div>
+													</section>
+												</div>
+											</div>
+										</div></li>
+									<li class="collection-item"><div class="rosterStudent"
+											id="1760298359"
+										>
+											<div class="studentHead">
+												<div class="counterRotate">
+													<img class="studentImg z-depth-2 circle responsive-img"
+														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
+														style="width: 100%; height: 100%;"
+													>
+												</div>
+											</div>
+											<div class="studentBody">
+												<div class="counterRotate">
+													<section class="studentInfoTable">
+														<div class="studentName">
+															<span class="first">STEPHENIE</span><br>
+															<span class="last">SUN</span>
+														</div>
+													</section>
+												</div>
+											</div>
+										</div></li>
+									<li class="collection-item"><div class="rosterStudent"
+											id="1760298371"
+										>
+											<div class="studentHead">
+												<div class="counterRotate">
+													<img class="studentImg z-depth-2 circle responsive-img"
+														src="https://cdn3-3.cdn.schoology.com/system/files/imagecache/profile_reg/pictures/picture-c70d7869951d5f30d13c25afa8f34c1e_5afb4b26d6c8b.png"
+														style="width: 100%; height: 100%;"
+													>
+												</div>
+											</div>
+											<div class="studentBody">
+												<div class="counterRotate">
+													<section class="studentInfoTable">
+														<div class="studentName">
+															<span class="first">YANIN</span><br>
+															<span class="last">ARDILA</span>
+														</div>
+													</section>
+												</div>
+											</div>
+										</div></li>
+								</ul>
+							</div>
+						</div>
+						<div class="editTools">
+							<ul class="collapsible">
+								<li class="editCollapseItem active" id="furnitureCollapseItem"
+									style="cursor: pointer;"
+								><div class="collapsible-header active">
+										<a style="cursor: pointer;"><i class="left material-icons"
+											style="cursor: pointer;"
+										>event_seat</i></a>
+									</div>
+									<div class="collapsible-body" style="display: block;">
+										<ul class="collection">
+											<li class="collection-item"><img
+												class="furnitureIcon responsive-img" id="doubleDeskIcon"
+												src="../img/doubleDesk.png"
+											></li>
+											<li class="collection-item"><img
+												class="furnitureIcon responsive-img" id="singleDeskIcon"
+												src="../img/singleDesk.png"
+											></li>
+										</ul>
+									</div></li>
+								<li class="editCollapseItem" id="studentCollapseItem"
+									style="cursor: pointer;"
+								><div class="collapsible-header">
+										<a style="cursor: pointer;"><i class="left material-icons"
+											style="cursor: pointer;"
+										>school</i></a>
+									</div>
+									<div id="studentCollapseBody" class="collapsible-body" style="">
+										<div>
+											<h5>No Students to show</h5>
+										</div>
+									</div></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</main>
+	</div>
+	<script src="scripts/jquery-3.1.1.min.js"></script>
+	<script src="scripts/loader.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.5.1/jQuery.print.min.js"
+	></script>
+	<script> 
+	//page init like resize 
+	$(window).resize(function(){
+		console.log('window was resize');
+		if(window.clientWidth < 1160){
+			showResizeWarning();
+		}else{
+			showChartApp();
+		}
+	});
+	</script>
+</body>
+</html>
