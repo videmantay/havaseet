@@ -188,7 +188,12 @@
 	var seatingCharts = {
 		"sectionId" : "675750671",
 		"defaultId" : 5732568548769792,
-		"list" : []
+		"list" : [
+			{"title":'Your seat', "id":5732568548769792},
+			{"title":'Math Lab', "id":9002568548769792},
+			{"title":'Reading Place', "id":2222568548769792},
+			{"title":'Investigation', "id":708968548769792}
+		]
 	};
 	var curChart = {
 		"id" : 5732568548769792,
@@ -230,20 +235,54 @@
 </head>
 <body style="position:relative">
 	<div id="dashboard">
-		<div class="amber" style="height: 3em;">
+		<div class="amber" style="overflow:visible;height:2em;">
 			<img id="sectionProfImg" class="left circle responsive-img"
 				src=""
-				style="width: 2.8em; margin-left: 20px; height: 2.8em;"
-			><span id="sectionTitleSpan" class="center-align white-text material-label"
-				style="font-size: 1.5em; font-weight: bold; margin-left: 15px;"
+				style="position:relative;width: 2.8em; margin-left: 20px; height: 4em; width:4em;top:0.25em"
+			><span id="sectionTitleSpan" class="white-text material-label"
+				style="position:relative;font-size: 1.5em; font-weight: bold;text-shadow:1px 1px 1px Black;left:30%"
 			></span>
+			<span class="right white-text" style="font-size:1.5em;font-family:Verdana;
+			text-shadow:1px 1px 2px Black;margin-right:1em;">Havaseet <i class="red-text">Beta</i></span>
 		</div>
 		<main>
-		<div class="homeToolbar row amber darken-3">
-			<div class="col s1">
-				<a class="btn waves-effect waves-light"><i class="material-icons">settings</i></a>
-			</div>
-		</div>
+		<div class="homeToolbar amber darken-1">
+			<div class="container row">
+				<div class="col s3 white-text">
+					<span>Check: </span>&nbsp;
+					<a class="btn-flat tooltiped waves-effect waves-light white-text"
+					data-tooltip="homework" style="display:inline">
+						<i class="material-icons">assignment</i>
+					</a>
+				</div>
+				<div class="col s5">
+					<a class="btn dropdown-trigger amber lighten-1 white-text left" 
+				data-target="routineDropdownList"
+				style="height:2.45em; overflow:hidden;width:100%;position:relative"
+				id="curRoutineBtn"><span style="position:relative;vertical-align:top;text-align:center;width:100%">Your Seats</span>&nbsp;
+				<i class="material-icons">arrow_drop_down</i></a>
+				
+					<ul id="routineDropdownList" class="dropdown-content"></ul>
+				</div>
+				<div class="col s4 white-text">
+						<span>View:</span>&nbsp;
+					<a class="btn-flat tooltiped waves-effect waves-light white-text"
+					data-tooltip="students">
+						<i class="material-icons view-icon">school</i>
+					</a>
+			
+					<a class="btn-flat tooltiped waves-effect waves-light white-text"
+					data-tooltip="groups">
+						<i class="material-icons view-icon">group_work</i>
+					</a>
+				
+					<a class="btn-flat tooltiped waves-effect waves-light white-text"
+					data-tooltip="procedures">
+						<i class="material-icons view-icon">list</i>
+					</a>
+				</div>		
+		</div><!-- end container row -->
+		</div><!-- end homeToolbar -->
 		<div>
 			<div class="edit-tools red lighten-1 row" style="display:none">
 				<div class="col">
@@ -266,9 +305,14 @@
 			</div>
 			<div class="row">
 				<div class="l10 col">
-					<div>
-						<div class="floorPlan" style="margin:0.5rem;min-width:996px;max-width:1060px">							
-						</div>
+					<div id="floorWrapper">
+					
+						<div id="procViewLayer" class="floorPlanLayer"></div>
+						<div id="procEditLayer" class="floorPlanLayer"></div>
+						<div id="infoEditLayer" class="floorPlanLayer"></div>
+					
+						<div class="floorPlan" style="min-width:996px;max-width:1060px;position:relative; left:1em">							
+					</div>
 					</div>
 				</div>
 				<div class="l2 col">
@@ -283,294 +327,7 @@
 								style="font-size: 1.5em; font-weight: bold; margin-left:auto;margin-right:auto"
 							>Students</span>
 							<div >
-								<ul class="scStudentList collection" style="width:8em; margin:auto">
-									<li class="collection-item"><div class="rosterStudent"
-											id="1760298377"
-										>
-											<div class="studentHead">
-												<div class="counterRotate">
-													<img class="studentImg z-depth-2 circle responsive-img"
-														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
-														style="width: 100%; height: 100%;"
-													>
-												</div>
-											</div>
-											<div class="studentBody">
-												<div class="counterRotate">
-													<section class="studentInfoTable">
-														<div class="studentName">
-															<span class="first">ALLISON</span><br>
-															<span class="last">CHOI</span>
-														</div>
-													</section>
-												</div>
-											</div>
-										</div></li>
-									<li class="collection-item"><div class="rosterStudent"
-											id="1760298365"
-										>
-											<div class="studentHead">
-												<div class="counterRotate">
-													<img class="studentImg z-depth-2 circle responsive-img"
-														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
-														style="width: 100%; height: 100%;"
-													>
-												</div>
-											</div>
-											<div class="studentBody">
-												<div class="counterRotate">
-													<section class="studentInfoTable">
-														<div class="studentName">
-															<span class="first">CELINA</span><br>
-															<span class="last">THEPHAVONG</span>
-														</div>
-													</section>
-												</div>
-											</div>
-										</div></li>
-									<li class="collection-item"><div class="rosterStudent"
-											id="1760298361"
-										>
-											<div class="studentHead">
-												<div class="counterRotate">
-													<img class="studentImg z-depth-2 circle responsive-img"
-														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
-														style="width: 100%; height: 100%;"
-													>
-												</div>
-											</div>
-											<div class="studentBody">
-												<div class="counterRotate">
-													<section class="studentInfoTable">
-														<div class="studentName">
-															<span class="first">ELIZABETH</span><br>
-															<span class="last">OCHOA</span>
-														</div>
-													</section>
-												</div>
-											</div>
-										</div></li>
-									<li class="collection-item"><div class="rosterStudent"
-											id="1760298387"
-										>
-											<div class="studentHead">
-												<div class="counterRotate">
-													<img class="studentImg z-depth-2 circle responsive-img"
-														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
-														style="width: 100%; height: 100%;"
-													>
-												</div>
-											</div>
-											<div class="studentBody">
-												<div class="counterRotate">
-													<section class="studentInfoTable">
-														<div class="studentName">
-															<span class="first">ESTER</span><br>
-															<span class="last">YOO</span>
-														</div>
-													</section>
-												</div>
-											</div>
-										</div></li>
-									<li class="collection-item"><div class="rosterStudent"
-											id="1760298373"
-										>
-											<div class="studentHead">
-												<div class="counterRotate">
-													<img class="studentImg z-depth-2 circle responsive-img"
-														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
-														style="width: 100%; height: 100%;"
-													>
-												</div>
-											</div>
-											<div class="studentBody">
-												<div class="counterRotate">
-													<section class="studentInfoTable">
-														<div class="studentName">
-															<span class="first">JUANA</span><br>
-															<span class="last">MERCADO</span>
-														</div>
-													</section>
-												</div>
-											</div>
-										</div></li>
-									<li class="collection-item"><div class="rosterStudent"
-											id="1760298353"
-										>
-											<div class="studentHead">
-												<div class="counterRotate">
-													<img class="studentImg z-depth-2 circle responsive-img"
-														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
-														style="width: 100%; height: 100%;"
-													>
-												</div>
-											</div>
-											<div class="studentBody">
-												<div class="counterRotate">
-													<section class="studentInfoTable">
-														<div class="studentName">
-															<span class="first">LINDA</span><br>
-															<span class="last">SUGIMOTO</span>
-														</div>
-													</section>
-												</div>
-											</div>
-										</div></li>
-									<li class="collection-item"><div class="rosterStudent"
-											id="1760298383"
-										>
-											<div class="studentHead">
-												<div class="counterRotate">
-													<img class="studentImg z-depth-2 circle responsive-img"
-														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
-														style="width: 100%; height: 100%;"
-													>
-												</div>
-											</div>
-											<div class="studentBody">
-												<div class="counterRotate">
-													<section class="studentInfoTable">
-														<div class="studentName">
-															<span class="first">LORRAINE</span><br>
-															<span class="last">WALTER</span>
-														</div>
-													</section>
-												</div>
-											</div>
-										</div></li>
-									<li class="collection-item"><div class="rosterStudent"
-											id="1760298363"
-										>
-											<div class="studentHead">
-												<div class="counterRotate">
-													<img class="studentImg z-depth-2 circle responsive-img"
-														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
-														style="width: 100%; height: 100%;"
-													>
-												</div>
-											</div>
-											<div class="studentBody">
-												<div class="counterRotate">
-													<section class="studentInfoTable">
-														<div class="studentName">
-															<span class="first">MICHELLE</span><br>
-															<span class="last">MOORE</span>
-														</div>
-													</section>
-												</div>
-											</div>
-										</div></li>
-									<li class="collection-item"><div class="rosterStudent"
-											id="1760298351"
-										>
-											<div class="studentHead">
-												<div class="counterRotate">
-													<img class="studentImg z-depth-2 circle responsive-img"
-														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
-														style="width: 100%; height: 100%;"
-													>
-												</div>
-											</div>
-											<div class="studentBody">
-												<div class="counterRotate">
-													<section class="studentInfoTable">
-														<div class="studentName">
-															<span class="first">MICHELLE</span><br>
-															<span class="last">PARK</span>
-														</div>
-													</section>
-												</div>
-											</div>
-										</div></li>
-									<li class="collection-item"><div class="rosterStudent"
-											id="1760298349"
-										>
-											<div class="studentHead">
-												<div class="counterRotate">
-													<img class="studentImg z-depth-2 circle responsive-img"
-														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
-														style="width: 100%; height: 100%;"
-													>
-												</div>
-											</div>
-											<div class="studentBody">
-												<div class="counterRotate">
-													<section class="studentInfoTable">
-														<div class="studentName">
-															<span class="first">MIN</span><br>
-															<span class="last">CHUNG</span>
-														</div>
-													</section>
-												</div>
-											</div>
-										</div></li>
-									<li class="collection-item"><div class="rosterStudent"
-											id="1760298355"
-										>
-											<div class="studentHead">
-												<div class="counterRotate">
-													<img class="studentImg z-depth-2 circle responsive-img"
-														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
-														style="width: 100%; height: 100%;"
-													>
-												</div>
-											</div>
-											<div class="studentBody">
-												<div class="counterRotate">
-													<section class="studentInfoTable">
-														<div class="studentName">
-															<span class="first">REGINA</span><br>
-															<span class="last">RAMOS</span>
-														</div>
-													</section>
-												</div>
-											</div>
-										</div></li>
-									<li class="collection-item"><div class="rosterStudent"
-											id="1760298359"
-										>
-											<div class="studentHead">
-												<div class="counterRotate">
-													<img class="studentImg z-depth-2 circle responsive-img"
-														src="https://cdn3-6.cdn.schoology.com/system/files/imagecache/profile_reg/sites/all/themes/schoology_theme/images/user-default.gif"
-														style="width: 100%; height: 100%;"
-													>
-												</div>
-											</div>
-											<div class="studentBody">
-												<div class="counterRotate">
-													<section class="studentInfoTable">
-														<div class="studentName">
-															<span class="first">STEPHENIE</span><br>
-															<span class="last">SUN</span>
-														</div>
-													</section>
-												</div>
-											</div>
-										</div></li>
-									<li class="collection-item"><div class="rosterStudent"
-											id="1760298371"
-										>
-											<div class="studentHead">
-												<div class="counterRotate">
-													<img class="studentImg z-depth-2 circle responsive-img"
-														src="https://cdn3-3.cdn.schoology.com/system/files/imagecache/profile_reg/pictures/picture-c70d7869951d5f30d13c25afa8f34c1e_5afb4b26d6c8b.png"
-														style="width: 100%; height: 100%;"
-													>
-												</div>
-											</div>
-											<div class="studentBody">
-												<div class="counterRotate">
-													<section class="studentInfoTable">
-														<div class="studentName">
-															<span class="first">YANIN</span><br>
-															<span class="last">ARDILA</span>
-														</div>
-													</section>
-												</div>
-											</div>
-										</div></li>
-								</ul>
+								<ul class="scStudentList collection" style="width:8em; margin:auto"></ul>
 							</div>
 						</div>
 						<div class="editTools">
@@ -614,21 +371,53 @@
 		</div>
 		</main>
 	</div>
+	
 	<script src="scripts/jquery-3.1.1.min.js"></script>
 	<script src="scripts/loader.js"></script>
+	<!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+       
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.5.1/jQuery.print.min.js"
 	></script>
+	<script src="scripts/seatingchart.js"></script>
 	<script> 
 	//page init like resize 
-	$(window).resize(function(){
+	/* $(window).resize(function(){
 		console.log('window was resize');
 		if(window.clientWidth < 1160){
 			showResizeWarning();
 		}else{
 			showChartApp();
 		}
-	});
+	}); */
+	//populate the section img and title
+	$('img#sectionProfImg').attr('src',course.section.profile_url );
+	$('span#sectionTitleSpan').text(course.section.course_title +': ' + course.section.section_title);
+	//init tooltip
+	$('a.tooltiped').tooltip();
+	//init dropdown
+	$('a.dropdown-trigger').dropdown({constrainWidth:true});
+	
+	//populate the students into studentList
+	$(()=> {for(var i=0;  i < students.enrollment.length; i++)
+			{var s = students.enrollment[i];  
+			if(s.admin == 1){continue}
+			var rosPanel = new RosterStudentPanel(); 
+				   rosPanel.setStudent(s); 
+				   $('ul.scStudentList').append('<li class="collection-item">' + rosPanel.getPanel()+'</li>');
+				   }//end for loop
+		//pop roster list
+		for(var i =0; i < seatingCharts.list.length; i++){
+			var s = seatingCharts.list[i];
+			var $rosterItem = $('<li class="collection-item roster-item grey-text"></li><li class="divider" tabindex="-1"></li>');
+			$rosterItem.attr('id',s.id);
+			$rosterItem.text(s.title);
+			$rosterItem.css({textAlign:'center',margin:'0 auto',padding:'2px',verticalAlign:'middle',fontWeight:10})
+			$('ul#routineDropdownList').append($rosterItem);
+		}//end for
+	}//end function
+	);
 	</script>
 </body>
 </html>

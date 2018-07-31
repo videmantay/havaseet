@@ -3,7 +3,8 @@
  * roster student panel
  */
 function RosterStudentPanel(){
-let template =`<div class="rosterStudent"
+	/*html only return inner html so must set a wrapper*/
+this.template =`<div class="im_a_wrapper" ><div class="rosterStudent"
 id="">
 <div class="studentHead">
 <div class="counterRotate">
@@ -22,21 +23,19 @@ style="width: 100%; height: 100%;">
 </section>
 </div>
 </div>
-</div>`;
-let $rosStudentPanel = $(template);
-let student;
-let getPanel = function(){return $rosStudentPanel};
-let setStudent = function(stu){
-	student = stu;
-	$rosStudentPanel.find('.first').text(student.name_first);
-	$rosStudentPanel.find('.last').text(student.name_last);
-	$rosStudentPanel.find('img.studentImg').attr('src', student.picture_url);
-	$rosStudentPanel.find('div.rosterStudent').attr('id',student.uid);
-}
+</div></div>`;
+this.$rosStudentPanel = $(this.template);
+this.student;
+ this.getPanel = function(){return this.$rosStudentPanel.html()};
+ this.setStudent = function(stu){
+	this.student = stu;
+	this.$rosStudentPanel.find('.first').text(stu.name_first);
+	this.$rosStudentPanel.find('.last').text(stu.name_last);
+	this.$rosStudentPanel.find('img.studentImg').attr('src', stu.picture_url);
+	this.$rosStudentPanel.find('div.rosterStudent').attr('id',stu.uid);
+};
 
-let getStudent = function(){
-	return student;
-}
+this.getStudent = function(){ return this.student};
 };
 /*
 end roster student panel
