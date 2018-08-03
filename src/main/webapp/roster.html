@@ -196,6 +196,7 @@
 		]
 	};
 	var curChart = {
+		"title":"Your seat",
 		"id" : 5732568548769792,
 		"uid" : "20013688",
 		"sectionId" : "675750671",
@@ -213,9 +214,9 @@
 	
 </script>
  <!--Import Google Icon Font-->
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link href="css/material-icons.css" rel="stylesheet">
  <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    <link rel="stylesheet" href="scripts/materialize/css/materialize.min.css">
 
 <link rel="stylesheet" href="css/app.css" />
 <title>Havaseet</title>
@@ -240,7 +241,7 @@
 				src=""
 				style="position:relative;width: 2.8em; margin-left: 20px; height: 4em; width:4em;top:0.25em"
 			><span id="sectionTitleSpan" class="white-text material-label"
-				style="position:relative;font-size: 1.5em; font-weight: bold;text-shadow:1px 1px 1px Black;left:30%"
+				style="position:relative;font-size: 1.5em; font-weight: bold;text-shadow:1px 1px 1px grey;left:30%"
 			></span>
 			<span class="right white-text" style="font-size:1.5em;font-family:Verdana;
 			text-shadow:1px 1px 2px Black;margin-right:1em;">Havaseet <i class="red-text">Beta</i></span>
@@ -252,51 +253,66 @@
 					<span>Check: </span>&nbsp;
 					<a class="btn-flat tooltiped waves-effect waves-light white-text"
 					data-tooltip="homework" style="display:inline">
-						<i class="material-icons">assignment</i>
+						<i id="hwIcon" class="material-icons">assignment</i>
 					</a>
 				</div>
 				<div class="col s5">
 					<a class="btn dropdown-trigger amber lighten-1 white-text left" 
 				data-target="routineDropdownList"
-				style="height:2.45em; overflow:hidden;width:100%;position:relative"
-				id="curRoutineBtn"><span style="position:relative;vertical-align:top;text-align:center;width:100%">Your Seats</span>&nbsp;
+				style="height:2.45em; overflow:hidden;width:100%;position:relative;margin-top:3px"
+				id="curRoutineBtn"><span style="position:relative;vertical-align:top;text-align:center;width:100%"></span>&nbsp;
 				<i class="material-icons">arrow_drop_down</i></a>
 				
 					<ul id="routineDropdownList" class="dropdown-content"></ul>
 				</div>
 				<div class="col s4 white-text">
 						<span>View:</span>&nbsp;
-					<a class="btn-flat tooltiped waves-effect waves-light white-text"
-					data-tooltip="students">
-						<i class="material-icons view-icon">school</i>
+					<a class="btn-flat tooltiped waves-effect waves-light white-text view-btn"
+					data-tooltip="students" id="student-view-btn">
+						<i class="material-icons amber-text text-accent-1 view-icon">school</i>
 					</a>
 			
-					<a class="btn-flat tooltiped waves-effect waves-light white-text"
-					data-tooltip="groups">
-						<i class="material-icons view-icon">group_work</i>
+					<a class="btn-flat tooltiped waves-effect waves-light white-text view-btn"
+					data-tooltip="groups" id="groups-view-btn">
+						<i class="material-icons view-icon">group</i>
 					</a>
 				
-					<a class="btn-flat tooltiped waves-effect waves-light white-text"
-					data-tooltip="procedures">
+					<a class="btn-flat tooltiped waves-effect waves-light white-text view-btn"
+					data-tooltip="procedures" id="proc-view-btn">
 						<i class="material-icons view-icon">list</i>
+					</a>		
+				
+					<a class="btn-floating btn-small tooltiped dropdown-trigger waves-effect waves-light amber lighten-1 white-text right"
+					data-tooltip="settings" data-target="settingsList">
+						<i class="material-icons">settings</i>
 					</a>
-				</div>		
+				</div>	
 		</div><!-- end container row -->
+			<ul class="dropdown-content" id="settingsList">
+				<li><a style="margin:0 auto; text-align:center" id="editRoutineLink" class="amber-text"><i class="material-icons right">edit</i>Edit</a></li>
+				<li class="divider" tab-index="-1"></li>
+				<li><a style="margin:0 auto; text-align:center" id="deleteRoutineLink" class="amber-text"><i  class="material-icons right">delete</i>Delete</a></li>
+				<li class="divider" tab-index="-1"></li>
+				<li><a style="margin:0 auto; text-align:center" id="newRoutineLink" class="amber-text"><i class="material-icons right">event_seat</i>New</a></li>
+				<li class="divider" tab-index="-1"></li>
+				<li><a style="margin:0 auto; text-align:center" id="printRoutineLink" class="amber-text"><i class="material-icons right">print</i>Print</a></li>
+				<li class="divider" tab-index="-1"></li>
+				
+			</ul>
 		</div><!-- end homeToolbar -->
 		<div>
-			<div class="edit-tools red lighten-1 row" style="display:none">
+			<div class="editToolbar red lighten-1 row" style="display:none; padding:0 25%">
 				<div class="col">
 					<a class="btn amber darken-1" style="cursor: pointer;"><i
 						class="left material-icons" style="cursor: pointer;"
 					>delete</i><span>Clear All</span></a>
 				</div>
 				<div class="col">
-					<div class="col">
 						<a class="btn deep-orange darken-1" style="cursor: pointer;"><i
 							class="left material-icons" style="cursor: pointer;"
 						>close</i><span>CANCEL</span></a>
-					</div>
-					<div class="col">
+				</div>
+				<div class="col">
 						<a class="btn green lighten-1" style="cursor: pointer;"><i
 							class="left material-icons" style="cursor: pointer;"
 						>done</i><span>SAVE</span></a>
@@ -311,30 +327,40 @@
 						<div id="procEditLayer" class="floorPlanLayer"></div>
 						<div id="infoEditLayer" class="floorPlanLayer"></div>
 					
-						<div class="floorPlan" style="min-width:996px;max-width:1060px;position:relative; left:1em">							
+						<div class="floorPlan" style="width:1050px; height:700px;min-width:996px;max-width:1060px;position:absolute;margin-left:0.25rem">							
 					</div>
 					</div>
 				</div>
 				<div class="l2 col">
-					<div class="scSideTools" style="margin:auto">
-						<div class="groupListWrapper center-align grey-text" style="display:none">
-							<span 	style="font-size: 1.5em; font-weight: bold; margin-left:auto;margin-right:auto"
+					<div class="sideTools" style="margin:auto">
+					<div class="homeTool-side">
+						<div id="procListWrapper" class="center-align grey-text side-tool" style="display:none">
+							<span class="material-label" 	
+							style="font-size: 1.5em; font-weight: bold; margin-left:auto;margin-right:auto"
+							>Procedures</span>
+							<ul class="procList collection"></ul>
+						</div>
+						<div id="groupListWrapper" class="center-align grey-text side-tool" style="display:none">
+							<span class="material-label" 	
+							style="font-size: 1.5em; font-weight: bold; margin-left:auto;margin-right:auto"
 							>Groups</span>
 							<ul class="groupList collection"></ul>
 						</div>
-						<div id="studentListWrapper" class="center-align grey-text material-label" style="margin:auto">
-							<span 
+						<div id="studentListWrapper" class="center-align grey-text side-tool" style="margin:auto">
+							<span class="material-label"
 								style="font-size: 1.5em; font-weight: bold; margin-left:auto;margin-right:auto"
 							>Students</span>
 							<div >
-								<ul class="scStudentList collection" style="width:8em; margin:auto"></ul>
+								<ul class="scStudentList collection" 
+								style="width:8em; margin:auto;overflow-y:scroll"></ul>
 							</div>
 						</div>
-						<div class="editTools">
+						</div>
+						<div class="editTool-side" style="display:none">
 							<ul class="collapsible">
 								<li class="editCollapseItem active" id="furnitureCollapseItem"
 									style="cursor: pointer;"
-								><div class="collapsible-header active">
+								><div class="collapsible-header">
 										<a style="cursor: pointer;"><i class="left material-icons"
 											style="cursor: pointer;"
 										>event_seat</i></a>
@@ -358,9 +384,45 @@
 											style="cursor: pointer;"
 										>school</i></a>
 									</div>
-									<div id="studentCollapseBody" class="collapsible-body" style="">
+									<div id="studentCollapseBody" class="collapsible-body">
 										<div>
 											<h5>No Students to show</h5>
+										</div>
+									</div></li>
+									<li class="editCollapseItem" id="groupCollapseItem"
+									style="cursor: pointer;"
+								><div class="collapsible-header">
+										<a style="cursor: pointer;"><i class="left material-icons"
+											style="cursor: pointer;"
+										>group</i></a>
+									</div>
+									<div id="groupCollapseBody" class="collapsible-body" style="">
+										<div>
+											<h5>No Groups to show</h5>
+										</div>
+									</div></li>
+									<li class="editCollapseItem" id="procCollapseItem"
+									style="cursor: pointer;"
+								><div class="collapsible-header">
+										<a style="cursor: pointer;"><i class="left material-icons"
+											style="cursor: pointer;"
+										>list</i></a>
+									</div>
+									<div id="procCollapseBody" class="collapsible-body" style="">
+										<div>
+											<h5>No procedures to show</h5>
+										</div>
+									</div></li>
+									<li class="editCollapseItem" id="infoCollapseItem"
+									style="cursor: pointer;"
+								><div class="collapsible-header">
+										<a style="cursor: pointer;"><i class="left material-icons"
+											style="cursor: pointer;"
+										>info</i></a>
+									</div>
+									<div id="infoCollapseBody" class="collapsible-body" style="">
+										<div>
+											<h5>TODO: Show Info</h5>
 										</div>
 									</div></li>
 							</ul>
@@ -375,13 +437,27 @@
 	<script src="scripts/jquery-3.1.1.min.js"></script>
 	<script src="scripts/loader.js"></script>
 	<!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+    <script src="scripts/materialize/js/materialize.min.js"></script>
        
 	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.5.1/jQuery.print.min.js"
+		src="scripts/jQuery.print.min.js"
 	></script>
 	<script src="scripts/seatingchart.js"></script>
 	<script> 
+	/*list of all 'global variable */
+	var $floorPlan = $("div.floorPlan");
+	var $homeTools =$('div.homeToolbar');
+	var $homeToolSide=$('div.homeTool-side')
+	var $editTools = $('div.editToolbar');
+	var $editToolSide = $('div.editTool-side');
+	var $editToolCollapsible = $('div.editTool-side > ul.collapsible');
+	var $sideTools = $('div.sideTools');
+	var $studentList = $('ul.scStudentList');
+	var state = 'home';//home, edit
+	var editState = 'furniture';//posible editState: furniture,student,group,proc,info,station
+	var view = 'student';//possible view: student, group, proc,station,info
+	var oldData;
+	var sortByLastName = false;
 	//page init like resize 
 	/* $(window).resize(function(){
 		console.log('window was resize');
@@ -391,7 +467,7 @@
 			showChartApp();
 		}
 	}); */
-	//populate the section img and title
+	//populate the heading section img and title
 	$('img#sectionProfImg').attr('src',course.section.profile_url );
 	$('span#sectionTitleSpan').text(course.section.course_title +': ' + course.section.section_title);
 	//init tooltip
@@ -400,24 +476,375 @@
 	$('a.dropdown-trigger').dropdown({constrainWidth:true});
 	
 	//populate the students into studentList
-	$(()=> {for(var i=0;  i < students.enrollment.length; i++)
-			{var s = students.enrollment[i];  
-			if(s.admin == 1){continue}
-			var rosPanel = new RosterStudentPanel(); 
-				   rosPanel.setStudent(s); 
-				   $('ul.scStudentList').append('<li class="collection-item">' + rosPanel.getPanel()+'</li>');
-				   }//end for loop
-		//pop roster list
+	$(()=> {
+		//set current routine btn
+		var $curRoutineBtn = $("a#curRoutineBtn > span");
+		$curRoutineBtn.text(window.curChart.title);
+		
+		//pop routine list
 		for(var i =0; i < seatingCharts.list.length; i++){
 			var s = seatingCharts.list[i];
-			var $rosterItem = $('<li class="collection-item roster-item grey-text"></li><li class="divider" tabindex="-1"></li>');
+			var $rosterItem = $('<li class="collection-item routine-item grey-text"></li>');
 			$rosterItem.attr('id',s.id);
 			$rosterItem.text(s.title);
 			$rosterItem.css({textAlign:'center',margin:'0 auto',padding:'2px',verticalAlign:'middle',fontWeight:10})
-			$('ul#routineDropdownList').append($rosterItem);
+			$('ul#routineDropdownList').append($rosterItem).append("<li class='divider' tab-index='-1'></li>");
 		}//end for
+		
+		//add the click fucntion to routine-items
+		$('li.routine-item').click(function(){var $this = $(this);
+		var $curRot =$('a#curRoutineBtn >span');
+		if($this.text() ==$curRot.text() ){console.log('text were the same');return;}
+		else{$curRot.text($this.text());
+		console.log('text were different');
+		//TODO: make ajax call to get routine and 
+		//populate screen and redraw
+		/*This is just a test*/
+		$.get('/dbTest/entity.json')
+		.done( function(data){
+			console.log(data);
+			var newRoutine = data;
+			for(var i = 0; i < newRoutine.length; i++){
+				if($this.attr('id') == newRoutine[i].id){
+					console.log(newRoutine[i]);
+					curChart = newRoutine[i];
+					M.toast({html:'changed seating chart'});
+				}
+			}
+			
+		});
+		}
+			});//end click
+			
+	/*set up click for view-btn :student group proc*/
+	$('a.view-btn').click(function(){
+		$this = $(this);
+		$icon = $this.find('i.view-icon');
+		if($icon.hasClass('amber-text')){
+			//means it is already active
+			return;
+		}
+		//here we can assume view is not active
+		var className ='amber-text text-accent-1'
+		$('i.view-icon').removeClass(className);
+		$icon.addClass(className);
+		$('.side-tool').css('display', 'none');
+		switch($this.attr('id')){
+			case 'student-view-btn':view = 'student';$('div#studentListWrapper').css('display', 'block');break;
+			case 'groups-view-btn':view = 'group';$('div#groupListWrapper').css('display', 'block');break;
+			case 'proc-view-btn':view = 'proc';$('div#procListWrapper').css('display', 'block');break;
+		}
+	});//end click view-btn
+	
+	/*set up click for editLink btn*/
+	$('a#editRoutineLink','ul#settingsList').click(function(){
+		console.log('edit btn click');
+		edit();
+	});
+	
+	/* set up edit toolside collapsible */
+	$editToolCollapsible.collapsible({onOpenEnd:() =>{
+		var $activeItem = $editToolCollapsible.find('li.active');
+		switch( editState){
+			case 'furniture':doneEditFurniture();break;
+			case 'student':doneEditStudent();break;
+			case 'proc':doneEditProc();break;
+			case 'info':doneEditInfo();break;
+			case 'group':doneEditGroup();break;
+		}
+		switch($activeItem.attr('id')){
+			case'furnitureCollapseItem':editFurniture();break;
+			case 'studentCollapseItem':editStudent();break;
+			case 'groupCollapseItem':editGroup();break;
+			case 'procCollapseItem':editProc();break;
+			case 'infoCollapseItem':editInfo();break;
+		}
+	}});
+		drawGrid();
+		home();
 	}//end function
-	);
+	);//end jquery init;
+	
+	/* ui function list */
+	function drawGrid(){
+		console.log('called draw grid');
+		$floorPlan.empty();
+		$studentList.empty();
+		var studentPanelList = [];
+		//put student in alphabetical order
+		if(sortByLastName){
+			students.enrollment.sort(function(a,b){
+				if(a.name_last < b.name_last)return -1;
+				if(a.name_last > b.name_last)return 1;
+				return 0});//end sort
+		}else{
+		students.enrollment.sort(function(a,b){
+			if(a.name_first < b.name_first)return -1;
+			if(a.name_first > b.name_first)return 1;
+			return 0;
+		});//end sort
+		}//end else
+		for(var i = 0; i < students.enrollment.length; i++){
+			if(students.enrollment[i].admin == 1)continue;
+			var sp =  RosterStudentPanel.createPanel(students.enrollment[i]);
+			studentPanelList.push(sp);
+		}///end for ////////
+		//put desks in place
+		if(curChart.furniture.length  > 0){
+			//iterate
+			for(var i = 0; i < curChart.furniture.length; i++ ){
+				//place furniture on floor
+					//check types 
+					//for desks see if student needs to be added
+				if(churChart.furniture[i].type='desk'){
+					var $desk = FurnitureUtils.drawDesk(churChart.furniture[i]);
+					var desk = $desk.data('desk');
+					//if student are assigned then seats are present
+					if(desk.seats.length > 0){
+						for(var j = 0; j < desk.seats.length; j++){
+							var $seat = $furniture.find('pos'+(j+1));
+							$seat.data('seat', desk.seats[j]);
+							if(desk.seats[j].student == null || desk.seats[j].student == ''){
+								continue;
+							}else{
+									//iterate through student to find same id
+									//and then pop from array
+									for(var k = 0; k < studentPanelList.length; k++){
+										if(studentPanelList[k].attr('id') == desk.seats[j].student){
+											$seat.append(studentPanel[k]);
+											studentPanelList = studentPanelList.splice(k, 1);
+											continue;
+										}//end if
+									}//end for
+							}//end else stuent empty
+						}//end for desk seat 
+					}//end if desk seat length
+					//apend desk now
+					$floorPlan.append($desk);
+				}//end if furniture is a desk
+			}//end for furniture
+		}//end if furniture length
+		//all other roster pane go into $studentList
+		for(var i=0;  i < studentPanelList.length; i++){
+				   studentPanelList[i].appendTo('<li class="collection-item"></li>')
+				   .closest('li').appendTo($studentList);
+				   }//end for loop
+		
+	}//end drawGrid///////
+	function edit(){
+		console.log('edit called');
+		doneHome();
+		state = 'edit';
+		editState = 'furniture';
+		$editTools.show();
+		$editToolSide.show();
+		if($studentList.find('li').length > 0){
+			console.log('clone student list called');
+			var $sListClone = $studentList.clone();
+			$sListClone.addClass('edit');
+			$sListClone.appendTo($('div#studentCollapseBody').empty());
+		}else{
+			$('div#studentCollapseBody').empty().append('<div> No students to view</div>');
+		}
+		oldData = $.extend(true,{},curChart);
+		editFurniture();
+	};
+	function doneEdit(){
+		switchEditState();
+		$editTools.hide();
+		$editToolSide.hide();
+		home();
+	};
+	function submitEdit(){
+		//Ajax call to submit data
+		doneEdit();
+	}
+	
+	function cancelEdit(){
+		//revert back to old data
+		//fix editState
+		curChart = oldData;
+		doneEdit();
+	}
+	
+	function editFurniture(){
+		editState = 'furniture';
+		$('img.furnitureIcon').draggable({zIndex:500,appendTo:'body',
+						cursorAt:[0,0], revert:'invalid', containment:'seatingChart', helper:'clone'});
+		$floorPlan.droppable({accept:'.furnitureIcon', greedy:true,
+								drop:(e,ui)=>{
+									console.log('this is e object');
+									console.log(e);
+									e.stopPropagation();
+									e.preventDefault();
+									var iconId = ui.draggable.attr('id');
+									var top,left;
+									if(mobileCheck()){
+										console.log('its a tablet');
+										left = (e.screenX - $floorPlan.offset().left + document.documentElement.scrollLeft)+'px';
+										top = (e.screenY -$floorPlan.offset().top + document.documentElement.scrollTop)+'px';
+									}else{
+										left = (e.clientX - $floorPlan.offset().left + document.documentElement.scrollLeft)+'px';
+										top = (e.clientY -$floorPlan.offset().top + document.documentElement.scrollTop)+'px';
+										
+									}
+									var dropInfo ={desk:iconId, top:top, left:left};
+									console.log(dropInfo);
+									var $newDesk = FurnitureUtils.newDeskOnDrop(dropInfo);
+									$newDesk.appendTo($floorPlan);
+									makeDragRotateDelete($newDesk);
+								}//end drop func
+								});
+		$('.desk-wrapper', '.floorPlan').each(function(){makeDragRotateDelete($(this))});
+	};//end edit Furniture
+	
+	function doneEditFurniture(){
+		$('.desk-wrapper','.floorPlan').draggable('destroy');
+		$('furnitureIcon','div.editTool-side').draggable('destroy');
+		
+		$floorPlan.droppable('destroy');
+		$('.deskDeleter','.floorPlan').off('click').css('display','none');
+		var $desks = $('.desk', '.floorPlan');
+		$desks.rotatable('destroy');
+		var deskList = [];
+		$desks.each(function(){
+		deskList.push($(this).data('desk'));}		
+		);
+		curChart.furniture = deskList;
+		
+	};
+	
+	function makeDragRotateDelete($desk){
+		var thisDesk = $desk.data('desk');
+		
+		
+		$desk.draggable({containment:'.floorPlan',
+						stop:function(){
+							thisDesk.top = $desk.css('top');
+							thisDesk.left = $desk.css('left');
+						},
+						start:function(){
+							
+							$desk.draggable('option','cursorAt',function(){
+								var cursorAt ={top:0, left:0};
+								if(mobileCheck()){
+								cursorAt.left = $desk.width()/2 -$floorPlant.offset().left + document.documentElement.scrollLeft;
+								cursorAt.top = $desk.height()/2 -$floorPlant.offset().top + document.documentElement.scrollTop;
+								}else{
+									cursorAt.top = Math.floor($desk.height()/2);
+									cursorAt.left = Math.floor($desk.width()/2);
+								}
+								return cursorAt;
+								}//end inner function cursorAt
+								);//end draggable
+						}//end start funciton				
+		});
+		$desk.find('.desk').rotatable({radian:thisDesk.rotate, 
+				stop:function(e, ui){
+					thisDesk.rotate = ui.angle.current;
+				},
+				rotate:function(e,ui){
+					var $counter = $(ui.element).find('div.counter');
+					if($counter !=null && $counter.length > 0){
+						$counter.css("transform", "rotate(" + -ui.angle.current +"rad)");
+					}
+				}
+		});
+		$desk.find('.deskDeleter').click(function(){
+			deleteFurniture( $(this).closest('.desk-wrapper'));
+		}).css('display','block');
+		
+	};//done make rotate drag delete
+	
+	function deleteFurniture($desk){
+		var $rosStu = $desk.find(".rosterStudent");
+		if($rosStu.length > 0){
+			$rosStu.each(function(){
+				$(this).appendTo($studentList).wrap('<li class="collection-item"></li>')
+			});
+		}//end if
+		$desk.removeData('desk');
+		$desk.remove();
+	}
+	
+	function editStudent(){
+		editState = 'student';
+	};
+	function doneEditStudent(){};
+	function editGroup(){
+		editState = 'group';
+		
+	};
+	function doneEditGroup(){};
+	
+	function editProc(){
+		editState = 'proc';
+	};
+	function doneEditProc(){};
+	function home(){
+		state = 'home';
+		view = 'student';
+		if($studentList.children().length < 1){
+			$studentList.append("<div><h5>No student to show</h5></div>")
+		}
+		$('.rosterStudent').click();
+		
+	};
+	
+	function switchEditState(){
+		switch(editState){
+			case 'student':doneEditStudent();
+			case 'group':doneEditGroup();
+			case 'proc':doneEditProc();
+			case 'info':doneEditInfo();
+			default:doneEditFurniture();
+		}
+	}
+	function doneHome(){
+		$homeTools.hide();
+		$homeToolSide.hide();
+		switch(view){
+			case 'group':doneGroupView();break;
+			case 'proc':doneProcView();break;
+			case 'station':doneStationView();break;
+			case 'info':doneInfoView();break;
+			default:doneStudentView();
+		}
+	};
+	function studentView(){};
+	function doneStudentView(){};
+	function groupView(){};
+	function doneGroupView(){};
+	function procView(){};
+	function doneProcView(){};
+	function stationView(){};
+	function doneStationView(){};
+	function infoView(){};
+	function doneInfoView(){};
+	function hwCheck(){};
+	function doneHwCheck(){};
+	
+	//ajax functions - routine
+	function saveRoutine(routine){};
+	function cancelSaveRoutine(){};
+	function deleteRoutine(routineId){};
+	function cancelDeleteRoutine(){};
+	
+	
+	function getRoutine(routineId){};
+	function printRoutine(){};
+	function newRoutine(){};
+	function copyRoutine(){};
+	
+	//ajax functions - groups
+	
+	//ajax functions - procs
+	
+	//TODO:ajax functions - stations
+	
+	 ////ajax functions - attendance
+	 
+	 //ajax functions - assignment
 	</script>
 </body>
 </html>

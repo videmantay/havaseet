@@ -41,18 +41,6 @@ span.sectionTitle {
 	text-shadow: 1px 1px 2px sandybrown;
 }
 
-button.helpBtn {
-	position: relative;
-	margin-left: 2.5% !important;
-	display: none;
-}
-
-button.helpBtn>i {
-	font-weight: bolder;
-	font-size: 2em;
-	text-shadow: 1px 1px 2px sandybrown
-}
-
 /* SeatingChart - Desk style */
 .desk {
 	position: absolute;
@@ -143,26 +131,6 @@ div.toolsPanel {
 	border: 1px dotted Red;
 }
 
-.studentTools {
-	display: none;
-}
-
-.studentTools ul.collection {
-	width: 5.5em;
-	height: 700px;
-}
-
-.studentTools ul.collection li {
-	border-bottom: 1px solid Gray;
-	min-height: 5em;
-	margin-left: auto;
-	margin-right: auto;
-	min-width: 5em;
-}
-
-.furnitureTools {
-	display: none;
-}
 /*  end seating chart style *************************/
 
 /* rosterStudent style ------------------------------*/
@@ -184,7 +152,7 @@ div.rosterStudent>div.studentHead {
 
 div.studentHead>div.counterRotate {
 	height: 3.5em;
-	widht: 3.5em;
+	width: 3.5em;
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -268,10 +236,14 @@ div.rosterStudent>div.studentBody>.counterRotate {
 	background-position: center;
 }
 
+ul.scStudentList.collection.edit{
+	max-height: 350px;
+}
 ul.scStudentList.collection {
 	overflow-y: scroll;
-	height: 600px;
+	max-height: 600px;
 }
+
 
 .scStudentTools {
 		overflow-x: hidden;
