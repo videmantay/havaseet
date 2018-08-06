@@ -4,7 +4,7 @@ body {
 	height: 100%;
 	width: 100%;
 	background-color: WhiteSmoke;
-	position: relative;
+	position: absolute;
 }
 
 /* jquery ui css stuff ----------------- */
@@ -259,15 +259,6 @@ ul.scStudentList.collection {
 		width:100%;
 		}
 
-		.seatingChart {
-		width: 1090px;
-		height: 650px;
-		display: block;
-		position: relative;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 1em;
-		}
 		.stationLayer {
 		height: 700px;
 		background-color:transparent;
@@ -290,11 +281,7 @@ ul.scStudentList.collection {
 		5px DimGray;
 		}
 
-		.seatingChartToolbar {
-		display: none;
-		position: relative;
-		}
-
+		
 		.editTools {
 		display: none;
 		position: relative;

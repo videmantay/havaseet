@@ -37,7 +37,7 @@ style="width: 100%; height: 100%;">
 	this.$rosStudentPanel.find('.first').text(stu.name_first);
 	this.$rosStudentPanel.find('.last').text(stu.name_last);
 	this.$rosStudentPanel.find('img.studentImg').attr('src', stu.picture_url);
-	this.$rosStudentPanel.find('div.rosterStudent').attr('id',stu.uid);
+	this.$rosStudentPanel.attr('id',stu.id);
 	return this.$rosStudentPanel;
  };
 
@@ -77,8 +77,13 @@ function FurnitureUtils(){};
 	  var $furniture;
 	var desk = new Desk();
 	switch(dropInfo.desk){
-		case'singleDeskIcon':desk.kind = 'single'; $furniture = $(FurnitureUtils.singleDeskTemplate);break;
+		case'singleDeskIcon':desk.kind = 'single'; 
+			$furniture = $(FurnitureUtils.singleDeskTemplate);
+			desk.seats.push(new Seat());
+			break;
 		default:$furniture =  $(FurnitureUtils.doubleDeskTemplate);
+		desk.seats.push(new Seat());
+		desk.seats.push(new Seat(2));
 	}
 	desk.top = dropInfo.top;
 	desk.left = dropInfo.left;
@@ -89,6 +94,8 @@ function FurnitureUtils(){};
 /*end furniture utils */
 /*Desk instance*/
 function Desk(){
+	//this id  is solely used on the client*/
+	this.id;
 	this.top = "0px";
 	this.left="0px";
 	this.rotate = 0.0;
@@ -100,8 +107,9 @@ function Desk(){
 	this.seats = [];
 }//end desk
 /*seat instance*/
-function Seat(){
-	this.pos = 1;
+function Seat(posNum){
+	if(posNum == null){ posNum =1}
+	this.pos = posNum;
 	this.student = '';
 }
 

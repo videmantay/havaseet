@@ -234,8 +234,8 @@
 }
 </style>
 </head>
-<body style="position:relative">
-	<div id="dashboard">
+<body>
+	<div id="dashboard" style="height:inherit; width:inherit;position:inherit">
 		<div class="amber" style="overflow:visible;height:2em;">
 			<img id="sectionProfImg" class="left circle responsive-img"
 				src=""
@@ -246,7 +246,7 @@
 			<span class="right white-text" style="font-size:1.5em;font-family:Verdana;
 			text-shadow:1px 1px 2px Black;margin-right:1em;">Havaseet <i class="red-text">Beta</i></span>
 		</div>
-		<main>
+		<main style="height:inherit; position:relative">
 		<div class="homeToolbar amber darken-1">
 			<div class="container row">
 				<div class="col s3 white-text">
@@ -319,20 +319,21 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="l10 col">
-					<div id="floorWrapper">
+			<div class="seatingChart" style="width:100%;height:inherit">
+				
+					<section id="floorWrapper" 
+					style="min-width:996px;max-width:1020px;height:760px;margin:0px 1rem;
+					float:left;position:relative">
 					
 						<div id="procViewLayer" class="floorPlanLayer"></div>
 						<div id="procEditLayer" class="floorPlanLayer"></div>
 						<div id="infoEditLayer" class="floorPlanLayer"></div>
 					
-						<div class="floorPlan" style="width:1050px; height:700px;min-width:996px;max-width:1060px;position:absolute;margin-left:0.25rem">							
+						<div class="floorPlan" style="width:100%; height:100%;min-width:996px;position:absolute;margin-left:0.25rem">							
 					</div>
-					</div>
-				</div>
-				<div class="l2 col">
-					<div class="sideTools" style="margin:auto">
+					</section>
+				
+					<div class="sideTools" style="margin:auto 0.5rem;float:right;position:relative;width:175px">
 					<div class="homeTool-side">
 						<div id="procListWrapper" class="center-align grey-text side-tool" style="display:none">
 							<span class="material-label" 	
@@ -356,7 +357,7 @@
 							</div>
 						</div>
 						</div>
-						<div class="editTool-side" style="display:none">
+						<div class="editTool-side" style="display:none;width:100%">
 							<ul class="collapsible">
 								<li class="editCollapseItem active" id="furnitureCollapseItem"
 									style="cursor: pointer;"
@@ -428,7 +429,7 @@
 							</ul>
 						</div>
 					</div>
-				</div>
+				
 			</div>
 		</div>
 		</main>
@@ -570,24 +571,13 @@
 		console.log('called draw grid');
 		$floorPlan.empty();
 		$studentList.empty();
-		var studentPanelList = [];
-		//put student in alphabetical order
-		if(sortByLastName){
-			students.enrollment.sort(function(a,b){
-				if(a.name_last < b.name_last)return -1;
-				if(a.name_last > b.name_last)return 1;
-				return 0});//end sort
-		}else{
-		students.enrollment.sort(function(a,b){
-			if(a.name_first < b.name_first)return -1;
-			if(a.name_first > b.name_first)return 1;
-			return 0;
-		});//end sort
-		}//end else
+	//new strategy: put all student in studentList and 
+	//li will have their id number as an attr
 		for(var i = 0; i < students.enrollment.length; i++){
 			if(students.enrollment[i].admin == 1)continue;
 			var sp =  RosterStudentPanel.createPanel(students.enrollment[i]);
-			studentPanelList.push(sp);
+			sp.appendTo($studentList)
+			.wrap('<li class="collection-item" data-id="'+ students.enrollment[i].id+ '"></li>');
 		}///end for ////////
 		//put desks in place
 		if(curChart.furniture.length  > 0){
@@ -598,21 +588,22 @@
 					//for desks see if student needs to be added
 				if(churChart.furniture[i].type='desk'){
 					var $desk = FurnitureUtils.drawDesk(churChart.furniture[i]);
-					var desk = $desk.data('desk');
+					var desk = $desk.data('desk') = churChar.furniture[i];
 					//if student are assigned then seats are present
 					if(desk.seats.length > 0){
 						for(var j = 0; j < desk.seats.length; j++){
 							var $seat = $furniture.find('pos'+(j+1));
-							$seat.data('seat', desk.seats[j]);
 							if(desk.seats[j].student == null || desk.seats[j].student == ''){
 								continue;
 							}else{
 									//iterate through student to find same id
-									//and then pop from array
-									for(var k = 0; k < studentPanelList.length; k++){
-										if(studentPanelList[k].attr('id') == desk.seats[j].student){
-											$seat.append(studentPanel[k]);
-											studentPanelList = studentPanelList.splice(k, 1);
+									//and then "hide" from array
+									var $liEls = $studentList.children.not(':hidden');
+									for(var k = 0; k < $liEls.length; k++){
+										$el = $($liEls.get(k));
+										if($el.attr('data-id') == desk.seats[j].student){
+											$el.find('.rosterStudent').appendTo($seat);
+											$el.hide();
 											continue;
 										}//end if
 									}//end for
@@ -624,11 +615,6 @@
 				}//end if furniture is a desk
 			}//end for furniture
 		}//end if furniture length
-		//all other roster pane go into $studentList
-		for(var i=0;  i < studentPanelList.length; i++){
-				   studentPanelList[i].appendTo('<li class="collection-item"></li>')
-				   .closest('li').appendTo($studentList);
-				   }//end for loop
 		
 	}//end drawGrid///////
 	function edit(){
@@ -643,6 +629,7 @@
 			var $sListClone = $studentList.clone();
 			$sListClone.addClass('edit');
 			$sListClone.appendTo($('div#studentCollapseBody').empty());
+			$sListClone.attr('id', 'studentEditList');
 		}else{
 			$('div#studentCollapseBody').empty().append('<div> No students to view</div>');
 		}
@@ -692,6 +679,7 @@
 									console.log(dropInfo);
 									var $newDesk = FurnitureUtils.newDeskOnDrop(dropInfo);
 									$newDesk.appendTo($floorPlan);
+									$newDesk.uniqueId().data('desk').id = $newDesk.attr('id');
 									makeDragRotateDelete($newDesk);
 								}//end drop func
 								});
@@ -699,13 +687,12 @@
 	};//end edit Furniture
 	
 	function doneEditFurniture(){
-		$('.desk-wrapper','.floorPlan').draggable('destroy');
+		var $desks = $('.desk-wrapper','.floorPlan').draggable('destroy');
 		$('furnitureIcon','div.editTool-side').draggable('destroy');
 		
 		$floorPlan.droppable('destroy');
 		$('.deskDeleter','.floorPlan').off('click').css('display','none');
-		var $desks = $('.desk', '.floorPlan');
-		$desks.rotatable('destroy');
+		 $('.desk', '.floorPlan').rotatable('destroy');
 		var deskList = [];
 		$desks.each(function(){
 		deskList.push($(this).data('desk'));}		
@@ -715,13 +702,12 @@
 	};
 	
 	function makeDragRotateDelete($desk){
-		var thisDesk = $desk.data('desk');
-		
-		
+		console.log('makeDragRotateDelete starting object: ');
+		console.log($desk);
 		$desk.draggable({containment:'.floorPlan',
 						stop:function(){
-							thisDesk.top = $desk.css('top');
-							thisDesk.left = $desk.css('left');
+							$desk.data('desk').top = $desk.css('top');
+							$desk.data('desk').left = $desk.css('left');
 						},
 						start:function(){
 							
@@ -739,12 +725,13 @@
 								);//end draggable
 						}//end start funciton				
 		});
-		$desk.find('.desk').rotatable({radian:thisDesk.rotate, 
+		$desk.find('.desk').rotatable({angle:$desk.data('desk').rotate, 
 				stop:function(e, ui){
-					thisDesk.rotate = ui.angle.current;
+					$desk.data('desk').rotate = ui.angle.current;
 				},
 				rotate:function(e,ui){
-					var $counter = $(ui.element).find('div.counter');
+					var $ui = $(ui.element);
+					var $counter = $ui.find('div.counterRotate');
 					if($counter !=null && $counter.length > 0){
 						$counter.css("transform", "rotate(" + -ui.angle.current +"rad)");
 					}
@@ -760,17 +747,125 @@
 		var $rosStu = $desk.find(".rosterStudent");
 		if($rosStu.length > 0){
 			$rosStu.each(function(){
-				$(this).appendTo($studentList).wrap('<li class="collection-item"></li>')
+				var $this = $(this);
+				$this.appendTo('li[data-id="'+$this.attr('id')+'"]').parent().show();
+				$this.find('.counterRotate').css("transform", "rotate(0.0rad)");
+				$this.delay(300);
 			});
 		}//end if
+		for(var i = 0 ; i < curChart.furniture.length; i++){
+			if(curChart.furniture[i].id == $desk.data('desk').id){
+				curChart.furniture.splice(i,1);
+				break;
+			}
+		}
 		$desk.removeData('desk');
 		$desk.remove();
 	}
 	
 	function editStudent(){
 		editState = 'student';
+		$('.rosterStudent').draggable({containment:'.seatingChart',
+					helper:'clone', appendTo:'body', 
+					start:function(){
+						$(this).css('opacity', '0.3');
+					},
+					stop:function(e, ui){
+						$(e.target).css('opacity','1');
+					},
+					drag:function(e, ui){
+						$(ui.helper).find('.counterRotate').css('transform','rotate(0.0rad)');
+					}
+					});
+		$('td >div.seat', '.floorPlan').droppable({accept:'.rosterStudent',greedy:true,hoverClass:'seat-over',
+				drop:function(e,ui){
+					console.log('on drop called');
+					var $dropSeat = $(e.target);
+					var $draggable =  $(ui.draggable);
+					var $dragParent = $draggable.parent();
+					console.log('drag parent is: ');
+					console.log($dragParent);
+					var $rosStudent = $dropSeat.find('.rosterStudent');
+					
+					//if seat occuupied by $rosStudent  move it first
+					if($rosStudent != null && $rosStudent.length > 0){
+						//first check to see if drag parent is comming from side
+						if($dragParent.is('li')){
+							$rosStudent.animate({left:'+=7em', opacity:0},500,'swing',
+									function(){
+								var $appendToMe = $('li[data-id = "'+ $rosStudent.attr('id')  +'"]');
+								console.log('appendToMe is: ');
+								console.log($appendToMe)
+								$appendToMe.css('display','block');
+								$rosStudent.appendTo($appendToMe);
+								$rosStudent.css({opacity:'1', position:'relative', left:'0px'})
+									.find('.counterRotate').css({transform:'rotate(0.0rad)'});
+							});
+						}//end if
+						//next check to see if drag student is coming from a seat then swap
+						if($dragParent.hasClass('seat')){
+							var $pWrapper = $dropSeat.closest('div.desk-wrapper');
+							var $cloneWrapper = $('<div id="clone"></div>');
+							$cloneWrapper.css({overFlow:'visible', width:'4em', height:'8em',
+								position:'absolute', left:$pWrapper.css('left'), top:$pWrapper.css('top')})
+								.appendTo('.floorPlan');
+							$rosStudent.appendTo($cloneWrapper);
+							$rosStudent.find('.counterRotate').css('transform', 'rotate(0.0rad)');
+							$cloneWrapper.animate({left:'+=' +($dragParent.offset().left - $pWrapper.offset().left), 
+													top:'+=' + ($dragParent.offset().top - $pWrapper.offset().top)},
+													350, 'swing',
+													function(){
+														$rosStudent.appendTo($dragParent);
+														$cloneWrapper.remove();
+														var stuDesk = $dragParent.closest('div.desk-wrapper').data('desk');
+														
+															if($dragParent.hasClass('pos1')){
+																stuDesk.seat[0].student = $rosStudent.attr('id');
+															}//end if
+															else{
+																stuDesk.seat[1].student = $rosStudent.attr('id');
+															}//end else
+																$rosStudent.find('.counterRotate').css('transform',
+																		'rotate('+ (-stuDesk.rotate)+'rad)');
+													});//end animate
+							
+						}//end if swapping
+					}//end check to see if seat is occupied
+					//now place the drop student in the target seat
+					$draggable.appendTo($dropSeat);
+					if($dragParent.children().length <1 && $dragParent.is('li')){
+						$dragParent.hide();
+					}
+					var stuDesk =$dropSeat.closest('div.desk-wrapper').data('desk');
+					if($dropSeat.hasClass('pos1')){
+						stuDesk.seats[0].student = $draggable.attr('id');
+					}else{
+						stuDesk.seats[1].student = $draggable.attr('id');
+					}
+					$draggable.find('.counterRotate').css('transform',
+							'rotate('+ (-stuDesk.rotate)+'rad)');
+				}
+				});//end droppable
+		
+	};// end edit student
+	function doneEditStudent(){
+		$('.rosterStudent').draggable('destroy');
+		$('td >div.seat', '.floorPlan').droppable('destroy');
 	};
-	function doneEditStudent(){};
+	function sortStudentList(a,b){
+		console.log('sort stuent list called')
+		/*a and b are list items find student */
+		if(sortByLastName){
+				if($(a).find('.last').text() < $(b).find('.last').text())return -1;
+				if($(a).find('.last').text() > $(b).find('.last').text())return 1;
+				return 0;
+		}else{
+			if($(a).find('.first').text() < $(b).find('.first').text())return -1;
+			if($(a).find('.first').text() > $(b).find('.first').text())return 1;
+			return 0;
+		}
+	}
+	
 	function editGroup(){
 		editState = 'group';
 		
