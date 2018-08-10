@@ -41,9 +41,145 @@ style="width: 100%; height: 100%;">
 	return this.$rosStudentPanel;
  };
 
-/*
-end roster student panel
-*/
+ /*end roster student panel */
+
+ /*Group Panel */
+ function StudentGroupPanel(){};
+ StudentGroupPanel.template =`
+ <div class="card group">
+	 <div class="card-title">
+	 <div class="row">
+			 
+ 					<img class="groupIcon" style="position:relative; left:5px"/>
+					 <i class="badge white-text" 
+					 style="position:absolute; right:-5px; top:-5px; font-size:0.5em;border-radius:100%; padding:0.15rem 0.45rem"></i>
+			 </div><!--end row -->
+			 <div class="groupTitle truncate white-text" style="margin-bottom:5px"></div>
+	 </div><!-- end card title -->
+	 <div class="card-content white" style="margin:2px">
+			 <label class="groupDescript" />
+			 <br/><label class="groupCriteria"/>
+			 <tabel class="groupMemeber">
+				 <tbody class="groupMemeberContent"></tbody>
+				 </tbody>
+			 </tabel>
+	 </div>
+ </div>
+ `;
+
+ StudentGroupPanel.create= function(group){
+	this.$group = $(StudentGroupPanel.template);
+	//set the card id to gid
+	this.$group.attr('id', group.gid);
+	//set card color
+	this.$group.addClass(group.color);
+	//find the img tag and set the src if exist
+	if(group.icon != null && group.icon != ''){
+		this.$group.find('img').attr('src', group.icon);
+	}else{
+		this.$group.find('img').hide();
+	}
+
+	this.$group.find('.groupTitle').text(group.title);
+	this.$group.find('.badge').addClass(group.color + " darken-3");
+	this.$group.find('.badge').text(group.members.length);
+	if(group.criteria != null && group.criteria != ''){
+		this.$group.find('label.groupCriteria').text(group.criteria);
+	}else{
+		this.$group.find('label.groupCriteria').hide();
+	}
+
+	if(group.description != null && group.description != ''){
+		this.$group.find('label.groupDescript').text(group.description);
+	}else{
+		this.$group.find('label.groupDescript').hide();
+	}
+
+	if(group.members.length > 0){
+		for(var i = 0; i < group.members.length; i++){
+			var $member = MemberItem.create(group.members[i]);
+			$member.appendTo(this.$group.find('tbody.groupMemberContent'));
+		}
+	}
+	
+	return this.$group;
+ };
+/*--- End Group Panel --- */
+/* Member Tabel Item */
+ function MemberItem(){};
+MemberItem.template = `<tr>
+			 <td>
+			 <div class="row group-mem" data-member=''>
+				 <div class="col xs2"><img class="group-mem-pic"/></div>
+				 <div class="col xs10">
+				 <label class="first trancate"></label>
+				 <label class="last truncate"></label>
+				 </div>
+				 </div>
+			 </td>
+			 <td>
+			 <div class="group-role"></div>
+			 </td>
+				</tr>`;
+MemberItem.create = function(member){
+	//checkt to see if membership is valid
+	//ie that student is still enrolled
+var match = false;
+var student;
+for(var i = 0 ; i < students.enrollment.length; i++){
+if(students.enrollment[i].id == member.id){
+	match = true;
+	student = students.enrollment[i];
+	break;
+}//end if
+}//end for
+if(match){
+this.$member = $(MemberItem.template);
+this.$member.find('div.group-mem').attr('data-member', member.gid);
+
+for(var i = 0; i < member.role.length; i++){
+  var $roleItem = RoleItem.create(member.role[i]);
+  $roleItem.appendTo(this.$member.find('div.group-role'));
+}//end for role
+
+this.$member.find('img').attr('src', student.picture_url);
+this.$member.find('label.first').text(student.name_first);
+this.$member.find('label.last').text(student.name_last);
+
+return this.$member;
+
+}//end if match
+else{
+	//TODO:add notification mechanism listing unenrolled students
+	return;
+}
+
+}
+/*end memeber table tiem*/
+/* Role item*/
+function RoleItem(){};
+RoleItem.template = `<div class="row">
+<div class="col xs2"><img class="role-icon"/></div>
+<div class="col xs10"><label class="role-name"/></div>
+</div>`;
+
+RoleItem.create= function(role){
+	console.log("RoleItem.create:  here is the object");
+	console.log(role);
+	this.$roleItem = $(RoleItem.template);
+	//set pic if there is one
+	if(role.icon != null && role.icon !=''){
+		this.$roleItem.find('img').attr("src",role.icon);
+	}else{
+		this.$roleItem.find('img').hide();
+	}///end else
+	this.$roleItem.find('label.role-name').css('color',role.color).text(role.title);
+	//TODO: do something with role description
+	console.log("RoleItem.create: return this object");
+	console.log(this.$roleItem);
+	return this.$roleItem;
+};
+/*end role item*/
 /*FurniturePanel - used to create desk and other furniture */
 function FurnitureUtils(){};
 	FurnitureUtils.singleDeskTemplate = `<div class="desk-wrapper">

@@ -193,7 +193,8 @@
 			{"title":'Math Lab', "id":9002568548769792},
 			{"title":'Reading Place', "id":2222568548769792},
 			{"title":'Investigation', "id":708968548769792}
-		]
+		],
+		"availableRoles":[]
 	};
 	var curChart = {
 		"title":"Your seat",
@@ -201,6 +202,23 @@
 		"uid" : "20013688",
 		"sectionId" : "675750671",
 		"furniture" : [],
+		"groups":[
+			{"gid": "79872987","title": "First Group", "description": "Created group for play",
+			"icon":"", "color":"blue", "criteria": "", 
+			"members":
+				[
+					{"id":"1453234329","role":[ {"title":"Admin", "icon":"", "color":"red", "description":""}] }
+				]},
+				{"gid": "81172987","title": "Second Group", "description": "Created group for play",
+					"icon":"", "color":"green", "criteria": "", 
+					"members":
+						[
+							{"id":"1453234329","role":[ {"title":"Admin", "icon":"", "color":"red", "description":""}] },
+							{"id":"1453234329","role":[ {"title":"Secretary", "icon":"", "color":"red", "description":""}] },
+							{"id":"1453234329","role":[] },
+							{"id":"1453234329","role":[] }
+						]}
+		],
 		"isDefault" : false,
 		"readOnly" : false,
 		"shared" : false,
@@ -239,7 +257,7 @@
 		<div class="amber" style="overflow:visible;height:2em;">
 			<img id="sectionProfImg" class="left circle responsive-img"
 				src=""
-				style="position:relative;width: 2.8em; margin-left: 20px; height: 4em; width:4em;top:0.25em"
+				style="position:relative;width: 2.8em; margin-left: 20px; height: 4em; width:4em;top:0.25em;z-index:10"
 			><span id="sectionTitleSpan" class="white-text material-label"
 				style="position:relative;font-size: 1.5em; font-weight: bold;text-shadow:1px 1px 1px grey;left:30%"
 			></span>
@@ -322,7 +340,7 @@
 			<div class="seatingChart" style="width:100%;height:inherit">
 				
 					<section id="floorWrapper" 
-					style="min-width:996px;max-width:1020px;height:760px;margin:0px 1rem;
+					style="min-width:996px;max-width:1000px;height:750px;margin:0px 1rem;
 					float:left;position:relative">
 					
 						<div id="procViewLayer" class="floorPlanLayer"></div>
@@ -333,7 +351,7 @@
 					</div>
 					</section>
 				
-					<div class="sideTools" style="margin:auto 0.5rem;float:right;position:relative;width:175px">
+					<div class="sideTools" style="margin:0% 0.25rem;float:right;position:relative;width:175px">
 					<div class="homeTool-side">
 						<div id="procListWrapper" class="center-align grey-text side-tool" style="display:none">
 							<span class="material-label" 	
@@ -454,6 +472,7 @@
 	var $editToolCollapsible = $('div.editTool-side > ul.collapsible');
 	var $sideTools = $('div.sideTools');
 	var $studentList = $('ul.scStudentList');
+	var $groupList = $('ul.groupList');
 	var state = 'home';//home, edit
 	var editState = 'furniture';//posible editState: furniture,student,group,proc,info,station
 	var view = 'student';//possible view: student, group, proc,station,info
@@ -476,6 +495,7 @@
 	//init dropdown
 	$('a.dropdown-trigger').dropdown({constrainWidth:true});
 	
+	/* ------Here is the onload method so start all coding here except for inits ---*/
 	//populate the students into studentList
 	$(()=> {
 		//set current routine btn
@@ -562,6 +582,7 @@
 		}
 	}});
 		drawGrid();
+		updateGroupPanels();
 		home();
 	}//end function
 	);//end jquery init;
@@ -704,30 +725,23 @@
 	function makeDragRotateDelete($desk){
 		console.log('makeDragRotateDelete starting object: ');
 		console.log($desk);
-		$desk.draggable({containment:'.floorPlan',
+		$desk.draggable({containment:'.floorPlan',scroll:true,
 						stop:function(){
-							$desk.data('desk').top = $desk.css('top');
-							$desk.data('desk').left = $desk.css('left');
+							$this = $(this);
+							$this.data('desk').top = $desk.css('top');
+							$this.data('desk').left = $desk.css('left');
 						},
-						start:function(){
-							
-							$desk.draggable('option','cursorAt',function(){
-								var cursorAt ={top:0, left:0};
-								if(mobileCheck()){
-								cursorAt.left = $desk.width()/2 -$floorPlant.offset().left + document.documentElement.scrollLeft;
-								cursorAt.top = $desk.height()/2 -$floorPlant.offset().top + document.documentElement.scrollTop;
-								}else{
-									cursorAt.top = Math.floor($desk.height()/2);
-									cursorAt.left = Math.floor($desk.width()/2);
-								}
-								return cursorAt;
-								}//end inner function cursorAt
-								);//end draggable
+						start:function(e , ui){
+							$this = $(this);
+							console.log('start drag this =');
+							console.log($this);
+							$this.draggable('option','cursorAt',{left:Math.floor($this.width()/2), top:Math.floor($this.height()/2)});//end draggable
 						}//end start funciton				
 		});
 		$desk.find('.desk').rotatable({angle:$desk.data('desk').rotate, 
 				stop:function(e, ui){
-					$desk.data('desk').rotate = ui.angle.current;
+					$this = $(this);
+					$this.data('desk').rotate = ui.angle.current;
 				},
 				rotate:function(e,ui){
 					var $ui = $(ui.element);
@@ -906,6 +920,22 @@
 			default:doneStudentView();
 		}
 	};
+	
+	/*Group Function -- Start Here ------ */
+	function updateGroupPanels(){
+		console.log('update group Panels called');
+		if(curChart.groups.length > 0){
+			for(var i = 0; i < curChart.groups.length; i++){
+				var $group = StudentGroupPanel.create(curChart.groups[i]);
+				//append to groupList
+				$group.appendTo($groupList).wrap('<li class="collection-item"></li>');
+			}
+		}else{
+			
+		}
+	}
+	
+	/* -- Group Functions End Here -----*/
 	function studentView(){};
 	function doneStudentView(){};
 	function groupView(){};
