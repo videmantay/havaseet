@@ -180,6 +180,31 @@ RoleItem.create= function(role){
 	return this.$roleItem;
 };
 /*end role item*/
+/*Procedure Panel -----*/
+function ProcedurePanel(){};
+ProcedurePanel.template = `<div class="card">
+<div class="card-action">
+	<label class="left check"> 
+		<input type="checkbox" css="display:none"/>
+	</label>
+	<label class="order" style="position:absolute;right:5px"/>
+</div>
+<div class="card-content"></div>
+</div>`;
+
+ProcedurePanel.create = function(procedure){
+	console.log("ProcedurePanel recieve as Param: ");
+	console.log(procedure);
+	this.$procPanel = $(ProcedurePanel.template);
+	this.$procPanel.find('label.order').text(procedure.order);
+	this.$procPanel.find('div.card-content').html(procedure.direction);
+	console.log("returning object: ");
+	console.log(this.$procPanel);
+	return this.$procPanel;
+
+};
+
+/*ProcedurePanel End-----*/
 /*FurniturePanel - used to create desk and other furniture */
 function FurnitureUtils(){};
 	FurnitureUtils.singleDeskTemplate = `<div class="desk-wrapper">

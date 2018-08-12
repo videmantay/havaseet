@@ -8,6 +8,7 @@ import com.googlecode.objectify.annotation.Index;
 import com.googlecode.objectify.annotation.Serialize;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 @Entity
 public class SeatingChart implements Serializable {
@@ -20,6 +21,10 @@ public class SeatingChart implements Serializable {
 	public String sectionId;
 	@Serialize
 	public ArrayList<Furniture> furniture = new ArrayList<>();
+	@Serialize
+	public ArrayList<Procedure>procedures = new ArrayList<>();
+	@Serialize
+	public HashSet<StudentGroup> groups = new HashSet<>();
 	@Serialize
 	public RotationManager rotationManager;
 	public boolean isDefault;
