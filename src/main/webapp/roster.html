@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>
+<script type="text/javascript">
 	//user info
 	var teacher = {
 		"uid" : "20013688",
@@ -201,7 +201,7 @@
 		"id" : 5732568548769792,
 		"uid" : "20013688",
 		"sectionId" : "675750671",
-		"furniture" : [],
+		"furniture":[{"top":"631px","left":"862.5px","rotate":-3.127534947865014,"transform":"","kind":"double","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":"1767944793"},{"pos":2,"student":""}],"id":"ui-id-1"},{"top":"654px","left":"271.5px","rotate":-3.7251875077097303,"transform":"","kind":"double","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":""},{"pos":2,"student":""}],"id":"ui-id-1"},{"top":"656.5px","left":"461.25px","rotate":-4.703965429592607,"transform":"","kind":"double","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":""},{"pos":2,"student":""}],"id":"ui-id-2"},{"top":"217px","left":"888.75px","rotate":-1.5845282757744439,"transform":"","kind":"double","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":""},{"pos":2,"student":"1585433778"}],"id":"ui-id-3"},{"top":"128.938px","left":"397.438px","rotate":0,"transform":"","kind":"double","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":""},{"pos":2,"student":"1585434038"}],"id":"ui-id-4"},{"top":"6px","left":"6.75px","rotate":0,"transform":"","kind":"single","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":""}],"id":"ui-id-1"},{"top":"18px","left":"906.75px","rotate":0,"transform":"","kind":"single","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":""}],"id":"ui-id-2"},{"top":"672px","left":"21.75px","rotate":0,"transform":"","kind":"single","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":""}],"id":"ui-id-3"}],
 		"groups":[
 			{"gid": "79872987","title": "First Group", "description": "Created group for play",
 			"icon":"", "color":"blue", "criteria": "", 
@@ -237,14 +237,15 @@
 	/*checks to see if acct is up to date*/
 	
 </script>
- <!--Import Google Icon Font-->
-      <link href="css/material-icons.css" rel="stylesheet">
- <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="scripts/materialize/css/materialize.min.css">
-
+<!--Import Google Icon Font-->
+<link href="css/material-icons.css" rel="stylesheet">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="scripts/materialize/css/materialize.min.css"
+>
 <link rel="stylesheet" href="css/app.css" />
 <title>Havaseet</title>
-<style>
+<style type="text/css">
 #loader {
 	position: fixed;
 	left: 0px;
@@ -259,221 +260,237 @@
 </style>
 </head>
 <body>
-	<div id="dashboard" style="height:inherit; width:inherit;position:inherit">
-		<div class="amber" style="overflow:visible;height:2em;">
-			<img id="sectionProfImg" class="left circle responsive-img"
-				src=""
-				style="position:relative;width: 2.8em; margin-left: 20px; height: 4em; width:4em;top:0.25em;z-index:10"
+	<div id="dashboard"
+		style="height: inherit; width: inherit; position: inherit"
+	>
+		<div class="amber" style="overflow: visible; height: 2em;">
+			<img id="sectionProfImg" class="left circle responsive-img" src=""
+				style="position: relative; width: 2.8em; margin-left: 20px; height: 4em; width: 4em; top: 0.25em; z-index: 10"
+				alt=""
 			><span id="sectionTitleSpan" class="white-text material-label"
-				style="position:relative;font-size: 1.5em; font-weight: bold;text-shadow:1px 1px 1px grey;left:30%"
-			></span>
-			<span class="right white-text" style="font-size:1.5em;font-family:Verdana;
-			text-shadow:1px 1px 2px Black;margin-right:1em;">Havaseet <i class="red-text">Beta</i></span>
+				style="position: relative; font-size: 1.5em; font-weight: bold; text-shadow: 1px 1px 1px grey; left: 30%"
+			></span> <span class="right white-text"
+				style="font-size: 1.5em; font-family: Verdana; text-shadow: 1px 1px 2px Black; margin-right: 1em;"
+			>Havaseet <i class="red-text">Beta</i></span>
 		</div>
 		<main style="height:inherit; position:relative">
 		<div class="homeToolbar amber darken-1">
 			<div class="container row">
 				<div class="col s3 white-text">
-					<span>Check: </span>&nbsp;
-					<a class="btn-flat tooltiped waves-effect waves-light white-text"
-					data-tooltip="homework" style="display:inline">
-						<i id="hwIcon" class="material-icons">assignment</i>
+					<span>Check: </span>&nbsp; <a
+						class="btn-flat tooltiped waves-effect waves-light white-text"
+						data-tooltip="homework" style="display: inline"
+					> <i id="hwIcon" class="material-icons">assignment</i>
 					</a>
 				</div>
 				<div class="col s5">
-					<a class="btn dropdown-trigger amber lighten-1 white-text left" 
-				data-target="routineDropdownList"
-				style="height:2.45em; overflow:hidden;width:100%;position:relative;margin-top:3px"
-				id="curRoutineBtn"><span style="position:relative;vertical-align:top;text-align:center;width:100%"></span>&nbsp;
-				<i class="material-icons">arrow_drop_down</i></a>
-				
+					<a class="btn dropdown-trigger amber lighten-1 white-text left"
+						data-target="routineDropdownList"
+						style="height: 2.45em; overflow: hidden; width: 100%; position: relative; margin-top: 3px"
+						id="curRoutineBtn"
+					><span
+						style="position: relative; vertical-align: top; text-align: center; width: 100%"
+					></span>&nbsp; <i class="material-icons">arrow_drop_down</i></a>
 					<ul id="routineDropdownList" class="dropdown-content"></ul>
 				</div>
 				<div class="col s4 white-text">
-						<span>View:</span>&nbsp;
-					<a class="btn-flat tooltiped waves-effect waves-light white-text view-btn"
-					data-tooltip="students" id="student-view-btn">
-						<i class="material-icons amber-text text-accent-1 view-icon">school</i>
+					<span>View:</span>&nbsp; <a
+						class="btn-flat tooltiped waves-effect waves-light white-text view-btn"
+						data-tooltip="students" id="student-view-btn"
+					> <i class="material-icons amber-text text-accent-1 view-icon">school</i>
+					</a> <a
+						class="btn-flat tooltiped waves-effect waves-light white-text view-btn"
+						data-tooltip="groups" id="groups-view-btn"
+					> <i class="material-icons view-icon">group</i>
+					</a> <a
+						class="btn-flat tooltiped waves-effect waves-light white-text view-btn"
+						data-tooltip="procedures" id="proc-view-btn"
+					> <i class="material-icons view-icon">list</i>
+					</a> <a
+						class="btn-floating btn-small tooltiped dropdown-trigger waves-effect waves-light amber lighten-1 white-text right"
+						data-tooltip="settings" data-target="settingsList"
+					> <i class="material-icons">settings</i>
 					</a>
-			
-					<a class="btn-flat tooltiped waves-effect waves-light white-text view-btn"
-					data-tooltip="groups" id="groups-view-btn">
-						<i class="material-icons view-icon">group</i>
-					</a>
-				
-					<a class="btn-flat tooltiped waves-effect waves-light white-text view-btn"
-					data-tooltip="procedures" id="proc-view-btn">
-						<i class="material-icons view-icon">list</i>
-					</a>		
-				
-					<a class="btn-floating btn-small tooltiped dropdown-trigger waves-effect waves-light amber lighten-1 white-text right"
-					data-tooltip="settings" data-target="settingsList">
-						<i class="material-icons">settings</i>
-					</a>
-				</div>	
-		</div><!-- end container row -->
+				</div>
+			</div>
+			<!-- end container row -->
 			<ul class="dropdown-content" id="settingsList">
-				<li><a style="margin:0 auto; text-align:center" id="editRoutineLink" class="amber-text"><i class="material-icons right">edit</i>Edit</a></li>
+				<li><a style="margin: 0 auto; text-align: center"
+					id="editRoutineLink" class="amber-text"
+				><i class="material-icons right">edit</i>Edit</a></li>
 				<li class="divider" tab-index="-1"></li>
-				<li><a style="margin:0 auto; text-align:center" id="deleteRoutineLink" class="amber-text"><i  class="material-icons right">delete</i>Delete</a></li>
+				<li><a style="margin: 0 auto; text-align: center"
+					id="deleteRoutineLink" class="amber-text"
+				><i class="material-icons right">delete</i>Delete</a></li>
 				<li class="divider" tab-index="-1"></li>
-				<li><a style="margin:0 auto; text-align:center" id="newRoutineLink" class="amber-text"><i class="material-icons right">event_seat</i>New</a></li>
+				<li><a style="margin: 0 auto; text-align: center"
+					id="newRoutineLink" class="amber-text"
+				><i class="material-icons right">event_seat</i>New</a></li>
 				<li class="divider" tab-index="-1"></li>
-				<li><a style="margin:0 auto; text-align:center" id="printRoutineLink" class="amber-text"><i class="material-icons right">print</i>Print</a></li>
+				<li><a style="margin: 0 auto; text-align: center"
+					id="printRoutineLink" class="amber-text"
+				><i class="material-icons right">print</i>Print</a></li>
 				<li class="divider" tab-index="-1"></li>
-				
 			</ul>
-		</div><!-- end homeToolbar -->
+		</div>
+		<!-- end homeToolbar -->
 		<div>
-			<div class="editToolbar red lighten-1 row" style="display:none; padding:0 25%">
+			<div class="editToolbar red lighten-1 row"
+				style="display: none; padding: 0 25%"
+			>
 				<div class="col">
 					<a class="btn amber darken-1" style="cursor: pointer;"><i
 						class="left material-icons" style="cursor: pointer;"
 					>delete</i><span>Clear All</span></a>
 				</div>
 				<div class="col">
-						<a class="btn deep-orange darken-1" style="cursor: pointer;"><i
-							class="left material-icons" style="cursor: pointer;"
-						>close</i><span>CANCEL</span></a>
+					<a class="btn deep-orange darken-1" style="cursor: pointer;"><i
+						class="left material-icons" style="cursor: pointer;"
+					>close</i><span>CANCEL</span></a>
 				</div>
 				<div class="col">
-						<a class="btn green lighten-1" style="cursor: pointer;"><i
-							class="left material-icons" style="cursor: pointer;"
-						>done</i><span>SAVE</span></a>
-					</div>
+					<a class="btn green lighten-1" style="cursor: pointer;"><i
+						class="left material-icons" style="cursor: pointer;"
+					>done</i><span>SAVE</span></a>
 				</div>
 			</div>
-			<div class="seatingChart" style="width:100%;height:inherit">
-				
-					<section id="floorWrapper" 
-					style="min-width:996px;max-width:1000px;height:750px;margin:0px;margin-left:1rem;
-					float:left;position:relative">
-						<div id="procViewLayer" class="floorPlanLayer" style="background-color:rgba()">
-							<div class="carousel"></div>
-							<div class="row timer-panel">
-							
-							</div>
-						</div>
-						<div id="procEditLayer" class="floorPlanLayer"></div>
-						<div id="groupEditLayer" class="floorPlanLayer"></div>
-						<div id="infoEditLayer" class="floorPlanLayer"></div>
-					
-						<div class="floorPlan" style="width:100%; height:100%;min-width:996px;position:absolute;margin-left:0.25rem">							
+		</div>
+		<div class="seatingChart" style="min-width:1195px; width:100%;height:inherit;position:absolute">
+			<section id="floorWrapper"
+				style="min-width: 996px; max-width: 1000px; height: 750px; margin: 0px; margin-left: 1rem; float: left; position: absolute"
+			>
+				<div id="procViewLayer" class="floorPlanLayer"
+					style="background-color: rgba(); display: none"
+				>
+					<div class="carousel"></div>
+					<div class="row timer-panel"></div>
+				</div>
+				<div id="procEditLayer" class="floorPlanLayer"></div>
+				<div id="groupEditLayer" class="floorPlanLayer"></div>
+				<div id="infoEditLayer" class="floorPlanLayer"></div>
+				<div class="floorPlan"
+					style="width: 100%; height: 100%; min-width: 996px; position: absolute; margin-left: 0.25rem"
+				></div>
+			</section>
+			<div class="sideTools"
+				style="margin: 0%; margin-right: 1rem; float: right; position: relative; width: 175px"
+			>
+				<div class="homeTool-side">
+					<div id="procListWrapper" class="center-align grey-text side-tool"
+						style="display: none"
+					>
+						<span class="material-label"
+							style="font-size: 1.5em; font-weight: bold; margin-left: auto; margin-right: auto"
+						>Procedures</span>
+						<ul class="procList collection"></ul>
 					</div>
-					</section>
-				
-					<div class="sideTools" style="margin:0%;margin-right:1rem;float:right;position:relative;width:175px">
-					<div class="homeTool-side">
-						<div id="procListWrapper" class="center-align grey-text side-tool" style="display:none">
-							<span class="material-label" 	
-							style="font-size: 1.5em; font-weight: bold; margin-left:auto;margin-right:auto"
-							>Procedures</span>
-							<ul class="procList collection"></ul>
-						</div>
-						<div id="groupListWrapper" class="center-align grey-text side-tool" style="display:none">
-							<span class="material-label" 	
-							style="font-size: 1.5em; font-weight: bold; margin-left:auto;margin-right:auto"
-							>Groups</span>
-							<ul class="groupList collection"></ul>
-						</div>
-						<div id="studentListWrapper" class="center-align grey-text side-tool" style="margin:auto">
-							<span class="material-label"
-								style="font-size: 1.5em; font-weight: bold; margin-left:auto;margin-right:auto"
-							>Students</span>
-							<div >
-								<ul class="scStudentList collection" 
-								style="width:8em; margin:auto;overflow-y:scroll"></ul>
-							</div>
-						</div>
-						</div>
-						<div class="editTool-side" style="display:none;width:100%">
-							<ul class="collapsible">
-								<li class="editCollapseItem active" id="furnitureCollapseItem"
-									style="cursor: pointer;"
-								><div class="collapsible-header">
-										<a style="cursor: pointer;"><i class="left material-icons"
-											style="cursor: pointer;"
-										>event_seat</i></a>
-									</div>
-									<div class="collapsible-body" style="display: block;">
-										<ul class="collection">
-											<li class="collection-item"><img
-												class="furnitureIcon responsive-img" id="doubleDeskIcon"
-												src="../img/doubleDesk.png"
-											></li>
-											<li class="collection-item"><img
-												class="furnitureIcon responsive-img" id="singleDeskIcon"
-												src="../img/singleDesk.png"
-											></li>
-										</ul>
-									</div></li>
-								<li class="editCollapseItem" id="studentCollapseItem"
-									style="cursor: pointer;"
-								><div class="collapsible-header">
-										<a style="cursor: pointer;"><i class="left material-icons"
-											style="cursor: pointer;"
-										>school</i></a>
-									</div>
-									<div id="studentCollapseBody" class="collapsible-body">
-										<div>
-											<h5>No Students to show</h5>
-										</div>
-									</div></li>
-									<li class="editCollapseItem" id="groupCollapseItem"
-									style="cursor: pointer;"
-								><div class="collapsible-header">
-										<a style="cursor: pointer;"><i class="left material-icons"
-											style="cursor: pointer;"
-										>group</i></a>
-									</div>
-									<div id="groupCollapseBody" class="collapsible-body" style="">
-										<div>
-											<h5>No Groups to show</h5>
-										</div>
-									</div></li>
-									<li class="editCollapseItem" id="procCollapseItem"
-									style="cursor: pointer;"
-								><div class="collapsible-header">
-										<a style="cursor: pointer;"><i class="left material-icons"
-											style="cursor: pointer;"
-										>list</i></a>
-									</div>
-									<div id="procCollapseBody" class="collapsible-body" style="">
-										<div>
-											<h5>No procedures to show</h5>
-										</div>
-									</div></li>
-									<li class="editCollapseItem" id="infoCollapseItem"
-									style="cursor: pointer;"
-								><div class="collapsible-header">
-										<a style="cursor: pointer;"><i class="left material-icons"
-											style="cursor: pointer;"
-										>info</i></a>
-									</div>
-									<div id="infoCollapseBody" class="collapsible-body" style="">
-										<div>
-											<h5>TODO: Show Info</h5>
-										</div>
-									</div></li>
-							</ul>
+					<div id="groupListWrapper" class="center-align grey-text side-tool"
+						style="display: none"
+					>
+						<span class="material-label"
+							style="font-size: 1.5em; font-weight: bold; margin-left: auto; margin-right: auto"
+						>Groups</span>
+						<ul class="groupList collection"></ul>
+					</div>
+					<div id="studentListWrapper"
+						class="center-align grey-text side-tool" style="margin: auto"
+					>
+						<span class="material-label"
+							style="font-size: 1.5em; font-weight: bold; margin-left: auto; margin-right: auto"
+						>Students</span>
+						<div>
+							<ul class="scStudentList collection"
+								style="width: 8em; margin: auto; overflow-y: scroll"
+							></ul>
 						</div>
 					</div>
-				
+				</div>
+				<div class="editTool-side" style="display: none; width: 100%">
+					<ul class="collapsible">
+						<li class="editCollapseItem active" id="furnitureCollapseItem"
+							style="cursor: pointer;"
+						><div class="collapsible-header">
+								<a style="cursor: pointer;"><i class="left material-icons"
+									style="cursor: pointer;"
+								>event_seat</i></a>
+							</div>
+							<div class="collapsible-body" style="display: block;">
+								<ul class="collection">
+									<li class="collection-item"><img
+										class="furnitureIcon responsive-img" id="doubleDeskIcon"
+										src="../img/doubleDesk.png" alt=""
+									></li>
+									<li class="collection-item"><img
+										class="furnitureIcon responsive-img" id="singleDeskIcon"
+										src="../img/singleDesk.png" alt=""
+									></li>
+								</ul>
+							</div></li>
+						<li class="editCollapseItem" id="studentCollapseItem"
+							style="cursor: pointer;"
+						><div class="collapsible-header">
+								<a style="cursor: pointer;"><i class="left material-icons"
+									style="cursor: pointer;"
+								>school</i></a>
+							</div>
+							<div id="studentCollapseBody" class="collapsible-body">
+								<div>
+									<h5>No Students to show</h5>
+								</div>
+							</div></li>
+						<li class="editCollapseItem" id="groupCollapseItem"
+							style="cursor: pointer;"
+						><div class="collapsible-header">
+								<a style="cursor: pointer;"><i class="left material-icons"
+									style="cursor: pointer;"
+								>group</i></a>
+							</div>
+							<div id="groupCollapseBody" class="collapsible-body" style="">
+								<div>
+									<h5>No Groups to show</h5>
+								</div>
+							</div></li>
+						<li class="editCollapseItem" id="procCollapseItem"
+							style="cursor: pointer;"
+						><div class="collapsible-header">
+								<a style="cursor: pointer;"><i class="left material-icons"
+									style="cursor: pointer;"
+								>list</i></a>
+							</div>
+							<div id="procCollapseBody" class="collapsible-body" style="">
+								<div>
+									<h5>No procedures to show</h5>
+								</div>
+							</div></li>
+						<li class="editCollapseItem" id="infoCollapseItem"
+							style="cursor: pointer;"
+						><div class="collapsible-header">
+								<a style="cursor: pointer;"><i class="left material-icons"
+									style="cursor: pointer;"
+								>info</i></a>
+							</div>
+							<div id="infoCollapseBody" class="collapsible-body" style="">
+								<div>
+									<h5>TODO: Show Info</h5>
+								</div>
+							</div></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 		</main>
 	</div>
-	
-	<script src="scripts/jquery-3.1.1.min.js"></script>
-	<script src="scripts/loader.js"></script>
+	<main></main>
+	<div></div>
+	<script src="scripts/jquery-3.1.1.min.js" type="text/javascript"></script>
+	<script src="scripts/loader.js" type="text/javascript"></script>
 	<!-- Compiled and minified JavaScript -->
-    <script src="scripts/materialize/js/materialize.min.js"></script>
-       
-	<script
-		src="scripts/jQuery.print.min.js"
+	<script src="scripts/materialize/js/materialize.min.js"
+		type="text/javascript"
 	></script>
-	<script src="scripts/seatingchart.js"></script>
-	<script> 
+	<script src="scripts/jQuery.print.min.js" type="text/javascript"></script>
+	<script src="scripts/seatingchart.js" type="text/javascript"></script>
+	<script type="text/javascript"> 
 	/*list of all 'global variable */
 	var $floorPlan = $("div.floorPlan");
 	var $homeTools =$('div.homeToolbar');
@@ -571,7 +588,7 @@
 	
 	/*set up click for editLink btn*/
 	$('a#editRoutineLink','ul#settingsList').click(function(){
-		console.log('edit btn click');
+	//	console.log('edit btn click');
 		edit();
 	});
 	
@@ -620,28 +637,33 @@
 				//place furniture on floor
 					//check types 
 					//for desks see if student needs to be added
-				if(churChart.furniture[i].type='desk'){
-					var $desk = FurnitureUtils.drawDesk(churChart.furniture[i]);
-					var desk = $desk.data('desk') = churChar.furniture[i];
+				if(curChart.furniture[i].type='desk'){
+					var $desk = FurnitureUtils.drawDesk(curChart.furniture[i]);
+					var desk = $desk.data('desk');
 					//if student are assigned then seats are present
 					if(desk.seats.length > 0){
 						for(var j = 0; j < desk.seats.length; j++){
-							var $seat = $furniture.find('pos'+(j+1));
+							var $seat = $desk.find('.pos'+(j+1));
+							console.log("this is the student seat:");
+							console.log($seat);
 							if(desk.seats[j].student == null || desk.seats[j].student == ''){
 								continue;
 							}else{
 									//iterate through student to find same id
 									//and then "hide" from array
-									var $liEls = $studentList.children.not(':hidden');
+									var $liEls = $studentList.children().not(':hidden');
 									for(var k = 0; k < $liEls.length; k++){
 										$el = $($liEls.get(k));
+										console.log('here is the student list:');
+										console.log($el);
 										if($el.attr('data-id') == desk.seats[j].student){
-											$el.find('.rosterStudent').appendTo($seat);
+											$el.find('div.rosterStudent').appendTo($seat);
 											$el.hide();
 											continue;
 										}//end if
 									}//end for
 							}//end else stuent empty
+							$seat.find('.counterRotate').css('transform', 'rotate('+(-desk.rotate) +'rad)')
 						}//end for desk seat 
 					}//end if desk seat length
 					//apend desk now
@@ -652,14 +674,12 @@
 		
 	}//end drawGrid///////
 	function edit(){
-		console.log('edit called');
 		doneHome();
 		state = 'edit';
 		editState = 'furniture';
 		$editTools.show();
 		$editToolSide.show();
 		if($studentList.find('li').length > 0){
-			console.log('clone student list called');
 			var $sListClone = $studentList.clone();
 			$sListClone.addClass('edit');
 			$sListClone.appendTo($('div#studentCollapseBody').empty());
@@ -694,14 +714,14 @@
 						cursorAt:[0,0], revert:'invalid', containment:'seatingChart', helper:'clone'});
 		$floorPlan.droppable({accept:'.furnitureIcon', greedy:true,
 								drop:(e,ui)=>{
-									console.log('this is e object');
-									console.log(e);
+									//console.log('this is e object');
+									//console.log(e);
 									e.stopPropagation();
 									e.preventDefault();
 									var iconId = ui.draggable.attr('id');
 									var top,left;
 									if(mobileCheck()){
-										console.log('its a tablet');
+										//console.log('its a tablet');
 										left = (e.screenX - $floorPlan.offset().left + document.documentElement.scrollLeft)+'px';
 										top = (e.screenY -$floorPlan.offset().top + document.documentElement.scrollTop)+'px';
 									}else{
@@ -710,7 +730,7 @@
 										
 									}
 									var dropInfo ={desk:iconId, top:top, left:left};
-									console.log(dropInfo);
+									//console.log(dropInfo);
 									var $newDesk = FurnitureUtils.newDeskOnDrop(dropInfo);
 									$newDesk.appendTo($floorPlan);
 									$newDesk.uniqueId().data('desk').id = $newDesk.attr('id');
@@ -741,8 +761,8 @@
 		$desk.draggable({containment:'.floorPlan',scroll:true,
 						stop:function(){
 							$this = $(this);
-							$this.data('desk').top = $desk.css('top');
-							$this.data('desk').left = $desk.css('left');
+							$this.data('desk').top = $this.css('top');
+							$this.data('desk').left = $this.css('left');
 						},
 						start:function(e , ui){
 							$this = $(this);
@@ -754,7 +774,7 @@
 		$desk.find('.desk').rotatable({angle:$desk.data('desk').rotate, 
 				stop:function(e, ui){
 					$this = $(this);
-					$this.data('desk').rotate = ui.angle.current;
+					$this.closest('.desk-wrapper').data('desk').rotate = ui.angle.current;
 				},
 				rotate:function(e,ui){
 					var $ui = $(ui.element);
@@ -821,8 +841,8 @@
 							$rosStudent.animate({left:'+=7em', opacity:0},500,'swing',
 									function(){
 								var $appendToMe = $('li[data-id = "'+ $rosStudent.attr('id')  +'"]');
-								console.log('appendToMe is: ');
-								console.log($appendToMe)
+								//console.log('appendToMe is: ');
+								//console.log($appendToMe)
 								$appendToMe.css('display','block');
 								$rosStudent.appendTo($appendToMe);
 								$rosStudent.css({opacity:'1', position:'relative', left:'0px'})
@@ -880,7 +900,7 @@
 		$('td >div.seat', '.floorPlan').droppable('destroy');
 	};
 	function sortStudentList(a,b){
-		console.log('sort stuent list called')
+		//console.log('sort stuent list called')
 		/*a and b are list items find student */
 		if(sortByLastName){
 				if($(a).find('.last').text() < $(b).find('.last').text())return -1;
@@ -936,7 +956,7 @@
 	
 	/*Group Function -- Start Here ------ */
 	function updateGroupPanels(){
-		console.log('update group Panels called');
+		//console.log('update group Panels called');
 		if(curChart.groups != null && curChart.groups.length > 0){
 			for(var i = 0; i < curChart.groups.length; i++){
 				var $group = StudentGroupPanel.create(curChart.groups[i]);
@@ -993,6 +1013,12 @@
 	function doneInfoView(){};
 	function hwCheck(){};
 	function doneHwCheck(){};
+	function submitHwCheck(){};
+	function cancelHwCheck(){};
+	function attendanceCheck(){};
+	function doneAttendanceCheck(){};
+	function submitAttendance(){};
+	function cancelAttendance(){};
 	
 	//ajax functions - routine
 	function saveRoutine(routine){};

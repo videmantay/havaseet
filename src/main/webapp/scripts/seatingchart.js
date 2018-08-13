@@ -223,12 +223,12 @@ function FurnitureUtils(){};
 											</tr></table></div></div>`;
 	FurnitureUtils.drawDesk = function(desk){
 	var $furniture;
-	switch(furniture.kind){
+	switch(desk.kind){
 		case 'single': $furniture = $(FurnitureUtils.singleDeskTemplate);break;
 		default:$furniture =  $(FurnitureUtils.doubleDeskTemplate);
 	}//end switch
 
-	$furniture.css({top:desk.top, left:desk.top});
+	$furniture.css({top:desk.top, left:desk.left});
 	$furniture.find('.desk').css({transform:'rotate('+ desk.rotate +'rad)'});
 	$furniture.data('desk',desk);
 	return $furniture;
