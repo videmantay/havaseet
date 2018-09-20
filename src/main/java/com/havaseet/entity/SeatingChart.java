@@ -1,7 +1,7 @@
 package com.havaseet.entity;
 
 
-import com.google.cloud.Date;
+
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -41,7 +41,7 @@ public class SeatingChart implements Serializable {
 	public String createDate;
 	public boolean isActive;
 	public boolean isArchived;
-	public Date expDate;
+	public String expDate;
 	public boolean isVolume;
 	public ArrayList<String> domainAssociations = new ArrayList<String>();
 }
