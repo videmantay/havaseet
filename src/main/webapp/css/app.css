@@ -15,7 +15,7 @@ div.ui-rotatable-handle {
 	border-radius: 100%;
 	background-size: 100%;
 	background-color: #f0f0f0;
-	background-image: url('/img/refresh-icon.svg');
+	background-image: url('../img/refresh-icon.svg');
 	background-repeat: no-repeat;
 	background-position: center;
 	box-shadow: 1px 1px 2x Black;
@@ -29,6 +29,8 @@ div.ui-rotatable-handle {
 div.ui-draggable.ui-draggable-handle {
 	position: absolute;
 }
+
+div.ui-selectable-helper{border:1px dotted DarkRed; position:relative; z-index:500}
 
 /* end jquery ui stuff *******************/
 

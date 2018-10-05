@@ -238,7 +238,8 @@
 	
 </script>
 <!--Import Google Icon Font-->
-<link href="css/material-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet"
 	href="scripts/materialize/css/materialize.min.css"
@@ -365,9 +366,6 @@
 					<div class="carousel"></div>
 					<div class="row timer-panel"></div>
 				</div>
-				<div id="procEditLayer" class="floorPlanLayer"></div>
-				<div id="groupEditLayer" class="floorPlanLayer"></div>
-				<div id="infoEditLayer" class="floorPlanLayer"></div>
 				<div class="floorPlan"
 					style="width: 100%; height: 100%; min-width: 996px; position: absolute; margin-left: 0.25rem"
 				></div>
@@ -418,11 +416,11 @@
 								<ul class="collection">
 									<li class="collection-item"><img
 										class="furnitureIcon responsive-img" id="doubleDeskIcon"
-										src="../img/doubleDesk.png" alt=""
+										src="img/doubleDesk.png" alt=""
 									></li>
 									<li class="collection-item"><img
 										class="furnitureIcon responsive-img" id="singleDeskIcon"
-										src="../img/singleDesk.png" alt=""
+										src="img/singleDesk.png" alt=""
 									></li>
 								</ul>
 							</div></li>
@@ -445,10 +443,12 @@
 									style="cursor: pointer;"
 								>group</i></a>
 							</div>
-							<div id="groupCollapseBody" class="collapsible-body" style="">
-								<div>
+							<div id="groupCollapseBody" class="collapsible-body">
+								<button id="group-add-btn" class="btn btn-flat" style="width:100%; position:relative; top:-1rem"><i class="material-icons left">add</i> Add...</button>
+								<div id="empty-group-panel">
 									<h5>No Groups to show</h5>
 								</div>
+								<div></div>
 							</div></li>
 						<li class="editCollapseItem" id="procCollapseItem"
 							style="cursor: pointer;"
@@ -480,8 +480,46 @@
 		</div>
 		</main>
 	</div>
-	<main></main>
-	<div></div>
+<!------ All page modals go here ----->
+<div id="procEditLayer" class="floorPlanLayer"></div>
+<div id="groupEditLayer" class="modal floorPlanLayer">
+<div class="modal-content">
+<ul class="tabs">
+	<li class="tab new-group-tab"><a href="#new-group-form">New Group</a></li>
+	<li class="tab import-groups-tab"><a href="#import-groups-panel">Schoology Import</a></li>
+	<li class="tab arti-groups-tab"><a href="#rti-groups-form">RTI</a></li>
+</ul>
+					<div id="new-group-form">
+					<div class="input-field">
+					<input type="text" id="group-name-input" />
+					<label for="group-name-input">Group Name:</label>
+					</div>
+					<div class="input-field">
+					<textarea" id="group-descript-input" class="materialize-textarea" />
+					<label for="group-descript-input">Description:</label>
+					</div>
+					<br/>
+					<div class="input-field">
+					<input type="color" id="group-color-input" />
+					<label for="group-color-input">Color:</label>
+					</div>
+					<button id="new-group-submit-btn">Ok</button>
+					</div>
+					<div id="import-groups-panel">
+						<h4>Import Course Group from Schoology</h4>
+						<hr/>
+						<ul id="import-groups-list">
+							<!--  list item will hold json of group 
+							       once clicked create a new group will populate the form.-->
+						</ul>
+					
+					</div>
+					<div id="rti-groups-form"></div>
+					<div id="rti-groups-list"></div>
+					</div><!-- end modal-content -->
+				</div><!--  end groupEditLayer -->
+				<div id="infoEditLayer" class="floorPlanLayer"></div>
+<!-- ------------End Page Modals -------------------- -->
 	<script src="scripts/jquery-3.1.1.min.js" type="text/javascript"></script>
 	<script src="scripts/loader.js" type="text/javascript"></script>
 	<!-- Compiled and minified JavaScript -->
@@ -523,6 +561,8 @@
 	$('a.tooltiped').tooltip();
 	//init dropdown
 	$('a.dropdown-trigger').dropdown({constrainWidth:true});
+	$('.tabs').tabs();
+	$('.modal').modal();
 	
 	/* ------Here is the onload method so start all coding here except for inits ---*/
 	//populate the students into studentList
@@ -548,22 +588,8 @@
 		else{$curRot.text($this.text());
 		console.log('text were different');
 		//TODO: make ajax call to get routine and 
-		//populate screen and redraw
-		/*This is just a test*/
-		$.get('/dbTest/entity.json')
-		.done( function(data){
-			console.log(data);
-			var newRoutine = data;
-			for(var i = 0; i < newRoutine.length; i++){
-				if($this.attr('id') == newRoutine[i].id){
-					console.log(newRoutine[i]);
-					curChart = newRoutine[i];
-					M.toast({html:'changed seating chart'});
-				}
-			}
-			
-		});
-		}
+	
+						}//end else //////////////////////
 			});//end click
 			
 	/*set up click for view-btn :student group proc*/
@@ -614,8 +640,8 @@
 		updateGroupPanels();
 		updateProceduresPanels();
 		home();
-	}//end function
-	);//end jquery init;
+	}//end function //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	);//end jquery init;//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/* ui function list */
 	function drawGrid(){
@@ -865,12 +891,13 @@
 														$rosStudent.appendTo($dragParent);
 														$cloneWrapper.remove();
 														var stuDesk = $dragParent.closest('div.desk-wrapper').data('desk');
-														
+														console.log('student desk of the swapped is: ');
+														console.log(stuDesk);
 															if($dragParent.hasClass('pos1')){
-																stuDesk.seat[0].student = $rosStudent.attr('id');
+																stuDesk.seats[0].student = $rosStudent.attr('id');
 															}//end if
 															else{
-																stuDesk.seat[1].student = $rosStudent.attr('id');
+																stuDesk.seats[1].student = $rosStudent.attr('id');
 															}//end else
 																$rosStudent.find('.counterRotate').css('transform',
 																		'rotate('+ (-stuDesk.rotate)+'rad)');
@@ -914,7 +941,28 @@
 	}
 	
 	function editGroup(){
+		console.log('edit group called');
 		editState = 'group';
+		//addGroup btn shows modal
+		$('button#group-add-btn').click(function(){
+			$("div#groupEditLayer.modal").modal('open');
+		});
+		//first check to see if there are any groups;
+		
+		//if not show empty else activate  panel
+		
+		
+		// first group is active group
+		
+		//click on group li to make it active
+		
+		//student in active group are excluded
+		//make students selectable
+		$floorPlan.selectable({filter:'.student'});
+		
+		//if studen belongs to another group then confirm move
+		
+		
 		
 	};
 	function doneEditGroup(){};
@@ -952,7 +1000,16 @@
 			case 'info':doneInfoView();break;
 			default:doneStudentView();
 		}
-	};
+	};	function studentView(){
+		/*TODO:add click functions to students
+		for showing studentActionPanel
+	*/
+};
+function doneStudentView(){
+	/* remove the click function */
+};
+	
+	
 	
 	/*Group Function -- Start Here ------ */
 	function updateGroupPanels(){
@@ -968,29 +1025,6 @@
 		}
 	}
 	
-	/* -- Group Functions End Here -----*/
-	
-	/*--Procedure Functions Start ---*/
-	
-	function updateProceduresPanels(){
-		console.log('update procedures panel called');
-		if(curChart.procedures != null && curChart.procedures.length > 0 ){
-			for(var i = 0; i < curChart.procedures.length; i++){
-				var $proc = ProcedurePanel.create(curChart.procedures[i]);
-				$proc.appendTo($procList).wrap('<li class="collection-item"></li>');
-			}//end for
-		}//end if
-		
-	}
-	/* --- Procedure Functions End ---- */
-	function studentView(){
-		/*TODO:add click functions to students
-			for showing studentActionPanel
-		*/
-	};
-	function doneStudentView(){
-		/* remove the click function */
-	};
 	function groupView(){
 		//add color to students by group membership
 		//update the icons and roles
@@ -1005,8 +1039,29 @@
 		
 		//remove hover from group panels
 	};
+	
+	/* -- Group Functions End Here -----*/
+	
+	/*--Procedure Functions Start ---*/
+	
+	function updateProceduresPanels(){
+		console.log('update procedures panel called');
+		if(curChart.procedures != null && curChart.procedures.length > 0 ){
+			for(var i = 0; i < curChart.procedures.length; i++){
+				var $proc = ProcedurePanel.create(curChart.procedures[i]);
+				$proc.appendTo($procList).wrap('<li class="collection-item"></li>');
+			}//end for
+		}//end if
+		
+	}
 	function procView(){};
 	function doneProcView(){};
+	
+	
+	/* --- Procedure Functions End ---- */
+
+
+	
 	function stationView(){};
 	function doneStationView(){};
 	function infoView(){};
