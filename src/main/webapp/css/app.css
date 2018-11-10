@@ -291,3 +291,11 @@ ul.scStudentList.collection {
 		
 
 /* end seating chart style *************************/
+
+/* misc display fixes */
+
+div#groupCollapseBody.collapsible-body{
+	padding:0px !important;
+}
+
+div.collapsible-body.group-descript{ padding:0px !important; height:150px}

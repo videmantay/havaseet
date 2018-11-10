@@ -105,22 +105,57 @@ style="width: 100%; height: 100%;">
 	return this.$group;
  };
 /*--- End Group Panel --- */
+ /* Edit Group Item */
+ 
+ function EditGroupItem(){};
+ EditGroupItem.template = `
+ <li class="group-edit-item" style="position:relative" >
+	 <div class="collapsible-header group-title">
+	 	<span class="title">
+	 	</div><!-- End title Div -->
+	 <div class="collapsible-body group-descript" style="padding:0px !important">
+	 	<ul class="collection edit-group-member-list" style="height:100px; overflow-y:scroll;
+	 																min-width:100% !important;">
+	 	</ul>
+	 	<div class="empty-group-members" style="display:none;margin:0.5rem">Drag students here to add members</div>
+	 	<a class="edit-group-item-btn btn-flat btn-small" style="position:absolute;right:5px; bottom:3px"><i class="material-icons">edit</i></a>
+	 <form  class="group-form white" style="position:absolute; z-index:2; height:100%; width:100%;top:0px;left:0px; display:none">
+	 <div class="input-field" style="margin:0px !important;!important;">
+	 	<input type="text" style="padding:0.15em" />
+	 </div>
+	 	<textarea class="materialize-textarea" style="height:75px;max-height:75px;overflow-y:scroll"></textarea>
+	 	 <div>
+	 	<a class="btn-flat red-text left wave-light"> <i class="material-icons cancel-group-edit">cancel</i></a>
+	 	<a class="btn-flat green-text right wave-light"><i class="material-icons done-group-edit">done</i></a>
+	 </div>
+	 </form>
+	 </div><!-- End body div -->
+	 
+</li> `;
+ 
+ EditGroupItem.create = function(group){
+	 this.$group = $(EditGroupItem.template);
+	 this.$group.find('div.collapsible-header').addClass(group.color +' white-text');
+	 this.$group.find('a.btn-floating').addClass(group.color);
+	 this.$group.find('span.title').text(group.title);
+	 this.$group.find('span.descript').text(group.description);
+	 this.$group.find('input').addClass(group.color).attr('placeholder',group.title);
+	 this.$group.find('textarea').attr('placeholder',group.description);
+	 return this.$group;
+ };
+ 
+ /* End Edit Group Item */
 /* Member Tabel Item */
  function MemberItem(){};
-MemberItem.template = `<tr>
-			 <td>
-			 <div class="row group-mem" data-member=''>
-				 <div class="col xs2"><img class="group-mem-pic"/></div>
-				 <div class="col xs10">
+MemberItem.template = 
+			 `<li class="collection-item group-mem" data-member='' style="position:relative; overflow:hidden; height:75px">
+				 <img class="left group-mem-pic" style="height:55px; position:relative; left:-10px"/>
+				 <div style="padding-right:1rem">
 				 <label class="first trancate"></label>
 				 <label class="last truncate"></label>
 				 </div>
-				 </div>
-			 </td>
-			 <td>
-			 <div class="group-role"></div>
-			 </td>
-				</tr>`;
+				 <div class="material-icons" style="position:absolute; z-index:2; right:0px; top:0px">cancel</div>
+			   </li>`;
 MemberItem.create = function(member){
 	//checkt to see if membership is valid
 	//ie that student is still enrolled
@@ -155,6 +190,8 @@ else{
 }
 
 }
+
+
 /*end memeber table tiem*/
 /* Role item*/
 function RoleItem(){};
