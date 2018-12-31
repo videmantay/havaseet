@@ -361,7 +361,7 @@
 					<div class="row timer-panel"></div>
 				</div>
 				<div class="floorPlan"
-					style="width: 100%; height: 100%; min-width: 996px; position: absolute; margin-left: 0.25rem"
+					style="width: 100%; height: 100%; min-width: 996px; position: relative; margin-left: 0.25rem"
 				></div>
 			</section>
 			<div class="sideTools"
@@ -617,8 +617,9 @@
 	var $groupList = $('ul.groupList');
 	var $procList = $('ul.procList');
 	var state = 'home';//home, edit
+	var isEditing = false;//replace state
 	var editState = 'furniture';//posible editState: furniture,student,group,proc,info,station
-	var view = 'student';//possible view: student, group, proc,station,info
+	var viewState = 'student';//possible view: student, group, proc,station,info
 	var oldData;
 	var sortByLastName = false;
 	//page init like resize 
@@ -742,7 +743,31 @@
 	}//end function //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	);//end jquery init;//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	
 	/* ui function list */
+	
+	function home(){
+		isEditing = false;
+		view = 'student';
+		if($studentList.children().length < 1){
+			$studentList.append("<div><h5>No student to show</h5></div>")
+		}
+		$('.rosterStudent').click();
+		
+	};
+	
+	function doneHome(){
+		$homeTools.hide();
+		$homeToolSide.hide();
+		switch(view){
+			case 'group':doneGroupView();break;
+			case 'proc':doneProcView();break;
+			case 'station':doneStationView();break;
+			case 'info':doneInfoView();break;
+			default:doneStudentView();
+		}
+	};
+	
 	function drawGrid(){
 		console.log('called draw grid');
 		$floorPlan.empty();
@@ -800,7 +825,7 @@
 	}//end drawGrid///////
 	function edit(){
 		doneHome();
-		state = 'edit';
+		isEditing = true;
 		editState = 'furniture';
 		$editTools.show();
 		$editToolSide.show();
@@ -833,6 +858,16 @@
 		doneEdit();
 	}
 	
+	function switchEditState(){
+		switch(editState){
+			case 'student':doneEditStudent();
+			case 'group':doneEditGroup();
+			case 'proc':doneEditProc();
+			case 'info':doneEditInfo();
+			default:doneEditFurniture();
+		}
+	}
+	
 	function editFurniture(){
 		editState = 'furniture';
 		$('img.furnitureIcon').draggable({zIndex:500,appendTo:'body',
@@ -845,15 +880,11 @@
 									e.preventDefault();
 									var iconId = ui.draggable.attr('id');
 									var top,left;
-									if(mobileCheck()){
-										//console.log('its a tablet');
-										left = (e.screenX - $floorPlan.offset().left + document.documentElement.scrollLeft)+'px';
-										top = (e.screenY -$floorPlan.offset().top + document.documentElement.scrollTop)+'px';
-									}else{
-										left = (e.clientX + document.body.scroll.left)+'px';
-										top = (e.clientY + document.body.scroll.top)+'px';
+									
+										left = (e.clientX + window.scrollX) - $floorPlan.offset().left +'px';
+										top = (e.clientY + window.scrollY)- $floorPlan.offset().top +'px';
 										
-									}
+									
 									var dropInfo ={desk:iconId, top:top, left:left};
 									//console.log(dropInfo);
 									var $newDesk = FurnitureUtils.newDeskOnDrop(dropInfo);
@@ -883,21 +914,28 @@
 	function makeDragRotateDelete($desk){
 		console.log('makeDragRotateDelete starting object: ');
 		console.log($desk);
-		$desk.draggable({containment:'.floorPlan',scroll:true,
+		$desk.draggable({containment: $floorPlan ,cursorAt:[0,0],
 						stop:function(e, ui){
-							/* var top, left;
-							left = (e.clientX + document.body.scroll.left)+'px';
-							top = (e.clientY + document.body.scroll.top)+'px'; */
-							$this = $(this);
-							/* $this.css('top', top);
-							$this.css('left', left); */
+							var $this = $(this);
+							 var top, left;
+							left = (e.clientX + window.scrollX) - $floorPlan.offset().left +'px';
+										top = (e.clientY + window.scrollY)- $floorPlan.offset().top +'px'; 
+							
+							 $this.css('top', top);
+							$this.css('left', left); 
+							//$this.css('display', 'block');
 							$this.data('desk').top = $this.css('top');
 							$this.data('desk').left = $this.css('left');
 						},
 						start:function(e , ui){
-							$this = $(this);
-							console.log('start drag this =');
-							console.log($this);
+							  var top, left;
+							  
+								left = (e.clientX + window.scrollX) - $floorPlan.offset().left +'px';
+											top = (e.clientY + window.scrollY)- $floorPlan.offset().top +'px'; 
+								
+								 $(ui.helper).css('top', top).css('left', left);
+								
+								//$(this).css('display', 'none');
 		
 						}//end start funciton				
 		});
@@ -1045,6 +1083,7 @@
 	}
 	
 	function editGroup(){
+		var activeGroup = '';/*store group id for group here*/
 		console.log('edit group called');
 		editState = 'group';
 		
@@ -1119,6 +1158,7 @@
 		}
 		
 	};
+	
 	function doneEditGroup(){
 	};
 	
@@ -1126,41 +1166,16 @@
 		editState = 'proc';
 	};
 	function doneEditProc(){};
-	function home(){
-		state = 'home';
-		view = 'student';
-		if($studentList.children().length < 1){
-			$studentList.append("<div><h5>No student to show</h5></div>")
-		}
-		$('.rosterStudent').click();
-		
-	};
+	
 	function editInfo(){
 		editState = 'info';
 	};
 	function doneEditInfo(){};
+	//end editing functions ------//////
 	
+	//View functions ---------//////////
 	
-	function switchEditState(){
-		switch(editState){
-			case 'student':doneEditStudent();
-			case 'group':doneEditGroup();
-			case 'proc':doneEditProc();
-			case 'info':doneEditInfo();
-			default:doneEditFurniture();
-		}
-	}
-	function doneHome(){
-		$homeTools.hide();
-		$homeToolSide.hide();
-		switch(view){
-			case 'group':doneGroupView();break;
-			case 'proc':doneProcView();break;
-			case 'station':doneStationView();break;
-			case 'info':doneInfoView();break;
-			default:doneStudentView();
-		}
-	};	function studentView(){
+	function studentView(){
 		/*TODO:add click functions to students
 		for showing studentActionPanel
 	*/
@@ -1226,6 +1241,10 @@ function doneStudentView(){
 	function doneStationView(){};
 	function infoView(){};
 	function doneInfoView(){};
+	
+	//End View function ----------- /////
+	
+	//Check functions hw & attendance //////
 	function hwCheck(){};
 	function doneHwCheck(){};
 	function submitHwCheck(){};
@@ -1234,6 +1253,7 @@ function doneStudentView(){
 	function doneAttendanceCheck(){};
 	function submitAttendance(){};
 	function cancelAttendance(){};
+	//end Check functions /////////////////
 	
 	//ajax functions - routine
 	function saveRoutine(routine){};
