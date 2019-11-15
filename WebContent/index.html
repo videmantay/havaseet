@@ -1,20 +1,604 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html>
 <head>
-<meta http-equiv="content-type"
-	content="application/xhtml+xml; charset=UTF-8"
-/>
-<title>Hello App Engine</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="text/javascript">
+	//user info
+	var teacher = {
+		"uid" : "20013688",
+		"id" : 20013688,
+		"school_id" : 228550800,
+		"synced" : 0,
+		"school_uid" : "",
+		"additional_buildings" : "",
+		"name_title" : "Mr.",
+		"name_title_show" : 1,
+		"name_first" : "Lee",
+		"name_first_preferred" : "",
+		"use_preferred_first_name" : "1",
+		"name_middle" : "",
+		"name_middle_show" : 0,
+		"name_last" : "ViDemantay",
+		"name_display" : "Mr. ViDemantay",
+		"username" : "",
+		"primary_email" : "lee@videmantay.net",
+		"picture_url" : "https:\/\/cdn3-4.cdn.schoology.com\/system\/files\/imagecache\/profile_reg\/pictures\/picture-f32980e8160b94a6d66e296dd64448fe_5ab1475f7c66d.png",
+		"gender" : null,
+		"position" : null,
+		"grad_year" : "",
+		"password" : "",
+		"role_id" : 5,
+		"tz_offset" : -7,
+		"tz_name" : "America\/Los_Angeles",
+		"parents" : null,
+		"child_uids" : null,
+		"send_message" : 1,
+		"language" : "",
+		"permissions" : {
+			"is_directory_public" : 1,
+			"allow_connections" : 1
+		}
+	};
+	var course = {
+		"section" : {
+			"id" : "1624225987",
+			"course_title" : "MadeIt Up",
+			"course_code" : "",
+			"course_id" : "1624225985",
+			"school_id" : "228550800",
+			"building_id" : "228550800",
+			"access_code" : "TB658-KHXRR",
+			"section_title" : "Section 1",
+			"section_code" : "",
+			"section_school_code" : "",
+			"synced" : "0",
+			"active" : 1,
+			"description" : "",
+			"subject_area" : "0",
+			"grade_level_range_start" : "0",
+			"grade_level_range_end" : "0",
+			"parent_id" : null,
+			"grading_periods" : [ 0 ],
+			"profile_url" : "https://cdn3-7.cdn.schoology.com/system/files/imagecache/profile_reg/courselogos/logo-1624225987_5b31557911e27.png?1529959801",
+			"location" : "",
+			"meeting_days" : [ "" ],
+			"start_time" : "",
+			"end_time" : "",
+			"weight" : "0"
+		},
+		"links" : {
+			"self" : "https:\/\/api.schoology.com\/v1\/users\/20013688\/sections"
+		}
+	};
+	
+	var acctInfo = {
+			"active" : true,
+			"expDate" : "2018-06-11",
+			"secId" : "1624225987"
+		};
+	
+	const students = {
+		"enrollment" : [
+				{
+					"id" : "1453234329",
+					"uid" : "20013688",
+					"school_uid" : "",
+					"name_title" : "Mr.",
+					"name_title_show" : "1",
+					"name_first" : "Lee",
+					"name_first_preferred" : "",
+					"use_preferred_first_name" : "1",
+					"name_middle" : "",
+					"name_middle_show" : "0",
+					"name_last" : "ViDemantay",
+					"name_display" : "Mr. ViDemantay",
+					"admin" : 1,
+					"status" : "1",
+					"picture_url" : "https:\/\/cdn3-4.cdn.schoology.com\/system\/files\/imagecache\/profile_reg\/pictures\/picture-f32980e8160b94a6d66e296dd64448fe_5ab1475f7c66d.png",
+					"links" : {
+						"self" : "https:\/\/api.schoology.com\/v1\/sections\/675750671\/enrollments\/1453234329"
+					}
+				},
+				{
+					"id" : "1767944793",
+					"uid" : "69690077",
+					"school_uid" : "",
+					"name_title" : "",
+					"name_title_show" : "0",
+					"name_first" : "Ainsley",
+					"name_first_preferred" : "",
+					"use_preferred_first_name" : "1",
+					"name_middle" : "",
+					"name_middle_show" : "0",
+					"name_last" : "Boomer",
+					"name_display" : "Ainsley Boomer",
+					"admin" : 0,
+					"status" : "1",
+					"picture_url" : "https:\/\/cdn3-4.cdn.schoology.com\/system\/files\/imagecache\/profile_reg\/pictures\/picture-f8e72f42f0e598f30f114be8f706b942_5b10a109d3e3e.png",
+					"links" : {
+						"self" : "https:\/\/api.schoology.com\/v1\/sections\/675750671\/enrollments\/1767944793"
+					}
+				},
+				{
+					"id" : "1585434038",
+					"uid" : "53909154",
+					"school_uid" : "",
+					"name_title" : "",
+					"name_title_show" : "0",
+					"name_first" : "Darwin",
+					"name_first_preferred" : "",
+					"use_preferred_first_name" : "1",
+					"name_middle" : "",
+					"name_middle_show" : "0",
+					"name_last" : "Goober",
+					"name_display" : "Darwin Goober",
+					"admin" : 0,
+					"status" : "1",
+					"picture_url" : "https:\/\/cdn3-7.cdn.schoology.com\/system\/files\/imagecache\/profile_reg\/pictures\/picture-4f0d01b827928ef9f1dc8cc3a30e4313_5b10a2b1cf680.png",
+					"links" : {
+						"self" : "https:\/\/api.schoology.com\/v1\/sections\/675750671\/enrollments\/1585434038"
+					}
+				},
+				{
+					"id" : "1767944723",
+					"uid" : "69690049",
+					"school_uid" : "",
+					"name_title" : "",
+					"name_title_show" : "0",
+					"name_first" : "Melanie",
+					"name_first_preferred" : "",
+					"use_preferred_first_name" : "1",
+					"name_middle" : "",
+					"name_middle_show" : "0",
+					"name_last" : "Gowor",
+					"name_display" : "Melanie Gowor",
+					"admin" : 0,
+					"status" : "1",
+					"picture_url" : "https:\/\/cdn3-3.cdn.schoology.com\/system\/files\/imagecache\/profile_reg\/pictures\/picture-6954c8e80211908c6bc457b73350add3_5b10a19e3433e.png",
+					"links" : {
+						"self" : "https:\/\/api.schoology.com\/v1\/sections\/675750671\/enrollments\/1767944723"
+					}
+				},
+				{
+					"id" : "1585433778",
+					"uid" : "53909040",
+					"school_uid" : "",
+					"name_title" : "",
+					"name_title_show" : "0",
+					"name_first" : "Angel",
+					"name_first_preferred" : "",
+					"use_preferred_first_name" : "1",
+					"name_middle" : "",
+					"name_middle_show" : "0",
+					"name_last" : "Guy",
+					"name_display" : "Angel Guy",
+					"admin" : 0,
+					"status" : "1",
+					"picture_url" : "https:\/\/cdn3-7.cdn.schoology.com\/system\/files\/imagecache\/profile_reg\/pictures\/picture-6ccdb4dccbd6397d951d84ec5a98613f_5b10a35880377.png",
+					"links" : {
+						"self" : "https:\/\/api.schoology.com\/v1\/sections\/675750671\/enrollments\/1585433778"
+					}
+				} ],
+		"total" : "5",
+		"links" : {
+			"self" : "https:\/\/api.schoology.com\/v1\/sections\/675750671\/enrollments?start=0&limit=50"
+		}
+	};
+	var seatingCharts = {
+		"sectionId" : "675750671",
+		"defaultId" : 5732568548769792,
+		"list" : [
+			{"title":'Your seat', "id":5732568548769792},
+			{"title":'Math Lab', "id":9002568548769792},
+			{"title":'Reading Place', "id":2222568548769792},
+			{"title":'Investigation', "id":708968548769792}
+		],
+		"availableRoles":[]
+	};
+	var curChart = {
+		"title":"Your seat",
+		"id" : 5732568548769792,
+		"uid" : "20013688",
+		"sectionId" : "675750671",
+		"furniture":[{"top":"631px","left":"862.5px","rotate":-3.127534947865014,"transform":"","kind":"double","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":"1767944793"},{"pos":2,"student":""}],"id":"ui-id-1"},{"top":"654px","left":"271.5px","rotate":-3.7251875077097303,"transform":"","kind":"double","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":""},{"pos":2,"student":""}],"id":"ui-id-1"},{"top":"656.5px","left":"461.25px","rotate":-4.703965429592607,"transform":"","kind":"double","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":""},{"pos":2,"student":""}],"id":"ui-id-2"},{"top":"217px","left":"888.75px","rotate":-1.5845282757744439,"transform":"","kind":"double","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":""},{"pos":2,"student":"1585433778"}],"id":"ui-id-3"},{"top":"128.938px","left":"397.438px","rotate":0,"transform":"","kind":"double","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":""},{"pos":2,"student":"1585434038"}],"id":"ui-id-4"},{"top":"6px","left":"6.75px","rotate":0,"transform":"","kind":"single","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":""}],"id":"ui-id-1"},{"top":"18px","left":"906.75px","rotate":0,"transform":"","kind":"single","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":""}],"id":"ui-id-2"},{"top":"672px","left":"21.75px","rotate":0,"transform":"","kind":"single","type":"desk","bgColor":"","borderColor":"","seats":[{"pos":1,"student":""}],"id":"ui-id-3"}],
+		"groups":[
+			{"gid": "79872987","title": "First Group", "description": "Created group for play",
+			"icon":"", "color":"blue", "criteria": "", 
+			"members":
+				[
+					{"id":"1453234329","role":[ {"title":"Admin", "icon":"", "color":"red", "description":""}] }
+				]},
+				{"gid": "81172987","title": "Second Group", "description": "Created group for play",
+					"icon":"", "color":"green", "criteria": "", 
+					"members":
+						[
+							{"id":"1767944793","role":[ {"title":"Admin", "icon":"", "color":"red", "description":""}] },
+							{"id":"1585434038","role":[ {"title":"Secretary", "icon":"", "color":"red", "description":""}] },
+							{"id":"1767944723","role":[] },
+							{"id":"1585433778","role":[] }
+						]},
+			{"gid": "888888","title": "Third Group", "description": "Created group for play",
+							"icon":"", "color":"indigo", "criteria": "", 
+							"members":[]}
+		],
+		"procedures":[
+					{"secs": 30, "direction":"move from your seat"},
+					{"secs": 90, "direction":"pick a friend"},
+					{"secs": 120, "direction":"fold your paper"},
+					{"secs": 60, "direction":"smile"}
+					],
+		"isDefault" : false,
+		"readOnly" : false,
+		"shared" : false,
+		"allowedUids" : [],
+		"isActive" : false,
+		"isArchived" : false,
+		"isVolume" : false,
+		"domainAssociations" : []
+	};
+	
+	var colorList = ['red','blue','yellow','oragne','green','purple',
+					'deep-orange','indigo','light-green','amber','deep-purple','pink',
+					'cyan','light-blue','teal','lime','brown','blue-grey'];
+	/*checks to see if acct is up to date*/
+	
+</script>
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="css/materialize.min.css"
+>
+<link rel="stylesheet" href="css/app.css" />
+<title>Havaseet</title>
 </head>
 <body>
-	<h1>Hello App Engine!</h1>
-	<table>
-		<tr>
-			<td colspan="2" style="font-weight: bold;">Available Servlets:</td>
-		</tr>
-		<tr>
-			<td><a href='/hello'>The servlet</a></td>
-		</tr>
-	</table>
+	<div id="dashboard"
+		style="height: inherit; width: inherit; position: inherit"
+	>
+		<div class="amber" style="overflow: visible; height: 2em;">
+			<img id="sectionProfImg" class="left circle responsive-img" src=""
+				style="position: relative; width: 2.8em; margin-left: 20px; height: 4em; width: 4em; top: 0.25em; z-index: 10"
+				alt=""
+			><span id="sectionTitleSpan" class="white-text material-label"
+				style="position: relative; font-size: 1.5em; font-weight: bold; text-shadow: 1px 1px 1px grey; left: 30%"
+			></span> <span class="right white-text"
+				style="font-size: 1.5em; font-family: Verdana; text-shadow: 1px 1px 2px Black; margin-right: 1em;"
+			>Havaseet <i class="red-text">Beta</i></span>
+		</div>
+		<main style="height:inherit; position:relative">
+		<div class="homeToolbar amber darken-1">
+			<div class="container row">
+				<div class="col s3 white-text">
+					<span>Check: </span>&nbsp; <a
+						class="btn-flat tooltiped waves-effect waves-light white-text"
+						data-tooltip="homework" style="display: inline"
+					> <i id="hwIcon" class="material-icons">assignment</i>
+					</a>
+				</div>
+				<div class="col s5">
+					<a class="btn dropdown-trigger amber lighten-1 white-text left"
+						data-target="routineDropdownList"
+						style="height: 2.45em; overflow: hidden; width: 100%; position: relative; margin-top: 3px"
+						id="curRoutineBtn"
+					><span
+						style="position: relative; vertical-align: top; text-align: center; width: 100%"
+					></span>&nbsp; <i class="material-icons">arrow_drop_down</i></a>
+					<ul id="routineDropdownList" class="dropdown-content"></ul>
+				</div>
+				<div class="col s4 white-text">
+					<span>View:</span>&nbsp; <a
+						class="btn-flat tooltiped waves-effect waves-light white-text view-btn"
+						data-tooltip="students" id="student-view-btn"
+					> <i class="material-icons amber-text text-accent-1 view-icon">school</i>
+					</a> <a
+						class="btn-flat tooltiped waves-effect waves-light white-text view-btn"
+						data-tooltip="groups" id="groups-view-btn"
+					> <i class="material-icons view-icon">group</i>
+					</a> <a
+						class="btn-flat tooltiped waves-effect waves-light white-text view-btn"
+						data-tooltip="procedures" id="proc-view-btn"
+					> <i class="material-icons view-icon">list</i>
+					</a> <a
+						class="btn-floating btn-small tooltiped dropdown-trigger waves-effect waves-light amber lighten-1 white-text right"
+						data-tooltip="settings" data-target="settingsList"
+					> <i class="material-icons">settings</i>
+					</a>
+				</div>
+			</div>
+			<!-- end container row -->
+			<ul class="dropdown-content" id="settingsList">
+				<li><a style="margin: 0 auto; text-align: center"
+					id="editRoutineLink" class="amber-text"
+				><i class="material-icons right">edit</i>Edit</a></li>
+				<li class="divider" tab-index="-1"></li>
+				<li><a style="margin: 0 auto; text-align: center"
+					id="deleteRoutineLink" class="amber-text"
+				><i class="material-icons right">delete</i>Delete</a></li>
+				<li class="divider" tab-index="-1"></li>
+				<li><a style="margin: 0 auto; text-align: center"
+					id="newRoutineLink" class="amber-text"
+				><i class="material-icons right">event_seat</i>New</a></li>
+				<li class="divider" tab-index="-1"></li>
+				<li><a style="margin: 0 auto; text-align: center"
+					id="printRoutineLink" class="amber-text"
+				><i class="material-icons right">print</i>Print</a></li>
+				<li class="divider" tab-index="-1"></li>
+			</ul>
+		</div>
+		<!-- end homeToolbar -->
+		<div>
+			<div class="editToolbar red lighten-1 row"
+				style="display: none; padding: 0 25%"
+			>
+				<div class="col">
+					<a class="btn amber darken-1" style="cursor: pointer;"><i
+						class="left material-icons" style="cursor: pointer;"
+					>delete</i><span>Clear All</span></a>
+				</div>
+				<div class="col">
+					<a class="btn deep-orange darken-1" style="cursor: pointer;"><i
+						class="left material-icons" style="cursor: pointer;"
+					>close</i><span>CANCEL</span></a>
+				</div>
+				<div class="col">
+					<a class="btn green lighten-1" style="cursor: pointer;"><i
+						class="left material-icons" style="cursor: pointer;"
+					>done</i><span>SAVE</span></a>
+				</div>
+			</div>
+		</div>
+		<div class="seatingChart" style="min-width:1195px; width:100%;height:inherit;position:absolute">
+			<section id="floorWrapper"
+				style="min-width: 996px; max-width: 1000px; height: 750px; margin: 0px; margin-left: 1rem; float: left; position: absolute"
+			>
+				<div id="procViewLayer" class="floorPlanLayer"
+					style="background-color: rgba(); display: none"
+				>
+					<div class="carousel"></div>
+					<div class="row timer-panel"></div>
+				</div>
+				<div class="floorPlan"
+					style="width: 100%; height: 100%; min-width: 996px; position: relative; margin-left: 0.25rem"
+				></div>
+			</section>
+			<div class="sideTools"
+				style="margin: 0%; margin-right: 1rem; float: right; position: relative; width: 175px"
+			>
+				<div class="homeTool-side">
+					<div id="procListWrapper" class="center-align grey-text side-tool"
+						style="display: none"
+					>
+						<span class="material-label"
+							style="font-size: 1.5em; font-weight: bold; margin-left: auto; margin-right: auto"
+						>Procedures</span>
+						<ul class="procList collection"></ul>
+					</div>
+					<div id="groupListWrapper" class="center-align grey-text side-tool"
+						style="display: none"
+					>
+						<span class="material-label"
+							style="font-size: 1.5em; font-weight: bold; margin-left: auto; margin-right: auto"
+						>Groups</span>
+						<ul class="groupList collection"></ul>
+					</div>
+					<div id="studentListWrapper"
+						class="center-align grey-text side-tool" style="margin: auto"
+					>
+						<span class="material-label"
+							style="font-size: 1.5em; font-weight: bold; margin-left: auto; margin-right: auto"
+						>Students</span>
+						<div>
+							<ul class="scStudentList collection"
+								style="width: 8em; margin: auto; overflow-y: scroll"
+							></ul>
+						</div>
+					</div>
+				</div>
+				<div class="editTool-side" style="display: none; width: 100%">
+					<ul class="collapsible">
+						<li class="editCollapseItem active" id="furnitureCollapseItem"
+							style="cursor: pointer;"
+						><div class="collapsible-header">
+								<a style="cursor: pointer;"><i class="left material-icons"
+									style="cursor: pointer;"
+								>event_seat</i></a>
+							</div>
+							<div class="collapsible-body" style="display: block;">
+								<ul class="collection">
+									<li class="collection-item"><img
+										class="furnitureIcon responsive-img" id="doubleDeskIcon"
+										src="img/doubleDesk.png" alt=""
+									></li>
+									<li class="collection-item"><img
+										class="furnitureIcon responsive-img" id="singleDeskIcon"
+										src="img/singleDesk.png" alt=""
+									></li>
+								</ul>
+							</div></li>
+						<li class="editCollapseItem" id="studentCollapseItem"
+							style="cursor: pointer;"
+						><div class="collapsible-header">
+								<a style="cursor: pointer;"><i class="left material-icons"
+									style="cursor: pointer;"
+								>school</i></a>
+							</div>
+							<div id="studentCollapseBody" class="collapsible-body">
+								<div>
+									<h5>No Students to show</h5>
+								</div>
+							</div></li>
+						<li class="editCollapseItem" id="groupCollapseItem"
+							style="cursor: pointer;"
+						><div class="collapsible-header">
+								<a style="cursor: pointer;"><i class="left material-icons"
+									style="cursor: pointer;"
+								>group</i></a>
+							</div>
+							<div id="groupCollapseBody" class="collapsible-body" style="padding:0px 0px 0px 0px !important;"><!-- padding ineffective here must be done in stylesheet -->
+								<button id="group-add-btn" class="btn btn-flat" style="width:100%; position:relative;"><i class="material-icons left">add</i> Add...</button>
+								<div id="empty-group-panel">
+									<h5>No Groups to show</h5>
+								</div>
+								<div id="edit-group-list" style="width:175px; padding:0px">
+								<ul id="editable-group-list" class="collapsible popout" style="width:100%"></ul>
+								</div>
+							</div></li>
+						<li class="editCollapseItem" id="procCollapseItem"
+							style="cursor: pointer;"
+						><div class="collapsible-header">
+								<a style="cursor: pointer;"><i class="left material-icons"
+									style="cursor: pointer;"
+								>list</i></a>
+							</div>
+							<div id="procCollapseBody" class="collapsible-body" style="">
+								<div>
+									<h5>No procedures to show</h5>
+								</div>
+							</div></li>
+						<li class="editCollapseItem" id="infoCollapseItem"
+							style="cursor: pointer;"
+						><div class="collapsible-header">
+								<a style="cursor: pointer;"><i class="left material-icons"
+									style="cursor: pointer;"
+								>info</i></a>
+							</div>
+							<div id="infoCollapseBody" class="collapsible-body" style="">
+								<div>
+									<h5>TODO: Show Info</h5>
+								</div>
+							</div></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		</main>
+	</div>
+<!------ All page modals go here ----->
+<div id="procEditLayer" class="floorPlanLayer"></div>
+<div id="groupEditLayer" class="modal floorPlanLayer">
+<div class="modal-content">
+<ul class="tabs">
+	<li class="tab new-group-tab"><a href="#new-group-form">New Group</a></li>
+	<li class="tab import-groups-tab"><a href="#import-groups-panel">Schoology Import</a></li>
+	<!-- <li class="tab rti-groups-tab"><a href="#rti-groups-form">RTI</a></li> -->
+</ul>
+					<div id="new-group-form">
+					<div class="input-field">
+					<input type="text" id="group-name-input" />
+					<label for="group-name-input">Group Name:</label>
+					</div>
+					<div class="input-field">
+					<textarea id="group-descript-input" class="materialize-textarea" style="max-height:100px;overflow-y:auto"></textarea>
+					<label for="group-descript-input">Description:</label>
+					</div>
+					<br/>
+					<div style="width:100px; margin-bottom:1em;">
+					<label for="group-color-input" style="float:left; margin-right:10px">Color:</label>
+					
+					<a id="group-color-input" class="dropdown-trigger btn grey" data-target="color-grid" data-color="red"
+					 style="border:1px solid DimGrey; border-radius:15%;float:right; width:20px;height:25px"></a>
+					<ul id="color-grid" class="dropdown-content" style="background-color:WhiteSmoke;width:245px;min-width:245px">
+						<li>
+							<div id="color-grid" style="padding:1em">
+									<div class="row">
+									<!-- 
+										<button data-color="red" class="btn color-selection red wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="pink" class="btn color-selection pink wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="purple" class="btn color-selection purple wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="deep-purple" class="btn color-selection deep-purple wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="indigo" class="btn color-selection indigo wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="blue" class="btn color-selection blue wave-light hoverable" style="height:15px; width:15px"></button>
+									 -->
+									 <button data-color="red" class="btn color-selection red wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="blue" class="btn color-selection blue wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="green" class="btn color-selection green wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="purple" class="btn color-selection purple wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="orange" class="btn color-selection orange wave-light hoverable" style="height:15px; width:15px"></button>
+									</div>
+									<div class="row">
+									
+										<!-- <button data-color="light-blue" class="btn color-selection light-blue wave-light hoverable" style="height:15px; width:15px"></button> -->
+									
+										<!-- <button data-color="cyan" class="btn color-selection cyan wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="teal" class="btn color-selection teal wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="green" class="btn color-selection green wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="light-green" class="btn color-selection light-green wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="lime" class="btn color-selection lime wave-light hoverable" style="height:15px; width:15px"></button>
+									 -->
+									 <button data-color="pink" class="btn color-selection pink wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="cyan" class="btn color-selection cyan wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="light-green" class="btn color-selection light-green wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="deep-purple" class="btn color-selection deep-purple wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="amber" class="btn color-selection amber wave-light hoverable" style="height:15px; width:15px"></button>
+									</div>
+									<div class="row">
+									
+										<!--  <button data-color="yellow" class="btn color-selection yellow wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="amber" class="btn color-selection amber wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="orange" class="btn color-selection orange wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="deep-orange" class="btn color-selection deep-orange wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="brown" class="btn color-selection brown wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="blue-grey" class="btn color-selection blue-grey wave-light hoverable" style="height:15px; width:15px"></button>
+									 -->
+									 <button data-color="blue-grey" class="btn color-selection blue-grey wave-light hoverable" style="height:15px; width:15px"></button>
+	
+										<button data-color="teal" class="btn color-selection teal wave-light hoverable" style="height:15px; width:15px"></button>
+									
+										<button data-color="lime" class="btn color-selection lime wave-light hoverable" style="height:15px; width:15px"></button>
+										<button data-color="indigo" class="btn color-selection indigo wave-light hoverable" style="height:15px; width:15px"></button>
+										<button data-color="brown" class="btn color-selection brown wave-light hoverable" style="height:15px; width:15px"></button>
+									</div>
+									
+								</div><!-- end color-grid -->
+						</li>
+					</ul>
+					</div>
+					<br/>
+					<button id="new-group-submit-btn" class="btn">Ok</button>
+					<button id="cancel-new-group-btn" class="btn">Cancel</button>
+					</div>
+					<div id="import-groups-panel">
+						<h4>Import Course Groups from Schoology</h4>
+						<hr/>
+						<ul id="import-groups-list">
+							<!--  list item will hold json of group 
+							       once clicked create a new group will populate the form.-->
+						</ul>
+						<button id="cancel-group-import-btn" class="btn">Cancel</button>
+					</div>
+					<!-- <div id="rti-groups-form"></div>
+					<div id="rti-groups-list"></div> -->
+					</div><!-- end modal-content -->
+				</div><!--  end groupEditLayer -->
+				<div id="infoEditLayer" class="floorPlanLayer"></div>
+<!-- ------------End Page Modals -------------------- -->
+	<script src="scripts/loader.js" type="text/javascript"></script>
+	<script src="scripts/seatingchart.js" type="text/javascript"></script>
+	<script src="scripts/main.js"></script>
 </body>
 </html>

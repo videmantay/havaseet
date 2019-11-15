@@ -13,6 +13,6 @@ public class ObjectifyListener implements ServletContextListener {
 	}
 
 	public void contextInitialized(ServletContextEvent sce) {
-	
+		ObjectifyService.init();
 	}
 }

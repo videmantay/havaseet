@@ -1,301 +1,671 @@
-/**
- * 
- */
+/*list of all 'global variable */
+var $floorPlan = $("div.floorPlan");
+var $homeTools =$('div.homeToolbar');
+var $homeToolSide=$('div.homeTool-side')
+var $editTools = $('div.editToolbar');
+var $editToolSide = $('div.editTool-side');
+var $editToolCollapsible = $('div.editTool-side > ul.collapsible');
+var $sideTools = $('div.sideTools');
+var $studentList = $('ul.scStudentList');
+var $groupList = $('ul.groupList');
+var $procList = $('ul.procList');
+var state = 'home';//home, edit
+var isEditing = false;//replace state
+var editState = 'furniture';//posible editState: furniture,student,group,proc,info,station
+var viewState = 'student';//possible view: student, group, proc,station,info
+var oldData;
+var sortByLastName = false;
+//page init like resize 
+/* $(window).resize(function(){
+	console.log('window was resize');
+	if(window.clientWidth < 1160){
+		showResizeWarning();
+	}else{
+		showChartApp();
+	}
+}); */
+//populate the heading section img and title
+$('img#sectionProfImg').attr('src',course.section.profile_url );
+$('span#sectionTitleSpan').text(course.section.course_title +': ' + course.section.section_title);
+//init tooltip
+$('a.tooltiped').tooltip();
+//init dropdown
+$('a.dropdown-trigger').dropdown({constrainWidth:true});
+$('.tabs').tabs();
+$('.modal').modal();
 
-import {RosterStudentPanel} from 'seatingchart/rosterStudentPanel';
-var store = new Vuex.Store({
-	state:{
-		rosters:[],
-		currentRoster:null,
-		students:null,
-		incidents:null,
-		routines:null,
-		colorBtnIconText:''
-	},
-	getters:{
-		getCurrentRoster(state){
-			return state.currentRoster;
-		},
-		getRosters(state){
-			return state.rosters;
-		}
-	},
-	mutations:{
-		setCurrentRoster(state, roster){
-			state.currentRoster = roster;
-		},
-		setRosters(state,rosters){
-			state.rosters = rosters;
-		},
-		addRoster(state, roster){
-			state.rosters.push(roster);
-		},
-		removeRoster(state, roster){
-			console.log('rosters list size is '+ state.rosters.length +' before cut');
-			//loop and rid
-			for(let i = 0; i < state.rosters.length; i++){
-				if(roster.id == state.rosters[i].id){
-					state.rosters.splice(i, 1);
-			console.log('rosters list size is ' + state.rosters.length+ ' afer cut');
-					break;
-				}//end if
-			}//end for
-		}
+/* ------Here is the onload method so start all coding here except for inits ---*/
+//populate the students into studentList
+$(()=> {
+	//set current routine btn
+	var $curRoutineBtn = $("a#curRoutineBtn > span");
+	$curRoutineBtn.text(window.curChart.title);
+	
+	//pop routine list
+	for(var i =0; i < seatingCharts.list.length; i++){
+		var s = seatingCharts.list[i];
+		var $rosterItem = $('<li class="collection-item routine-item grey-text"></li>');
+		$rosterItem.attr('id',s.id);
+		$rosterItem.text(s.title);
+		$rosterItem.css({textAlign:'center',margin:'0 auto',padding:'2px',verticalAlign:'middle',fontWeight:10})
+		$('ul#routineDropdownList').append($rosterItem).append("<li class='divider' tab-index='-1'></li>");
+	}//end for
+	
+	//add the click fucntion to routine-items
+	$('li.routine-item').click(function(){var $this = $(this);
+	var $curRot =$('a#curRoutineBtn >span');
+	if($this.text() ==$curRot.text() ){console.log('text were the same');return;}
+	else{$curRot.text($this.text());
+	console.log('text were different');
+	//TODO: make ajax call to get routine and 
+
+					}//end else //////////////////////
+		});//end click
 		
-	},
-	actions:{
-		loadRosters:function(context){
-			$.getJSON('/roster', data => context.commit('setRosters',data));
-		},
-		removeRosterAsync(context, roster){
-			$.ajax({
-				method:'delete',
-				url:'/roster/'+roster.id,
-				contentType:'application/json',
-			}).done(
-					function(){
-						console.log('called remove roster from store');
-						context.commit('removeRoster',roster);
-						this.$emit('deletesuccess');
-					}
-			);
-		}
+/*set up click for view-btn :student group proc*/
+$('a.view-btn').click(function(){
+	$this = $(this);
+	$icon = $this.find('i.view-icon');
+	if($icon.hasClass('amber-text')){
+		//means it is already active
+		return;
+	}
+	//here we can assume view is not active
+	var className ='amber-text text-accent-1'
+	$('i.view-icon').removeClass(className);
+	$icon.addClass(className);
+	$('.side-tool').css('display', 'none');
+	switch($this.attr('id')){
+		case 'student-view-btn':view = 'student';$('div#studentListWrapper').css('display', 'block');break;
+		case 'groups-view-btn':view = 'group';$('div#groupListWrapper').css('display', 'block');break;
+		case 'proc-view-btn':view = 'proc';$('div#procListWrapper').css('display', 'block');break;
+	}
+});//end click view-btn
+
+/*set up click for editLink btn*/
+$('a#editRoutineLink','ul#settingsList').click(function(){
+//	console.log('edit btn click');
+	edit();
+});
+
+/* set up edit toolside collapsible */
+$editToolCollapsible.collapsible({onOpenEnd:() =>{
+	var $activeItem = $editToolCollapsible.find('li.active');
+	switch( editState){
+		case 'furniture':doneEditFurniture();break;
+		case 'student':doneEditStudent();break;
+		case 'proc':doneEditProc();break;
+		case 'info':doneEditInfo();break;
+		case 'group':doneEditGroup();break;
+	}
+	switch($activeItem.attr('id')){
+		case'furnitureCollapseItem':editFurniture();break;
+		case 'studentCollapseItem':editStudent();break;
+		case 'groupCollapseItem':editGroup();break;
+		case 'procCollapseItem':editProc();break;
+		case 'infoCollapseItem':editInfo();break;
+	}
+}});
+
+/*make add group btn open modal for group edit */ 
+//addGroup btn shows modal
+$('button#group-add-btn').click(function(){
+	$("div#groupEditLayer.modal").modal('open');
+});
+/*make color-selectable clickable passing available color*/
+var $colorSelect = $('button.btn.color-selection');
+$colorSelect.click(function(){
+	var color;
+	var $this = $(this);
+	if(! $this.hasClass('selected')){
+		color = $this.attr('data-color');
+	var $groupColorInput = 	$('#group-color-input');
+	$groupColorInput.removeClass();
+	$groupColorInput.addClass('dropdown-trigger btn ' + color);
+	$groupColorInput.attr('data-color', color);	
+		
 	}
 });
 
-var rosterColorPicker ={
-	name:'roster-color-picker',
-	template:'<div class="roster-color-picker" style="background-color:SmokeWhite">\
-		<v-container  fluid grid-list-md>\
-		<v-layout  row-xs column justify-center wrap>\
-		<v-flex xs4 style="overflow:hidden">\
-		<v-btn style="width:2em;height:2em" @click.native="setColor" class="red ma-1 pa-1" name="red"></v-btn>\
-		</v-flex>\
-		<v-flex xs4 style="overflow:hidden">\
-		<v-btn style="width:2em;height:2em" @click.native="setColor" class="red darken-1 ma-1 pa-1" name="red darken-1"></v-btn>\
-		</v-flex>\
-		<v-flex xs4 style="overflow:hidden">\
-		<v-btn style="width:2em;height:2em"  @click.native="setColor" class="red accent-1 ma-1 pa-1" name="red accent-1"></v-btn>\
-		</v-flex>\
-		<v-flex xs4 style="overflow:hidden">\
-		<v-btn style="width:2em;height:2em" @click.native="setColor" class="amber ma-1 pa-1" name="amber"></v-btn>\
-		</v-flex>\
-		<v-flex xs4 style="overflow:hidden">\
-		<v-btn style="width:2em;height:2em"  @click.native="setColor" class="amber darken-1 ma-1 pa-1" name="amber darken-1"></v-btn>\
-		</v-flex>\
-		<v-flex xs4 style="overflow:hidden">\
-		<v-btn style="width:2em;height:2em"  @click.native="setColor" class="amber accent-1 ma-1 pa-1" name="amber accent-1"></v-btn>\
-		</v-flex>\
-		</v-layout>\
-		</v-container>\
-		</div>',
-	methods:{
-		setColor(event){
-			console.log('a color was selected');
-			console.log(event.target)
-			let color = $(event.target).parent().attr('name');
-			console.log(color);
-			this.$emit('rostercolorselected',color);
-		}
+
+
+	drawGrid();
+	updateGroupPanels();
+	updateProceduresPanels();
+	home();
+}//end function //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+);//end jquery init;//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/* ui function list */
+
+function home(){
+	isEditing = false;
+	view = 'student';
+	if($studentList.children().length < 1){
+		$studentList.append("<div><h5>No student to show</h5></div>")
 	}
+	$('.rosterStudent').click();
 	
 };
 
-var rosterPanel ={
-		name:'roster-panel',
-		data(){
-			return{
-				colorPicker:false
-			};
-		},
-		components:{'roster-color-picker':rosterColorPicker},
-		props:{roster:{type:Object, required:true}},
-		methods:{
-			rosterColorSelected(color){
-				console.log('setting roster color from panel')
-				this.roster.color = color;
-				for(let i = 0; i < this.$store.getters.getRosters.length; i++){
-					if(this.$store.getters.getRosters[i].id == this.roster.id){
-						this.$store.getters.getRosters[i].color = color;
-						//ajax update the roster
-						$.ajax({url:'/roster/'+this.roster.id, data:JSON.stringify(this.$store.getters.getRosters[i]), dataType:'json',
-								method:'post',contentType:'application/json'});
-						}
-					}
-				},
-				deleteRoster(){
-					console.log('delete roster called from roster panel');
-					console.log('the roster is : ');
-					console.log(this.roster);
-					this.$emit('deleteroster', this.roster);
-				}
-			
-		},
-		template:'<div class="roster-panel ma-2">\
-					<v-card>\
-						<v-card-title :class="roster.color"><h4>{{roster.name}}</h4>\
-						<v-spacer></v-spacer>\
-						<v-menu  offset-y v-model="colorPicker">\
-						<v-icon slot="activator" class="white--text" @click.native.stop="colorPicker = true">more_vert</v-icon>\
-						<v-list style="width:9em">\
-						<v-list-tile><v-list-tile @click.native="updateRoster">Update<v-icon right>update</v-icon></v-list-tile></v-list-tile>\
-						<v-list-tile><v-list-tile @click.native="deleteRoster">Remove<v-icon right>delete</v-icon></v-list-tile></v-list-tile>\
-						</v-list>\
-						<hr/>\
-						<roster-color-picker v-on:rostercolorselected="rosterColorSelected" style="width:8em"></roster-color-picker>\
-						</v-menu>\
-						</v-card-title>\
-						<v-card-text>\
-			{{roster.description}}</v-card-text>\
-					</v-card></div>'
+function doneHome(){
+	$homeTools.hide();
+	$homeToolSide.hide();
+	switch(view){
+		case 'group':doneGroupView();break;
+		case 'proc':doneProcView();break;
+		case 'station':doneStationView();break;
+		case 'info':doneInfoView();break;
+		default:doneStudentView();
+	}
 };
 
-var landingPage = Vue.component('landing-page',{
-	data(){return {
-		rosters:[],
-		roster:{ rosterInfo:{name:'General Class',
-							description:'a typical elementary school class, managed by RoutineLee',		
-							roomNum:'33',
-							startDate:null,
-							endDate:null,
-							specialDates:[],
-							teacherInfo:{
-								name:'',
-								grade:'',
-								picUrl:''
-							}},
-				calendarId:null,
-				taskListId:null,
-				id:null,		
-				gid:null,		
-				color:'red darken-4'},				
-		deleteRoster:{type:Object, required:false},
-		deleteDialog:false,
-		deleteSuccess:false,
-		showForm:false,
-		showColor:false,
-		showLoader:false,
-		showCalendarList:false,
-		colorBtnIconText:'',
-		calendarList:null
-	}},
-	components:{
-		'roster-color-picker':rosterColorPicker,
-		'roster-panel':rosterPanel
-	},
-	methods:{
-		saveRoster(){
-			let url = '/roster';
-			if(this.roster.id){
-				url += '/'+id;
-			}
-			$.ajax({url:url,method:'post', data:JSON.stringify(this.roster),dataType:'json',contentType:'application/json'})
-				.done(data => {this.$store.commit('addRoster',data);
-									this.roster = {};});
-			this.showForm = false;
-			this.showLoader = true;
-		},
-		setColorBtnIcon(color){
-			console.log('set color icon called');
-			console.log(color);
-			let str = color.split(' ');
-			console.log(str)
-			this.colorBtnIconText=str[0]+'--text';
-			if(str[1]){
-				this.colorBtnIconText+=' text--'+str[1];
-			}
-		},
-		showDeleteDialog(roster){
-			console.log('show delete dialog called')
-			this.deleteRoster = roster;
-			this.deleteDialog = true;
-		},
-		deleteRosterAsync(){
-			console.log('delete roster called from main');
-			this.$store.dispatch('removeRosterAsync', this.deleteRoster).then(this.showLoader = false);
-			this.deleteRoster = null;
-			this.deleteDialog = false;
-			this.showLoader = true;
-		},
-		rosterColorSelect(color){
-			console.log(color);
-			this.setColorBtnIcon(color);
-			this.roster.color = color;
-			
-		},
-		selectCalendar(event){
-			let id = event.target.id;
-			console.log(event.target);
-			this.roster.calendarId = id;
-			this.showCalendarList = false;
-		},
-		showCalendar(){
-			this.showCalendarList = true;
-			
-		}
-	},
-	template:'<v-app>\
-		<v-progress-circular indeterminate v-show="showLoader"></v-progress-circular>\
-		<div v-if="$store.getters.getRosters.length < 1" id="emptyRosterList" style="margin-left:auto;marign-right:auto; margin-top:20%; width:500px">\
-	<h2>Your Roster List appears to be empty!</h2>\
-	<h4>Create a roster by pressing the add button</h4>\
-</div>\
-	<v-layout row-sm column justify-space-around>\
-	<v-flex  sm12 md4 lg3 v-for="roster in $store.getters.getRosters">\
-		<roster-panel v-on:deleteroster="showDeleteDialog"  :roster="roster"></roster-panel>\
-	</v-flex>\
-	</v-layout>\
-		 <v-dialog v-model="showForm" lazy absolute>\
-	      <v-btn fab fixed bottom right slot="activator"><v-icon>add</v-icon></v-btn>\
-	      <v-card>\
-	        <v-card-title>\
-	        	<h5>Roster Form</h5>\
-	        </v-card-title>\
-	        <form style="padding:2em" v-show="!showCalendarList">\
-	        <v-text-field v-model="roster.rosterInfo.name" label="Name"></v-text-field>\
-	        <v-text-field v-model="roster.rosterInfo.description" label="Description" multi-line></v-text-field>\
-			<v-text-field v-model="roster.rosterInfo.roomNum" label="Room number"></v-text-field>\
-				<v-btn flat >Color<v-icon id="colorBtnIcon" :class="colorBtnIconText">color_lens</v-icon></v-btn>\
-				<roster-color-picker v-on:rostercolorselected="rosterColorSelect"></roster-color-picker>\
-				<v-btn flat @click="showCalendar()">Calendar<v-icon>event</v-icon></v-btn>\
-			</form>\
-		<v-card v-show="showCalendarList"><v-card-title>Available Calendars</v-card-title>\
-		<v-list><v-list-tile @click.native.stop="selectCalendar" v-for="cal in calendarList.items">\
-				<v-list-tile-content>\
-				<v-list-tile-title><h5 :id="cal.id">{{cal.summary}}</h5></v-list-tile-title>\
-				<v-list-tile-subtitle><p>{{cal.description}}</p></v-list-title-subtitle>\
-		</v-list-tile-content>\
-		</v-list-tile>\
-		</v-list>\
-		</v-card-title>\
-	       <v-card-actions>\
-	          <v-btn class="green--text darken-1" flat="flat" @click.native="showForm = false">Cancel</v-btn>\
-	          <v-btn class="green--text darken-1" flat="flat" @click.native="saveRoster()">Save</v-btn>\
-	        </v-card-actions>\
-	      </v-card>\
-	    </v-dialog>\
-		<v-dialog v-model="deleteDialog">\
-		<v-card><v-card-title>Delete Roster</v-card-title><v-card-text>Are you sure you want to remove this roster?</v-card-text>\
-		<v-card-text><v-btn @click="deleteRosterAsync">Delete</v-btn><v-btn @click="deleteDialog=false">Cancel</v-btn></v-card-text></v-card>\
-		</v-dialog>\</v-app>',
-mounted(){
-			this.setColorBtnIcon(this.roster.color);
-			
+function drawGrid(){
+	console.log('called draw grid');
+	$floorPlan.empty();
+	$studentList.empty();
+//new strategy: put all student in studentList and 
+//li will have their id number as an attr
+	for(var i = 0; i < students.enrollment.length; i++){
+		if(students.enrollment[i].admin == 1)continue;
+		var sp =  RosterStudentPanel.createPanel(students.enrollment[i]);
+		sp.appendTo($studentList)
+		.wrap('<li class="collection-item" data-id="'+ students.enrollment[i].id+ '"></li>');
+	}///end for ////////
+	//put desks in place
+	if(curChart.furniture.length  > 0){
+		//iterate
+		for(var i = 0; i < curChart.furniture.length; i++ ){
+			//place furniture on floor
+				//check types 
+				//for desks see if student needs to be added
+			if(curChart.furniture[i].type='desk'){
+				var $desk = FurnitureUtils.drawDesk(curChart.furniture[i]);
+				var desk = $desk.data('desk');
+				//if student are assigned then seats are present
+				if(desk.seats.length > 0){
+					for(var j = 0; j < desk.seats.length; j++){
+						var $seat = $desk.find('.pos'+(j+1));
+						console.log("this is the student seat:");
+						console.log($seat);
+						if(desk.seats[j].student == null || desk.seats[j].student == ''){
+							continue;
+						}else{
+								//iterate through student to find same id
+								//and then "hide" from array
+								var $liEls = $studentList.children().not(':hidden');
+								for(var k = 0; k < $liEls.length; k++){
+									$el = $($liEls.get(k));
+									console.log('here is the student list:');
+									console.log($el);
+									if($el.attr('data-id') == desk.seats[j].student){
+										$el.find('div.rosterStudent').appendTo($seat);
+										$el.hide();
+										continue;
+									}//end if
+								}//end for
+						}//end else stuent empty
+						$seat.find('.counterRotate').css('transform', 'rotate('+(-desk.rotate) +'rad)')
+					}//end for desk seat 
+				}//end if desk seat length
+				//apend desk now
+				$floorPlan.append($desk);
+			}//end if furniture is a desk
+		}//end for furniture
+	}//end if furniture length
+	
+}//end drawGrid///////
+function edit(){
+	doneHome();
+	isEditing = true;
+	editState = 'furniture';
+	$editTools.show();
+	$editToolSide.show();
+	if($studentList.find('li').length > 0){
+		var $sListClone = $studentList.clone();
+		$sListClone.addClass('edit');
+		$sListClone.appendTo($('div#studentCollapseBody').empty());
+		$sListClone.attr('id', 'studentEditList');
+	}else{
+		$('div#studentCollapseBody').empty().append('<div> No students to view</div>');
+	}
+	oldData = $.extend(true,{},curChart);
+	editFurniture();
+};
+function doneEdit(){
+	switchEditState();
+	$editTools.hide();
+	$editToolSide.hide();
+	home();
+};
+function submitEdit(){
+	//Ajax call to submit data
+	doneEdit();
+}
+
+function cancelEdit(){
+	//revert back to old data
+	//fix editState
+	curChart = oldData;
+	doneEdit();
+}
+
+function switchEditState(){
+	switch(editState){
+		case 'student':doneEditStudent();
+		case 'group':doneEditGroup();
+		case 'proc':doneEditProc();
+		case 'info':doneEditInfo();
+		default:doneEditFurniture();
+	}
+}
+
+function editFurniture(){
+	editState = 'furniture';
+	$('img.furnitureIcon').draggable({zIndex:500,appendTo:'body',
+					cursorAt:[0,0], revert:'invalid', containment:'seatingChart', helper:'clone'});
+	$floorPlan.droppable({accept:'.furnitureIcon', greedy:true,
+							drop:(e,ui)=>{
+								//console.log('this is e object');
+								//console.log(e);
+								e.stopPropagation();
+								e.preventDefault();
+								var iconId = ui.draggable.attr('id');
+								var top,left;
+								
+									left = (e.clientX + window.scrollX) - $floorPlan.offset().left +'px';
+									top = (e.clientY + window.scrollY)- $floorPlan.offset().top +'px';
+									
+								
+								var dropInfo ={desk:iconId, top:top, left:left};
+								//console.log(dropInfo);
+								var $newDesk = FurnitureUtils.newDeskOnDrop(dropInfo);
+								$newDesk.appendTo($floorPlan);
+								$newDesk.uniqueId().data('desk').id = $newDesk.attr('id');
+								makeDragRotateDelete($newDesk);
+							}//end drop func
+							});
+	$('.desk-wrapper', '.floorPlan').each(function(){makeDragRotateDelete($(this))});
+};//end edit Furniture
+
+function doneEditFurniture(){
+	var $desks = $('.desk-wrapper','.floorPlan').draggable('destroy');
+	$('furnitureIcon','div.editTool-side').draggable('destroy');
+	
+	$floorPlan.droppable('destroy');
+	$('.deskDeleter','.floorPlan').off('click').css('display','none');
+	 $('.desk', '.floorPlan').rotatable('destroy');
+	var deskList = [];
+	$desks.each(function(){
+	deskList.push($(this).data('desk'));}		
+	);
+	curChart.furniture = deskList;
+	
+};
+
+function makeDragRotateDelete($desk){
+	console.log('makeDragRotateDelete starting object: ');
+	console.log($desk);
+	$desk.draggable({containment: $floorPlan ,cursorAt:[0,0],
+					stop:function(e, ui){
+						var $this = $(this);
+						 var top, left;
+						left = (e.clientX + window.scrollX) - $floorPlan.offset().left +'px';
+									top = (e.clientY + window.scrollY)- $floorPlan.offset().top +'px'; 
+						
+						 $this.css('top', top);
+						$this.css('left', left); 
+						//$this.css('display', 'block');
+						$this.data('desk').top = $this.css('top');
+						$this.data('desk').left = $this.css('left');
+					},
+					start:function(e , ui){
+						  var top, left;
+						  
+							left = (e.clientX + window.scrollX) - $floorPlan.offset().left +'px';
+										top = (e.clientY + window.scrollY)- $floorPlan.offset().top +'px'; 
+							
+							 $(ui.helper).css('top', top).css('left', left);
+							
+							//$(this).css('display', 'none');
+	
+					}//end start funciton				
+	});
+	$desk.find('.desk').rotatable({angle:$desk.data('desk').rotate, 
+			stop:function(e, ui){
+				$this = $(this);
+				$this.closest('.desk-wrapper').data('desk').rotate = ui.angle.current;
 			},
-created(){
-				$.getJSON('/roster/googlecal').then(data => this.calendarList = data);
+			rotate:function(e,ui){
+				var $ui = $(ui.element);
+				var $counter = $ui.find('div.counterRotate');
+				if($counter !=null && $counter.length > 0){
+					$counter.css("transform", "rotate(" + -ui.angle.current +"rad)");
+				}
 			}
-														}
-													);
-var vm = new Vue({
-	store,
-	el:'div#app',
-	created(){
-		store.dispatch('loadRosters');
-	},
-	mounted(){
-		$('#loader').remove();
+	});
+	$desk.find('.deskDeleter').click(function(){
+		deleteFurniture( $(this).closest('.desk-wrapper'));
+	}).css('display','block');
+	
+};//done make rotate drag delete
+
+function deleteFurniture($desk){
+	var $rosStu = $desk.find(".rosterStudent");
+	if($rosStu.length > 0){
+		$rosStu.each(function(){
+			var $this = $(this);
+			$this.appendTo('li[data-id="'+$this.attr('id')+'"]').parent().show();
+			$this.find('.counterRotate').css("transform", "rotate(0.0rad)");
+			$this.delay(300);
+		});
+	}//end if
+	for(var i = 0 ; i < curChart.furniture.length; i++){
+		if(curChart.furniture[i].id == $desk.data('desk').id){
+			curChart.furniture.splice(i,1);
+			break;
+		}
+	}
+	$desk.removeData('desk');
+	$desk.remove();
+}
+
+function editStudent(){
+	editState = 'student';
+	$('.rosterStudent').draggable({containment:'.seatingChart',
+				helper:'clone', appendTo:'body', 
+				start:function(){
+					$(this).css('opacity', '0.3');
+				},
+				stop:function(e, ui){
+					$(e.target).css('opacity','1');
+				},
+				drag:function(e, ui){
+					$(ui.helper).find('.counterRotate').css('transform','rotate(0.0rad)');
+				}
+				});
+	$('td >div.seat', '.floorPlan').droppable({accept:'.rosterStudent',greedy:true,hoverClass:'seat-over',
+			drop:function(e,ui){
+				console.log('on drop called');
+				var $dropSeat = $(e.target);
+				var $draggable =  $(ui.draggable);
+				var $dragParent = $draggable.parent();
+				console.log('drag parent is: ');
+				console.log($dragParent);
+				var $rosStudent = $dropSeat.find('.rosterStudent');
+				
+				//if seat occuupied by $rosStudent  move it first
+				if($rosStudent != null && $rosStudent.length > 0){
+					//first check to see if drag parent is comming from side
+					if($dragParent.is('li')){
+						$rosStudent.animate({left:'+=7em', opacity:0},500,'swing',
+								function(){
+							var $appendToMe = $('li[data-id = "'+ $rosStudent.attr('id')  +'"]');
+							//console.log('appendToMe is: ');
+							//console.log($appendToMe)
+							$appendToMe.css('display','block');
+							$rosStudent.appendTo($appendToMe);
+							$rosStudent.css({opacity:'1', position:'relative', left:'0px'})
+								.find('.counterRotate').css({transform:'rotate(0.0rad)'});
+						});
+					}//end if
+					//next check to see if drag student is coming from a seat then swap
+					if($dragParent.hasClass('seat')){
+						var $pWrapper = $dropSeat.closest('div.desk-wrapper');
+						var $cloneWrapper = $('<div id="clone"></div>');
+						$cloneWrapper.css({overFlow:'visible', width:'4em', height:'8em',
+							position:'absolute', left:$pWrapper.css('left'), top:$pWrapper.css('top')})
+							.appendTo('.floorPlan');
+						$rosStudent.appendTo($cloneWrapper);
+						$rosStudent.find('.counterRotate').css('transform', 'rotate(0.0rad)');
+						$cloneWrapper.animate({left:'+=' +($dragParent.offset().left - $pWrapper.offset().left), 
+												top:'+=' + ($dragParent.offset().top - $pWrapper.offset().top)},
+												350, 'swing',
+												function(){
+													$rosStudent.appendTo($dragParent);
+													$cloneWrapper.remove();
+													var stuDesk = $dragParent.closest('div.desk-wrapper').data('desk');
+													console.log('student desk of the swapped is: ');
+													console.log(stuDesk);
+														if($dragParent.hasClass('pos1')){
+															stuDesk.seats[0].student = $rosStudent.attr('id');
+														}//end if
+														else{
+															stuDesk.seats[1].student = $rosStudent.attr('id');
+														}//end else
+															$rosStudent.find('.counterRotate').css('transform',
+																	'rotate('+ (-stuDesk.rotate)+'rad)');
+												});//end animate
+						
+					}//end if swapping
+				}//end check to see if seat is occupied
+				//now place the drop student in the target seat
+				$draggable.appendTo($dropSeat);
+				if($dragParent.children().length <1 && $dragParent.is('li')){
+					$dragParent.hide();
+				}
+				var stuDesk =$dropSeat.closest('div.desk-wrapper').data('desk');
+				if($dropSeat.hasClass('pos1')){
+					stuDesk.seats[0].student = $draggable.attr('id');
+				}else{
+					stuDesk.seats[1].student = $draggable.attr('id');
+				}
+				$draggable.find('.counterRotate').css('transform',
+						'rotate('+ (-stuDesk.rotate)+'rad)');
+			}
+			});//end droppable
+	
+};// end edit student
+function doneEditStudent(){
+	$('.rosterStudent').draggable('destroy');
+	$('td >div.seat', '.floorPlan').droppable('destroy');
+};
+function sortStudentList(a,b){
+	//console.log('sort stuent list called')
+	/*a and b are list items find student */
+	if(sortByLastName){
+			if($(a).find('.last').text() < $(b).find('.last').text())return -1;
+			if($(a).find('.last').text() > $(b).find('.last').text())return 1;
+			return 0;
+	}else{
+		if($(a).find('.first').text() < $(b).find('.first').text())return -1;
+		if($(a).find('.first').text() > $(b).find('.first').text())return 1;
+		return 0;
+	}
+}
+
+function editGroup(){
+	var activeGroup = '';/*store group id for group here*/
+	console.log('edit group called');
+	editState = 'group';
+	
+	//first check to see if there are any groups;
+	var $emptyGroupPanel = $('div#empty-group-panel');
+	var $editGroupList = $('ul#editable-group-list');
+	//incase of populattion emty children from edit-group-list
+	$editGroupList.children().remove();
+	//if not show empty else activate  panel
+	if(curChart.groups.length < 1){ 
+		$emptyGroupPanel.show();
+		
+	}
+	else{
+	// hide empty group panel
+	$emptyGroupPanel.hide();
+	// first group is active group
+	for(var i = 0; i < curChart.groups.length ; i++){
+		//create an li to add to the  
+		var $item = EditGroupItem.create(curChart.groups[i]);
+		if(i == 0){
+			$item.addClass('active');
+		}
+		$item.data('data',curChart.groups[i] );
+		$item.attr('id',curChart.groups[i].gid );
+		$editGroupList.append($item);
+		$item.find('a.edit-group-item-btn').click(function(){
+			$(this).siblings('form').show().find('input').focus();
+			
+		});
+		
+		//add members to the group /////
+		//check if group has members ////
+		if(curChart.groups[i].members.length > 0){
+		for(var j = 0; j < curChart.groups[i].members.length; j++){
+			
+			var mem = MemberItem.create(curChart.groups[i].members[j]);
+			$item.find('ul.edit-group-member-list').append(mem);
+		}
+		} else{ $item.find('div.empty-group-members').show(); 
+				$item.find('ul.edit-group-member-list').hide();}//end if groups has memebers
 	}
 	
-});
+	$('ul#editable-group-list.collapsible').collapsible(
+			{accordian:true,
+			onCloseStart:function(li){
+			var $li = $(li);
+			$li.find('form')[0].reset();
+			$li.find('form').hide();
+			},
+			
+			onOpenStart:function(li){
+				var $li = $(li);
+				$li.find('input').attr('placeholder', $li.data('data').title);
+				$li.find('textarea').attr('placeholder', $li.data('data').description);
+			}
+			
+			}); //end collapsible
+	
+	$('a.edit-group-item-btn').click(function(){
+		var $this = $(this);
+		$this.closest('form').css('display', 'block');
+	});
+	
+	
+	//student in active group are excluded
+	//make students selectable
+	$floorPlan.selectable({filter:'.student'});
+	
+	//if studen belongs to another group then confirm move
+	
+	}
+	
+};
 
+function doneEditGroup(){
+};
+
+function editProc(){
+	editState = 'proc';
+};
+function doneEditProc(){};
+
+function editInfo(){
+	editState = 'info';
+};
+function doneEditInfo(){};
+//end editing functions ------//////
+
+//View functions ---------//////////
+
+function studentView(){
+	/*TODO:add click functions to students
+	for showing studentActionPanel
+*/
+};
+function doneStudentView(){
+/* remove the click function */
+};
+
+
+
+/*Group Function -- Start Here ------ */
+function updateGroupPanels(){
+	//console.log('update group Panels called');
+	if(curChart.groups != null && curChart.groups.length > 0){
+		for(var i = 0; i < curChart.groups.length; i++){
+			var $group = StudentGroupPanel.create(curChart.groups[i]);
+			//append to groupList
+			$group.appendTo($groupList).wrap('<li class="collection-item"></li>');
+		}
+	}else{
+	
+	}
+}
+
+function groupView(){
+	//add color to students by group membership
+	//update the icons and roles
+	
+	//add hover to group panel to dim non members
+	
+};
+function doneGroupView(){
+	//get rid of color style
+	
+	//get rid of icons and roles
+	
+	//remove hover from group panels
+};
+
+/* -- Group Functions End Here -----*/
+
+/*--Procedure Functions Start ---*/
+
+function updateProceduresPanels(){
+	console.log('update procedures panel called');
+	if(curChart.procedures != null && curChart.procedures.length > 0 ){
+		for(var i = 0; i < curChart.procedures.length; i++){
+			var $proc = ProcedurePanel.create(curChart.procedures[i]);
+			$proc.appendTo($procList).wrap('<li class="collection-item"></li>');
+		}//end for
+	}//end if
+	
+}
+function procView(){};
+function doneProcView(){};
+
+
+/* --- Procedure Functions End ---- */
+
+
+
+function stationView(){};
+function doneStationView(){};
+function infoView(){};
+function doneInfoView(){};
+
+//End View function ----------- /////
+
+//Check functions hw & attendance //////
+function hwCheck(){};
+function doneHwCheck(){};
+function submitHwCheck(){};
+function cancelHwCheck(){};
+function attendanceCheck(){};
+function doneAttendanceCheck(){};
+function submitAttendance(){};
+function cancelAttendance(){};
+//end Check functions /////////////////
+
+//ajax functions - routine
+function saveRoutine(routine){};
+function cancelSaveRoutine(){};
+function deleteRoutine(routineId){};
+function cancelDeleteRoutine(){};
+
+
+function getRoutine(routineId){};
+function printRoutine(){};
+function newRoutine(){};
+function copyRoutine(){};
+
+//ajax functions - groups
+
+//ajax functions - procs
+
+//TODO:ajax functions - stations
+
+ ////ajax functions - attendance
+ 
+ //ajax functions - assignment
