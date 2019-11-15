@@ -13,7 +13,6 @@ public class ObjectifyListener implements ServletContextListener {
 	}
 
 	public void contextInitialized(ServletContextEvent sce) {
-		ObjectifyService.register(SchoologyInfo.class);
-		ObjectifyService.register(SeatingChart.class);
+	
 	}
 }
