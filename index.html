@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<base target="_top">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<script>
+		//user info
+		var acctInfo = {
+			"active": true,
+			"expDate": "2018-06-11",
+			"secId": "1624225987"
+		};
+
+
+		var courseList = [];
+		var course = {
+			"id": 5732568548769792,
+			"courseId": "675750671",
+			"title": "Math Class",
+			"section": "Section Name",
+			"icon": "img/star2.svg",
+			"routineList": [
+				{ "title": 'Your seat', "id": 5732568548769792, 'defaultRoutine': true },
+				{ "title": 'Math Lab', "id": 9002568548769792 },
+				{ "title": 'Reading Place', "id": 2222568548769792 },
+				{ "title": 'Investigation', "id": 708968548769792 }
+			],
+			"teacher": {},
+			"students": [
+				{ "id": 1, "firstName": "Dillon", "lastName": "Harper", "pic": "img/courseImg/blueBoyStudent.png" },
+				{ "id": 2, "firstName": "Juan", "lastName": "Gonzalez", "pic": "img/courseImg/redBoyStudent.png" },
+				{ "id": 3, "firstName": "Steve", "lastName": "Rogers", "pic": "img/courseImg/brownBoyStudent.png" },
+				{ "id": 4, "firstName": "Peter", "lastName": "Parker", "pic": "img/courseImg/greenBoyStudent.png" },
+				{ "id": 5, "firstName": "Miles", "lastName": "Morales", "pic": "img/courseImg/orangeBoyStudent.png" },
+				{ "id": 6, "firstName": "Brue", "lastName": "Lee", "pic": "img/courseImg/pinkBoyStudent.png" },
+				{ "id": 7, "firstName": "Barbara", "lastName": "Gordon", "pic": "img/courseImg/grayGirlStudent.png" },
+				{ "id": 8, "firstName": "Gwen", "lastName": "Stacey", "pic": "img/courseImg/purplegirlStudent.png" },
+				{ "id": 9, "firstName": "MJ", "lastName": "Johnson", "pic": "img/courseImg/redGirlStudent.png" },
+				{ "id": 10, "firstName": "Mei", "lastName": "Lin", "pic": "img/courseImg/yellowGirlStudent.png" }
+			],
+		};
+
+		var curRoutine = {
+			"title": "Your seat",
+			"id": 5732568548769792,
+			"courseId": "675750671",
+			"furniture": [
+							{ "top": "631px", "left": "862.5px", "rotate": -3.127534947865014, "transform": "", "kind": "double", "type": "desk", "bgColor": "", "borderColor": "", "seats": [{ "pos": 1, "student": "1" }, { "pos": 2, "student": "2" }], "id": "333" }, 
+							{ "top": "654px", "left": "271.5px", "rotate": -3.7251875077097303, "transform": "", "kind": "double", "type": "desk", "bgColor": "", "borderColor": "", "seats": [{ "pos": 1, "student": "" }, { "pos": 2, "student": "4" }], "id": "334" }, 
+							{ "top": "656.5px", "left": "461.25px", "rotate": -4.703965429592607, "transform": "", "kind": "double", "type": "desk", "bgColor": "", "borderColor": "", "seats": [{ "pos": 1, "student": "7" }, { "pos": 2, "student": "8" }], "id": "335" }, 
+							{ "top": "217px", "left": "888.75px", "rotate": -1.5845282757744439, "transform": "", "kind": "double", "type": "desk", "bgColor": "", "borderColor": "", "seats": [{ "pos": 1, "student": "3" }, { "pos": 2, "student": "1585433778" }], "id": "336" }, 
+							{ "top": "128.938px", "left": "397.438px", "rotate": 0, "transform": "", "kind": "double", "type": "desk", "bgColor": "", "borderColor": "", "seats": [{ "pos": 1, "student": "" }, { "pos": 2, "student": "5" }], "id": "337" }, 
+							{ "top": "6px", "left": "6.75px", "rotate": 0, "transform": "", "kind": "single", "type": "desk", "bgColor": "", "borderColor": "", "seats": [{ "pos": 1, "student": "9" }], "id": "332" }, { "top": "18px", "left": "906.75px", "rotate": 0, "transform": "", "kind": "single", "type": "desk", "bgColor": "", "borderColor": "", "seats": [{ "pos": 1, "student": "10" }], "id": "338" }, 
+							{ "top": "672px", "left": "21.75px", "rotate": 0, "transform": "", "kind": "single", "type": "desk", "bgColor": "", "borderColor": "", "seats": [{ "pos": 1, "student": "6" }], "id": "339" }],
+			"groupRationale": {
+				"strategy": "",/*Proximity, Name, Age, Performance(RTI2, ZPD, BELL), Custom*/
+				"description": "",
+					"studentMin": null,
+					"studentMax": null,
+					"exclude": [],
+					"keepFrom": [],//array of arrays
+					"assignmentUsed": [],/*This is pretty much static */
+					"assignmentFromSubject": { "lastNum": 3, "subject": "Math..." }/*this is dynamic */
+			},//"groups":[],
+			"groups": [
+				{
+					"id": "798",
+					"title": "First Group",
+					"description": "Created group for play",
+					"icon": "brutus",
+					"color": "blue",
+					"members": [
+						{ "memberId": "1" },
+						{ "memberId": "8" },
+						{ "memberId": "3" }
+					],
+					"roles": [
+						{ "name": "", "description": "", "icon": "", "color": "", "memberIds": [] }
+					]
+				},//end first group
+				{
+					"id": "798729",
+					"title": "Second Group",
+					"description": "Lower Group",
+					"icon": "hello-kitty",
+					"color": "red",
+					"members": [
+						{ "memberId": "2" },
+						{ "memberId": "7" },
+						{ "memberId": "5" }
+					],
+					"roles": [
+						{ "name": "", "description": "", "icon": "", "color": "", "memberIds": [] }
+					]
+				}, //end second group
+				{
+					"id": "79872987",
+					"title": "Third Group",
+					"description": "Middle Group",
+					"icon": "",
+					"color": "green",
+					"members": [
+						{ "memberId": "4" },
+						{ "memberId": "9" },
+						{"memberId": "6"},
+						{ "memberId": "10" }
+					],
+					"roles": [
+						{ "name": "", "description": "", "icon": "", "color": "", "memberIds": [] }
+					]
+				} //end third group
+			],//end groups
+			"rotationManager": {
+				"ingoingInstr": "",
+				"outgoingInstr": "",
+				"rounds": [
+					{
+						"1":[1],//station 1/group 1
+						"2":[2], //station 2 /group 2
+					},//round 1
+					{
+						"1":[2],//station 1/group 1
+						"2":[1], //station 2 /group 2
+					},//round 2
+					{
+						"1":[1],//station 1/group 1
+						"2":[2], //station 2 /group 2
+					} //round 3
+				],
+
+			},
+			"stations": [
+				{"id": "1","x":350, 'y':100, 'w': 150, 'h':300,"color":"red","shape":"rect", "description":"first station"},
+				{"id":"2","x":550, 'y':700, 'w': 150, 'h':300,"color":"blue", "shape":"circle","description":"second station" }
+			],
+			"procedures": [
+				{ "secs": 30, "direction": "move from your seat", "order": 0 },
+				{ "secs": 90, "direction": "pick a friend" },
+				{ "secs": 120, "direction": "fold your paper" },
+				{ "secs": 60, "direction": "smile" }
+			],
+			"isDefault": false,
+			"readOnly": false,
+			"shared": false,
+			"allowedUids": [],
+			"isActive": false,
+			"isArchived": false,
+			"isVolume": false
+		};
+		var routineList = [];
+		/*checks to see if acct is up to date*/
+
+	</script>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- load css from public repo -->
+	<link rel="stylesheet" href="css/adminlte.min.css">
+	<link rel="stylesheet" href="scripts/plugins/select2/css/select2.min.css">
+	<link rel="stylesheet" href="icons8/css/styles.css">
+	<link rel="stylesheet" href="css/app.css" />
+
+	<!-- end css-->
+	<title>Havaseet Apps Scripts</title>
+</head>
+
+<body>
+	<header style="position: relative;z-index: 100;">
+		<nav id="navbar" class="navbar navbar-dark navbar-expand yellow d-flex flex-row justify-content-between"
+			style="width:100%; height:2.85rem; border-bottom:2px solid goldenrod">
+			<div class="nav-item nabar-brand ml-1">
+				<img id="sectionProfImg" class="  img-thumbnail rounded ml-auto" src="img/star2.svg" alt="course icon"
+					style="width:3rem;height:3rem" />
+			</div>
+
+			<div id="sectionTitleSpan" class="nav-item "></div>
+			<div class="nav-item">Havaseet <i class="red-text">Beta</i></div>
+
+		</nav>
+		<div id="homeToolbar" class=" amber  d-flex justify-content-around align-center"
+			style="width:100%; height:2.5rem">
+
+
+			<div class="dropdown" style="min-width: 210px;max-width: 600px;">
+				<a class="btn btn-flat btn-block amber lighten-3 dropdown-toggle" href="#" id="routineListBtn"
+					role="button" data-toggle="dropdown" aria-expanded="false">
+					<span id="curRoutineBtnText">DropDown</span>
+				</a>
+				<div id="routineDropdownList" class="dropdown-menu" aria-labelledby="routineListBtn">
+				</div>
+			</div>
+
+			<!-- View Controls-->
+			<div class="d-flex flex-row align-center  justify-content-between" style="width:180px">
+				<span>View:</span>&nbsp;
+				<a class="btn white-text view-btn" data-toggle="tooltip" title="students" id="student-view-btn"> <i
+						class="material-icons amber-text text-accent-1 view-icon">school</i>
+				</a> <a class="btn white-text view-btn" data-toggle="tooltip" title="groups" id="groups-view-btn"> <i
+						class="material-icons view-icon">groups</i>
+				</a>
+				<a class="btn white-text view-btn" data-toggle="tooltip" title="info" id="info-view-btn"> <i
+						class="material-icons view-icon">info</i>
+				</a>
+
+			</div>
+
+			<div class="dropdown" style="padding-top:5px;" data-toggle="tooltip" data-placement="right"
+				title="settings">
+				<a id="settings-dropdown" role="button" data-toggle="dropdown"
+					class="btn btn-circle amber darken-2 white-text" data-target="settingsList"> <i
+						class="material-icons">settings</i>
+				</a>
+				<!--- setting btn drop list-->
+				<ul id="settingsList" class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					<li class="dropdown-item"><a style="margin: 0 auto; text-align: center" id="editRoutineLink"
+							class="amber-text"><i class="material-icons right">edit</i>Edit</a></li>
+
+					<li class="dropdown-item"><a style="margin: 0 auto; text-align: center" id="deleteRoutineLink"
+							class="amber-text"><i class="material-icons right">delete</i>Delete</a></li>
+
+					<li class="dropdown-item"><a style="margin: 0 auto; text-align: center" id="newRoutineLink"
+							class="amber-text"><i class="material-icons right">event_seat</i>New</a></li>
+
+					<li class="dropdown-item"><a style="margin: 0 auto; text-align: center" id="printRoutineLink"
+							class="amber-text"><i class="material-icons right">print</i>Print</a></li>
+
+					<li class="dropdown-item"><a style="margin: 0 auto; text-align: center" id="appSettingsLink"
+							class="amber-text"><i class="material-icons right">tune</i>Preferences</a></li>
+					<li class="dropdown-item"><a style="margin: 0 auto; text-align: center" id="helpPageLink"
+							class="amber-text"><i class="material-icons right">help</i>Help</a></li>
+
+				</ul>
+			</div>
+
+
+
+
+		</div>
+		<!-- end homeToolbar -->
+
+		<div class="editToolbar red lighten-1 d-flex flex-row align-center"
+			style="display: none !important; padding: 0 25%">
+			<div class="dropdown" style="min-width: 210px;max-width: 600px;position:absolute; left:5rem">
+				<a class="btn btn-flat btn-block dropdown-toggle" style="background:rgba(255,255,255,0.3)" href="#"
+					id="editRoutineListBtn" role="button" data-toggle="dropdown" aria-expanded="false">
+					<span id="curRoutineBtn">DropDown</span>
+				</a>
+				<div id="routineDropdownList" class="dropdown-menu" aria-labelledby="editRoutineListBtn">
+				</div>
+			</div>
+			<div class="col">
+				<a class="btn amber darken-1" style="cursor: pointer;"><i class="left material-icons"
+						style="cursor: pointer;">delete</i><span>Clear All</span></a>
+			</div>
+			<div class="col">
+				<a class="btn deep-orange darken-1" style="cursor: pointer;"><i class="left material-icons"
+						style="cursor: pointer;">close</i><span>CANCEL</span></a>
+			</div>
+			<div class="col">
+				<a class="btn green lighten-1" style="cursor: pointer;"><i class="left material-icons"
+						style="cursor: pointer;">done</i><span>SAVE</span></a>
+			</div>
+		</div>
+		<!-- end edit toolbar-->
+	</header>
+	<main id="main-panel" style="height:inherit; position:relative">
+		<div id="dashboard" class="wrapper">
+			<div class="seatingChart" style="min-width:1195px; width:100%;height:inherit;position:absolute;top:2rem">
+				<section id="floorWrapper"
+					style="min-width: 996px; max-width: 1000px; height: 750px; margin: 0px; margin-left: 1rem; float: left; position: absolute">
+					<div id="procViewLayer" class="floorPlanLayer" style="background-color: rgba(); display: none">
+						<div class="carousel"></div>
+						<div class="row timer-panel"></div>
+					</div>
+					<section class="stationPlan" style="border:1px dotted cyan; position:absolute; z-index: 2; height:100%;width:100%;left:-0.27rem; display:none">
+				</section>
+					<div class="floorPlan"
+						style="width: 100%; height: 100%; min-width: 996px; position: relative; margin-left: 0.25rem">
+						
+					</div>
+					
+				</section>
+				<div class="sideTools"
+					style="margin: 0%; margin-right: 1rem; float: right; position: relative; width: 175px">
+					<div class="homeTool-side">
+						<div id="infoWrapper" class="gray-text side-tool" style="display: none">
+							<span class="material-label"
+								style="font-size: 1.5em; font-weight: bold; margin-left: auto; margin-right: auto">Info</span>
+							<ul class="infoList"></ul>
+						</div>
+						<div id="stationListWrapper" class="gray-text side-tool" style="display: none">
+							<span class="material-label"
+								style="font-size: 1.5em; font-weight: bold; margin-left: auto; margin-right: auto">Stations</span>
+							<section>
+								<h3>Rounds</h3>
+								
+							</section>
+							
+						</div><!-- end station wrapper-->
+						<div id="procListWrapper" class="gray-text side-tool" style="display: none">
+							<span class="material-label"
+								style="font-size: 1.5em; font-weight: bold; margin-left: auto; margin-right: auto">Procedures</span>
+							<ul class="procList collection"></ul>
+						</div>
+						<!--end proc list wrapper-->
+						<div id="groupListWrapper" class="gray-text side-tool" style="display: none">
+							<span class="material-label"
+								style="font-size: 1.5em; font-weight: bold; margin-left: auto; margin-right: auto">Groups</span>
+							<ul class="groupList list-group"></ul>
+						</div>
+						<!--end group list wrapper-->
+						<div id="studentListWrapper" class="gray-text side-tool" style="margin: auto">
+							<span class="material-label"
+								style="font-size: 1.5em; font-weight: bold; margin-left: auto; margin-right: auto">Students</span>
+							<div>
+								<ul class="scStudentList list-group"
+									style="width: 8em; margin: auto; overflow-y: scroll;max-height: 700px;"></ul>
+							</div>
+						</div>
+						<!--end student list wrapper-->
+					</div>
+					<!--end hometools-->
+					<!-- end home side tools-->
+					<div class="editTool-side " style="display: none; width: 100%">
+						<div class="accordian" id="edit-accordian">
+							<div class="editCollapseItem card" style="cursor: pointer;">
+								<div class="card-header" id="furnitureCollapseItem">
+									<a class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+										data-target="#furnitureCollapse" aria-expanded="true"
+										aria-controls="furnitureCollapse">
+										<i class="left material-icons">event_seat</i>
+									</a>
+								</div>
+								<div id="furnitureCollapse" class="collapse show"
+									aria-labelledby="furnitureCollapseItem" data-parent="#edit-accordian">
+									<div class="card-body">
+										<ul class="list-group">
+											<li class="list-group-item"><img class="furnitureIcon img-fluid"
+													id="doubleDeskIcon" src="img/doubleDesk.png" alt=""></li>
+											<li class="list-group-item"><img class="furnitureIcon img-fluid"
+													id="singleDeskIcon" src="img/singleDesk.png" alt=""></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="editCollapseItem card" style="cursor: pointer;">
+								<div class="card-header" id="studentCollapseItem">
+									<a class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+										data-target="#studentCollapse" aria-expanded="true"
+										aria-controls="studentCollapse">
+										<i class="material-icons">school</i>
+									</a>
+								</div>
+								<div id="studentCollapse" class="collapse" aria-labelledby="studentCollapseItem"
+									data-parent="#edit-accordian">
+									<div id="studentCollapseBody" class="card-body">
+
+										<h5>No Students to show</h5>
+
+									</div>
+								</div>
+							</div>
+
+							<div class="editCollapseItem card" style="cursor: pointer;">
+								<div class="card-header" id="groupCollapseItem">
+									<a class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+										data-target="#groupCollapse" aria-expanded="true" aria-controls="groupCollapse">
+										<i class="material-icons">groups</i>
+									</a>
+								</div>
+								<div id="groupCollapse" class="collapse" aria-labelledby="groupCollapseItem"
+									data-parent="#edit-accordian">
+									<div id="groupCollapseBody" class="collapsible-body">
+									
+										<div id="group-edit-toolbar" class="mb-1" >
+		
+											<a id="group-add-btn" class="btn btn-sm btn-block btn-outline-secondary" >
+											Add Group <i class="material-icons">group_add</i>
+											</a>
+										</div>
+										<div id="empty-group-panel"  style="height:20rem; ">
+											<h5>No Groups </h5> 
+										</div>
+										<div id="active-group-panel" style="overflow-y:auto; height: 39rem">
+											
+												<div id="edit-group-list"  class="accordion" style="position:reative" >
+													
+												
+												</div>
+											
+										  </div>
+										</div>
+									</div>
+								</div>
+							
+
+							<div class="editCollapseItem card" style="cursor: pointer;">
+								<div class="card-header" id="infoCollapseItem">
+									<a class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+										data-target="#infoCollapse" aria-expanded="true" aria-controls="infoCollapse">
+										<i class="material-icons">info</i>
+									</a>
+								</div>
+								<div id="infoCollapse" class="collapse" aria-labelledby="infoCollapseItem"
+									data-parent="#edit-accordian">
+									<div id="infoCollapseBody" class="collapsible-body"
+										style="padding:0px 0px 0px 0px !important;">
+										<!-- padding ineffective here must be done in stylesheet -->
+										<button id="info-add-btn" class="btn btn-flat"
+											style="width:100%; position:relative;"><i
+												class="material-icons left">add</i> Add...</button>
+										<div id="empty-group-panel">
+											<h5>No Groups to show</h5>
+										</div>
+										<div id="edit-info" style="width:175px; padding:0px">
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<!--end accrodian-->
+					</div>
+					<!--end edit tools-->
+				</div>
+			</div>
+	</main>
+	<!------ All page modals go here ----->
+	<div id="procEditLayer" class="floorPlanLayer"></div>
+	
+	<div id="infoEditLayer" class="floorPlanLayer"></div>
+
+	<div id="groupRemoveDialog" class="floorPlanLayer"></div>
+
+	<div id="groupIconChooserDialog" class="floorPlanLayer"></div>
+
+	<div id="colorChooserDialog" class="floorPlanLayer"></div>
+	<!-- ------------End Page Modals -------------------- -->
+	<!--Prevent AdminLTE IFrame Error-->
+	<script>localStorage.setItem('AdminLTE:IFrame:Options',JSON.stringify({autoIframeMode:false,autoItemActive:false}))  </script>
+	<!-- load scripts from public repo -->
+	<script src="scripts/loader.js" type="text/javascript"></script>
+	<script src="scripts/svg/svg.all.js" type="text/javascript"></script>
+	<script src="scripts/plugins/select2/js/select2.min.js" type="text/javascript"></script>
+	<script src="scripts/main.js" type="text/javascript"></script>
+	<script src="scripts/seatingchart.js" type="text/javascript"></script>
+	<script src="scripts/colorpicker.js" type="text/javascript"></script>
+</body>
+</html>
