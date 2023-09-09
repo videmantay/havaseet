@@ -7,11 +7,7 @@
 	
 	<script>
 		//user info
-		var acctInfo = {
-			"active": true,
-			"expDate": "2018-06-11",
-			"secId": "1624225987"
-		};
+		
 
 
 		var courseList = [];
@@ -115,16 +111,20 @@
 			"rotationManager": {
 				"ingoingInstr": "",
 				"outgoingInstr": "",
+        "defaultTimer": 30, //in minutes(secs ???)
 				"rounds": [
 					{
+            "timer": null,
 						"1":[1],//station 1/group 1
 						"2":[2], //station 2 /group 2
 					},//round 1
 					{
+            "timer": null,
 						"1":[2],//station 1/group 1
 						"2":[1], //station 2 /group 2
 					},//round 2
 					{
+            "timer": null,
 						"1":[1],//station 1/group 1
 						"2":[2], //station 2 /group 2
 					} //round 3
