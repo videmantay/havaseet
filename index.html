@@ -6,11 +6,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<script>
-		//user info
-		
+		google.script.run
+    .withSuccessHandler( getResponse)
+    .withFailureHandler(getResponse)
+    .getUserProfile();
+		let userInfo = {
+			email: "",
+			title
+		}
+		function getResponse(data){
+      console.log(data);
+    }
 
-
-		var courseList = [];
+		const courseList = [];
 		var course = {
 			"id": 5732568548769792,
 			"courseId": "675750671",
