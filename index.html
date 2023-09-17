@@ -437,7 +437,7 @@
 	<div id="colorChooserDialog" class="floorPlanLayer"></div>
 
 	<div id="courseList-modal" class="modal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog modal-lg" role="document">
 		  <div class="modal-content">
 			<div class="modal-header">
 			  <h5 class="modal-title">Select a Course to get Started</h5>
@@ -446,13 +446,9 @@
 			  </button>
 			</div>
 			<div class="modal-body">
-			  <section id="courseList-panel" style="display: flex;">
+			  <section id="courseList-panel" class="container" >
 
 			  </section>
-			</div>
-			<div class="modal-footer">
-			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			  <button type="button" class="btn btn-primary">Save changes</button>
 			</div>
 		  </div>
 		</div>
@@ -492,13 +488,15 @@
 		}
 		
 		function showCourses(){
-			let $coursePanel = $('#courseList-modal');
+			let $coursePanel = $('#courseList-panel');
 				$coursePanel.empty();
 			for( course of courseList){
+        let row = $('<div class="row">');
 				courseCard = Course(course);
-				$coursePanel.append(courseCard);
+        row.append(courseCard);
+				$coursePanel.append(row);
 			}
-			$coursePanel.modal('show');
+			$('#courseList-modal').modal('show');
 		}
   </script>
 
