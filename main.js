@@ -53,6 +53,9 @@ function getCourses(u){
   return {courseList: courses, userInfo: u};
 }
 
+function startCourse(id){
+  return Classroom.Courses.get(id);
+}
 
 
 
