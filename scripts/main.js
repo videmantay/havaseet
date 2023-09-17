@@ -1406,7 +1406,8 @@ function copyRoutine() {}
 ///function with Courses
 $('.course').click(
   function(){ var id = $(this).attr('id'); 
-  google.run.script.withSuccessHandler(start).startCourse(id).with }
+  google.run.script.withSuccessHandler(start).startCourse(id);
+alert('click on ' + id) }
 );
 
 function start(data){
