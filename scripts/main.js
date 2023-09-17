@@ -1404,3 +1404,11 @@ function newRoutine() {}
 function copyRoutine() {}  
 
 ///function with Courses
+$('.course').click(
+  function(){ var id = $(this).attr('id'); 
+  google.run.script.withSuccessHandler(start).startCourse(id).with }
+);
+
+function start(data){
+  console.log(data);
+}
