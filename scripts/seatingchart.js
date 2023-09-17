@@ -384,3 +384,21 @@ function Seat(posNum) {
   this.pos = posNum;
   this.student = "";
 }
+
+function Course(course){
+  return `
+  <div class="card course" id="${course.id}>
+  <div class="card-header">
+   ${course.name}
+  </div>
+  <div class="card-body">
+    <blockquote class="blockquote mb-0">
+      ${course.section ? `<div>Section: ${course.section}</div>`: ''}
+      ${course.description ? `<div>Description: ${course.description}</div>`: ''}
+      ${course.room ? `<div> Room: ${course.room}</div>`: ''}
+      <footer class="blockquote-footer"><cite>Create on: ${course}</cite> &nbsp;<a href="${course.alternateLink}" View course </a></footer>
+    </blockquote>
+  </div>
+</div>
+  `;
+}

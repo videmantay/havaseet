@@ -1398,7 +1398,8 @@ function saveRoutine(routine) {}
 function cancelSaveRoutine() {}
 function deleteRoutine(routineId) {}
 function cancelDeleteRoutine() {}
-
 function printRoutine() {}
 function newRoutine() {}
 function copyRoutine() {}  
+
+///function with Courses

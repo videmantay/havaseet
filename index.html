@@ -6,17 +6,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<script>
+
+	let userInfo
 		google.script.run
-    .withSuccessHandler( getResponse)
-    .withFailureHandler(getResponse)
+    .withSuccessHandler( initPage)
+    .withFailureHandler(initError)
     .getUserProfile();
-		let userInfo = {
+		 userInfo = {
 			email: "",
 			title
 		}
-		function getResponse(data){
-      console.log(data);
+		function initPage(data){
+			Object.assign(userInfo, data.userInfo);
+			courseList.length = 0;
+			for(course of data.courseList){
+				courseList.push(course);
+			}
+
+			console.log(courseList)
+			showCourses();
     }
+		function initError(data){
+
+		}
 
 		const courseList = [];
 		var course = {
@@ -159,6 +171,15 @@
 		};
 		var routineList = [];
 		/*checks to see if acct is up to date*/
+		function showCourses(){
+			let $coursePanel = $('#coursList-Panel');
+				$coursePanel.clear();
+			for( course of courseList.courses){
+				courseCard = Course(course);
+				$coursePanel.append(courseCard);
+			}
+			$coursePanel.modal('show');
+		}
 
 	</script>
 	<!--Import Google Icon Font-->
@@ -443,6 +464,28 @@
 	<div id="groupIconChooserDialog" class="floorPlanLayer"></div>
 
 	<div id="colorChooserDialog" class="floorPlanLayer"></div>
+
+	<div class="modal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title">Select a Course to get Started</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			  <section id="courseList-panel" style="display: flex;">
+
+			  </section>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  <button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
 	<!-- ------------End Page Modals -------------------- -->
 	<!--Prevent AdminLTE IFrame Error-->
 	<script>localStorage.setItem('AdminLTE:IFrame:Options',JSON.stringify({autoIframeMode:false,autoItemActive:false}))  </script>

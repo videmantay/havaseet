@@ -48,11 +48,11 @@ function getUserProfile(){
 
 }
 
-
 function getCourses(u){
   let courses = Classroom.Courses.list();
   return {courseList: courses, userInfo: u};
 }
+
 
 
 
