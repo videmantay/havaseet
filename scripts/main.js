@@ -115,7 +115,8 @@ $(
 
 
     /** initalize group setting modal */
-  
+    
+
         let strategyNum = 16;
     
     let groupRationale = {

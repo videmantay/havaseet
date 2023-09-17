@@ -387,16 +387,16 @@ function Seat(posNum) {
 
 function Course(course){
   return `
-  <div class="card course" id="${course.id}>
+  <div class="card course" id="${course.id}">
   <div class="card-header">
-   ${course.name}
+    <div class="card-title">${course.name}</div>
   </div>
   <div class="card-body">
     <blockquote class="blockquote mb-0">
       ${course.section ? `<div>Section: ${course.section}</div>`: ''}
       ${course.description ? `<div>Description: ${course.description}</div>`: ''}
       ${course.room ? `<div> Room: ${course.room}</div>`: ''}
-      <footer class="blockquote-footer"><cite>Create on: ${course}</cite> &nbsp;<a href="${course.alternateLink}" View course </a></footer>
+      <footer class="blockquote-footer"><cite>Created on: ${course.creationTime}</cite> &nbsp;<a href="${course.alternateLink}" View course </a></footer>
     </blockquote>
   </div>
 </div>

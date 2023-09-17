@@ -5,32 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<script>
-
-	let userInfo
-		google.script.run
-    .withSuccessHandler( initPage)
-    .withFailureHandler(initError)
-    .getUserProfile();
-		 userInfo = {
-			email: "",
-			title
-		}
-		function initPage(data){
-			Object.assign(userInfo, data.userInfo);
-			courseList.length = 0;
-			for(course of data.courseList){
-				courseList.push(course);
-			}
-
-			console.log(courseList)
-			showCourses();
-    }
-		function initError(data){
-
-		}
-
-		const courseList = [];
+	<script>	
 		var course = {
 			"id": 5732568548769792,
 			"courseId": "675750671",
@@ -170,17 +145,13 @@
 			"isVolume": false
 		};
 		var routineList = [];
-		/*checks to see if acct is up to date*/
-		function showCourses(){
-			let $coursePanel = $('#coursList-Panel');
-				$coursePanel.clear();
-			for( course of courseList.courses){
-				courseCard = Course(course);
-				$coursePanel.append(courseCard);
-			}
-			$coursePanel.modal('show');
-		}
 
+		let userInfo = {
+			email: "",
+			name:""
+		};
+
+	  let courseList = [];
 	</script>
 	<!--Import Google Icon Font-->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -465,7 +436,7 @@
 
 	<div id="colorChooserDialog" class="floorPlanLayer"></div>
 
-	<div class="modal" tabindex="-1" role="dialog">
+	<div id="courseList-modal" class="modal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 		  <div class="modal-content">
 			<div class="modal-header">
@@ -496,5 +467,40 @@
 	<script src="https://videmantay.github.io/havaseet/scripts/main.js" type="text/javascript"></script>
 	<script src="https://videmantay.github.io/havaseet/scripts/seatingchart.js" type="text/javascript"></script>
 	<script src="https://videmantay.github.io/havaseet/scripts/colorpicker.js" type="text/javascript"></script>
+  <!-- move to main afterwards -->
+  <script>
+    //init course list modal
+    $('#courseList-modal').modal();
+		google.script.run
+    .withSuccessHandler( initPage)
+    .withFailureHandler(initError)
+    .getUserProfile();
+		 
+
+		function initPage(data){
+			Object.assign(userInfo, data.userInfo);
+			courseList.length = 0;
+			for(course of data.courseList.courses){
+				courseList.push(course);
+			}
+
+			console.log(courseList)
+			showCourses();
+    }
+		function initError(data){
+
+		}
+		
+		function showCourses(){
+			let $coursePanel = $('#courseList-modal');
+				$coursePanel.empty();
+			for( course of courseList){
+				courseCard = Course(course);
+				$coursePanel.append(courseCard);
+			}
+			$coursePanel.modal('show');
+		}
+  </script>
+
 </body>
 </html>
