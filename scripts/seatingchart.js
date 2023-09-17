@@ -387,7 +387,7 @@ function Seat(posNum) {
 
 function Course(course){
   return `
-  <div class="card course" id="${course.id}">
+  <div class="card course col-4" id="${course.id}">
   <div class="card-header">
     <div class="card-title">${course.name}</div>
   </div>
