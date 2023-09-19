@@ -466,7 +466,27 @@
   <!-- move to main afterwards -->
   <script>
     //init course list modal
-    $('#courseList-modal').modal();
+	$courseModal = $('#courseList-modal');
+    $courseModal.modal(
+		{
+			show:false
+		}
+	);
+	$courseModal.on('shown.bs.modal', ()=>{
+		$('div.card.course').on('click',
+  	function(){ var id = $(this).attr('id'); 
+  	google.script.run.withSuccessHandler(start).startCourse(id);
+	}
+	);
+	});
+
+	$courseModal.on('hidden.bs.modal',()=>{
+		$('div.card.course').off('click');
+	});
+
+  function start(data){
+    console.log(data)
+  }
 		google.script.run
     .withSuccessHandler( initPage)
     .withFailureHandler(initError)
@@ -497,7 +517,7 @@
 				$coursePanel.append(row);
 			}
 			$('#courseList-modal').modal('show');
-			
+
 		}
   </script>
 
